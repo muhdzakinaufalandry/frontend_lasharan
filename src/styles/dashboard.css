@@ -1,0 +1,125 @@
+  .dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    margin-bottom: 0.1rem;
+  }
+  
+  .dashboard-header {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 2rem;
+  }
+  
+  .dashboard-header h1 {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .dashboard-header p {
+    color: #666;
+    font-size: 1rem;
+  }
+  
+  /* Tambahkan ini untuk menyamakan tampilan button seperti link */
+.dropdown-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-weight: 500;
+  font-size: 1rem;
+  text-align: left;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* Optional: efek hover biar konsisten */
+.dropdown-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+}
+  
+  .logout {
+    color: #ffdddd;
+  }
+  
+  .dashboard-content {
+    flex: 1;
+    padding: 1rem;
+    margin-bottom: auto;
+    background-color: #f5f6fa;
+  }
+  .info-cards {
+  display: flex;
+  gap: 1rem;
+  margin: 2rem;
+  flex-wrap: wrap;
+}
+
+.info-card {
+  flex: 1;
+  min-width: 180px;
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+  text-align: left;
+}
+
+.info-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.info-card p {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #111;
+}
+
+/* Warna khusus */
+.info-card.yellow {
+  border-left: 6px solid #f6c90e;
+}
+
+.info-card.purple {
+  border-left: 6px solid #c084fc;
+}
+
+.dropdown-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  background-color: white;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+}
+
+.dropdown-item {
+  color: #173ea5;
+  text-decoration: none;
+  display: block;
+  padding: 0.3rem 0;
+  font-weight: bold;
+}
+
+.dropdown-item:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,114 @@
+/* Sidebar Styling */
+.sidebar {
+    background-color: #2f4298;
+    width: 250px;
+    height: 100vh;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 0 10px 10px 0;
+  }
+  
+  /* Logo and Greeting */
+  .sidebar-logo {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .sidebar-greeting {
+    color: white;
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+  
+  /* Navigation */
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .sidebar-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Bottom Section (Logout) */
+  .sidebar-bottom {
+    margin-top: auto;
+  }
+  
+  .sidebar-link.logout {
+    color: #b0b0b0;
+  }
+  
+  /* Icon Styling for Links */
+  .icon-home::before {
+    content: "🏠";
+  }
+  
+  .icon-book::before {
+    content: "📘";
+  }
+  
+  .icon-clock::before {
+    content: "🕒";
+  }
+  
+  .icon-logout::before {
+    content: "🔚";
+  }
+  
+ 
+  .sidebar-top-horizontal {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+  
+  .sidebar-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  
+  .sidebar-admin {
+    font-weight: bold;
+    font-size: 1rem;
+    color: white;
+  }
+  
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0 1rem;
+    margin-top: 0.5rem;
+  }
+  
+  .sidebar-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 0;
+  }
+  
+  .sidebar-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+  }

@@ -1,0 +1,46 @@
+.subjects-page {
+    padding: 2rem;
+  }
+  
+  .subjects-page h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+  
+  .subjects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .subject-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: box-shadow 0.3s ease;
+    text-align: center;
+  }
+  
+  .subject-card:hover {
+    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+  }
+  
+  .subject-card img {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+  }
+  
+  .subject-card p {
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none; /* ⛔ remove underline */
+    color: #000;
+  }
+  
