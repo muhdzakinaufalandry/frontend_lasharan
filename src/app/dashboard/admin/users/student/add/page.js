@@ -1,36 +1,72 @@
-'use client'
-import React from 'react'
+'use client';
+import React, { useState, useEffect } from 'react';
 import '@/styles/student.css';
 
-// export default function AddStudentPage() {
-//   const router = useRouter();
-//   const [form, setForm] = useState({
-//     designation: '',
-//     fullName: '',
-//     email: '',
-//     password: '',
-//     subject: '',
-//     phone: '',
-//     gender: '',
-//     class: '',
-//   });
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setForm({ ...form, [name]: value });
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     console.log('Data Murid:', form);
-//     router.push('/dashboard/admin/users/student');
-//   };
 export default function AddStudent() {
+  const [idUser, setIDUser] = useState('');
+  const [idKelas, setIDKelas] = useState('');
+  const [kelasList, setKelasList] = useState([]);
+  const [namaSiswa, setNamaSiswa] = useState('');
+  const [alamat, setAlamat] = useState('');
+  const [tanggalLahir, setTanggalLahir] = useState('');
+
+  useEffect(() => {
+    const fetchKelas = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/kelas');
+        const data = await response.json();
+        setKelasList(data);
+      } catch (error) {
+        console.error('Gagal memuat data kelas:', error);
+      }
+    };
+
+    fetchKelas();
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const newSiswa = {
+      id_user: parseInt(idUser),
+      id_kelas: parseInt(idKelas),
+      nama_siswa: namaSiswa,
+      alamat: alamat,
+      tanggal_lahir: tanggalLahir,
+    };
+
+    console.log("Data yang dikirim:", newSiswa);
+
+    try {
+      const response = await fetch('http://localhost:8080/siswa', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newSiswa),
+      });
+
+      if (response.ok) {
+        alert('Siswa berhasil ditambahkan!');
+        setIDUser('');
+        setIDKelas('');
+        setNamaSiswa('');
+        setAlamat('');
+        setTanggalLahir('');
+      } else {
+        const errorText = await response.text();
+        console.error("Response error:", errorText);
+        alert('Gagal menambahkan siswa. Lihat console.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Terjadi kesalahan.');
+    }
+  };
+
   return (
     <div className="student-form-container">
       <h2 className="form-title">Add New Student</h2>
 
-      <form className="student-form">
+      <form className="student-form" onSubmit={handleSubmit}>
         <div className="section-header">
           <h3>Student Details</h3>
           <div className="form-buttons">
@@ -43,56 +79,60 @@ export default function AddStudent() {
         <div className="form-grid">
           <div className="form-group">
             <label>Name *</label>
-            <input type="text" placeholder="Enter name" />
+            <input
+              type="text"
+              placeholder="Enter name"
+              value={namaSiswa}
+              onChange={(e) => setNamaSiswa(e.target.value)}
+              required
+            />
           </div>
-          <div className="form-group">
 
-            <div className="form-group">
-            <label>User *</label>
-            <select>
-              <option>A</option>
-              <option>B</option>
-              <option>C</option>
-              </select>
-          </div>
-          </div>
           <div className="form-group">
-            <label>Date & Place of Birth *</label>
-            <div className="dob-place">
-              <input type="text" placeholder="3 Februari 1997" />
-            </div>
+            <label>User ID *</label>
+            <input
+              type="number"
+              placeholder="Enter user ID"
+              value={idUser}
+              onChange={(e) => setIDUser(e.target.value)}
+              required
+            />
           </div>
+
           <div className="form-group">
-            <label>NISN *</label>
-            <input type="text" placeholder="231964023" />
+            <label>Date of Birth *</label>
+            <input
+              type="date"
+              value={tanggalLahir}
+              onChange={(e) => setTanggalLahir(e.target.value)}
+              required
+            />
           </div>
-          <div className="form-group address">
+
+          <div className="form-group">
             <label>Address *</label>
-            <input type="text" placeholder="Enter student address"/>
+            <input
+              type="text"
+              placeholder="Enter student address"
+              value={alamat}
+              onChange={(e) => setAlamat(e.target.value)}
+              required
+            />
           </div>
+
           <div className="form-group">
             <label>Class *</label>
-            <select>
-              <option>Class</option>
-              <option>10-A</option>
-              <option>10-B</option>
-              <option>11-A</option>
+            <select value={idKelas} onChange={(e) => setIDKelas(e.target.value)} required>
+              <option value="">Pilih Kelas</option>
+              {kelasList.map((kelas) => (
+                <option key={kelas.id_kelas} value={kelas.id_kelas}>
+                  {kelas.nama_kelas}
+                </option>
+              ))}
             </select>
           </div>
         </div>
-
-        {/* <h3 className="login-title">Login/Account Details</h3>
-        <div className="form-grid">
-          <div className="form-group full">
-            <label>User Name *</label>
-            <input type="text" placeholder="Enter username" />
-          </div>
-          <div className="form-group full">
-            <label>Password *</label>
-            <input type="password" placeholder="********" />
-          </div>
-        </div> */}
       </form>
     </div>
-  )
+  );
 }

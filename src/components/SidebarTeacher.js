@@ -21,7 +21,7 @@ export default function SidebarTeacher() {
           <i className="icon-class" /> Class
         </Link>
 
-        <Link href="/dashboard/Teacher/subjects" className="sidebar-link">
+        {/* <Link href="/dashboard/Teacher/subjects" className="sidebar-link">
         <span role="img" aria-label="subject">📚</span>
           <i className="icon-book" /> Subjects
         </Link>
@@ -29,7 +29,7 @@ export default function SidebarTeacher() {
         <Link href="/dashboard/Teacher/history" className="sidebar-link">
         <span role="img" aria-label="history">⏱️</span>
           <i className="icon-clock" /> History
-        </Link>
+        </Link> */}
       </nav>
 
       <div className="sidebar-bottom">

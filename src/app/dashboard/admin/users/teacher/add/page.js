@@ -1,31 +1,68 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import '@/styles/teacher.css';
 
 export default function AddTeacherPage() {
-  const router = useRouter();
-  const [form, setForm] = useState({
-    designation: '',
-    fullName: '',
-    email: '',
-    password: '',
-    subject: '',
-    phone: '',
-    gender: '',
-    class: '',
-  });
+  const [IDUser, setIDUser] = useState('');
+  const [IDMapel, setIDMapel] = useState('');
+  const [namaGuru, setNamaGuru] = useState('');
+  const [mataPelajaran, setMataPelajaran] = useState('');
+  const [subjects, setSubjects] = useState([]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+  useEffect(() => {
+    const fetchSubjects = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/matapelajaran');
+        const data = await response.json();
+        setSubjects(data);
+      } catch (error) {
+        console.error('Gagal memuat data mata pelajaran:', error);
+      }
+    };
+
+    fetchSubjects();
+  }, []);
+
+  const handleSubjectChange = (e) => {
+    const selectedId = parseInt(e.target.value);
+    const selectedSubject = subjects.find((s) => s.id_mapel === selectedId);
+    setIDMapel(selectedSubject?.id_mapel || '');
+    setMataPelajaran(selectedSubject?.nama_mata_pelajaran || '');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Data Guru:', form);
-    router.push('/dashboard/admin/users/teacher');
+
+    const newGuru = {
+      id_user: parseInt(IDUser),
+      id_mapel: parseInt(IDMapel),
+      nama_guru: namaGuru,
+      mata_pelajaran: mataPelajaran,
+    };
+
+    try {
+      const response = await fetch('http://localhost:8080/guru', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newGuru),
+      });
+
+      if (response.ok) {
+        alert('Guru berhasil ditambahkan!');
+        setIDUser('');
+        setIDMapel('');
+        setNamaGuru('');
+        setMataPelajaran('');
+      } else {
+        const err = await response.text();
+        console.error('Gagal:', err);
+        alert('Gagal menambahkan guru.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Terjadi kesalahan.');
+    }
   };
 
   return (
@@ -34,8 +71,8 @@ export default function AddTeacherPage() {
         <h2>Add Teachers</h2>
         <div className="form-buttons">
           <button className="btn cancel">cancel</button>
-          <button className="btn reset">reset</button>
-          <button className="btn save">save</button>
+          <button className="btn reset" type="reset">reset</button>
+          <button className="btn save" type="submit" onClick={handleSubmit}>save</button>
         </div>
       </div>
 
@@ -45,44 +82,53 @@ export default function AddTeacherPage() {
         <div className="form-row">
           <div className="form-group">
             <label>Name *</label>
-            <input type="text" placeholder="e.g. Maria" />
+            <input
+              type="text"
+              placeholder="e.g. Maria"
+              value={namaGuru}
+              onChange={(e) => setNamaGuru(e.target.value)}
+              required
+            />
           </div>
         </div>
         <div className="form-row">
           <div className="form-group">
-            <label>User *</label>
-            <select>
-              <option>A</option>
-              <option>B</option>
-              <option>C</option>
-              </select>
+            <label>User ID *</label>
+            <input
+              type="text"
+              placeholder="e.g. 5"
+              value={IDUser}
+              onChange={(e) => setIDUser(e.target.value)}
+              required
+            />
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label>NIP *</label>
-            <input type="text" placeholder="18 Digit" />
-          </div>
+            <input
+              type="text"
+              placeholder="18 Digit"
+              value={IDMapel}
+              onChange={(e) => setIDMapel(e.target.value)}
+              required
+            />
+          </div> */}
           <div className="form-group">
             <label>Subject</label>
-            <select>
-              <option>Subject</option>
-              <option>Math</option>
-              <option>Science</option>
+            <select
+              value={IDMapel}
+              onChange={handleSubjectChange}
+              required
+            >
+              <option value="">Pilih Mata Pelajaran</option>
+              {subjects.map((subject) => (
+                <option key={subject.id_mapel} value={subject.id_mapel}>
+                  {subject.nama_mata_pelajaran}
+                </option>
+              ))}
             </select>
           </div>
         </div>
-
-        {/* <div className="form-section-title">Login/Account Details</div>
-
-        <div className="form-group full-width">
-          <label>User Name *</label>
-          <input type="text" placeholder="e.g. wilson" />
-        </div>
-
-        <div className="form-group full-width">
-          <label>Password *</label>
-          <input type="password" placeholder="********" />
-        </div> */}
       </form>
     </div>
-  )
+  );
 }

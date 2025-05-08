@@ -17,7 +17,7 @@ export default function SidebarStudent() {
         </Link>
 
 
-        <Link href="/dashboard/Student/subjects" className="sidebar-link">
+        <Link href="/dashboard/Student/subject" className="sidebar-link">
         <span role="img" aria-label="subject">📚</span>
           <i className="icon-book" /> Subjects
         </Link>

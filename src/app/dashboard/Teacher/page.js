@@ -1,8 +1,19 @@
 'use client';
 import SidebarTeacher from '@/components/SidebarTeacher';
 import '@/styles/teacherDashboard.css';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function TeacherDashboardPage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const role = localStorage.getItem('id_role');
+    if (role !== '2') { // misalnya '2' = guru
+      alert('Akses ditolak');
+      router.push('/unauthorized'); // atau redirect ke halaman lain
+    }
+  }, []);
   return (
     <div className="teacher-dashboard">
       <main className="dashboard-content-wrapper">
@@ -64,7 +75,7 @@ export default function TeacherDashboardPage() {
                 <div className="message-avatar" />
                 <div className="message-content">
                   <span>Jane Cooper</span>
-                  <span>Don't forget the class meet...</span>
+                  <span>Dont forget the class meet...</span>
                 </div>
                 <span className="message-time">12:34 pm</span>
               </div>

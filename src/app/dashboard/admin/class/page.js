@@ -1,20 +1,151 @@
-'use client'
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+'use client';
+import React, { useState, useEffect } from 'react';
 import '@/styles/class.css';
 
 export default function ClassPage() {
-  const router = useRouter();
+  const [kelass, setKelass] = useState([]);
+  const [gurus, setGurus] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [editKelas, setEditKelas] = useState(null);
+  const [IDGuru, setIDGuru] = useState('');
+  const [namaKelas, setNamaKelas] = useState('');
+  const [tahunAjaran, setTahunAjaran] = useState('');
 
-  const handleOpen = () => setShowModal(true);
-  const handleClose = () => setShowModal(false);
+  useEffect(() => {
+    const fetchKelass = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/kelas');
+        const data = await response.json();
+        setKelass(data);
+      } catch (error) {
+        console.error("Error fetching kelas:", error);
+      }
+    };
+    fetchKelass();
+  }, []);
 
-  const classData = [
-    { id: 1, name: 'X IPA 1', homeroom: 'Mr. John', total: 32 },
-    { id: 2, name: 'X IPA 2', homeroom: 'Ms. Lily', total: 30 },
-    { id: 3, name: 'XI IPS 1', homeroom: 'Mr. Anton', total: 28 },
-  ];
+  useEffect(() => {
+    const fetchGurus = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/guru');
+        const data = await response.json();
+        setGurus(data);
+      } catch (error) {
+        console.error("Error fetching guru:", error);
+      }
+    };
+    fetchGurus();
+  }, []);
+
+  const getNamaGuruById = (id) => {
+    const guru = gurus.find((g) => g.id_guru === id);
+    return guru ? guru.nama_guru : 'Tidak diketahui';
+  };
+
+  const handleOpen = () => {
+    setShowModal(true);
+    setEditKelas(null);
+    setIDGuru('');
+    setNamaKelas('');
+    setTahunAjaran('');
+  };
+
+  const handleClose = () => {
+    setShowModal(false);
+    setEditKelas(null);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const payload = {
+      id_guru: parseInt(IDGuru),
+      nama_kelas: namaKelas,
+      tahun_ajaran: tahunAjaran,
+    };
+
+    try {
+      const response = await fetch('http://localhost:8080/kelas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        const updated = await fetch('http://localhost:8080/kelas');
+        const data = await updated.json();
+        setKelass(data);
+        alert('Kelas berhasil ditambahkan!');
+        handleClose();
+      } else {
+        const text = await response.text();
+        console.error("Response error:", text);
+        alert('Gagal menambahkan kelas.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Terjadi kesalahan saat menambahkan kelas.');
+    }
+  };
+
+  const handleEdit = (kelas) => {
+    setEditKelas(kelas);
+    setIDGuru(kelas.id_guru.toString());
+    setNamaKelas(kelas.nama_kelas);
+    setTahunAjaran(kelas.tahun_ajaran);
+    setShowModal(true);
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    const updatedKelas = {
+      id_kelas: editKelas.id_kelas,
+      id_guru: parseInt(IDGuru),
+      nama_kelas: namaKelas,
+      tahun_ajaran: tahunAjaran,
+    };
+
+    try {
+      const response = await fetch(`http://localhost:8080/kelas/${editKelas.id_kelas}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedKelas),
+      });
+
+      if (response.ok) {
+        const updated = await response.json();
+        setKelass(kelass.map(k => (k.id_kelas === updated.id_kelas ? updated : k)));
+        alert('Kelas berhasil diperbarui!');
+        handleClose();
+      } else {
+        const text = await response.text();
+        console.error("Response error:", text);
+        alert('Gagal memperbarui kelas.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Terjadi kesalahan saat memperbarui kelas.');
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm('Yakin ingin menghapus kelas ini?')) return;
+
+    try {
+      const response = await fetch(`http://localhost:8080/kelas/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        setKelass(kelass.filter(k => k.id_kelas !== id));
+        alert('Kelas berhasil dihapus.');
+      } else {
+        alert('Gagal menghapus kelas.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Terjadi kesalahan saat menghapus kelas.');
+    }
+  };
 
   return (
     <div className="class-container">
@@ -23,63 +154,82 @@ export default function ClassPage() {
         <button className="btn-add" onClick={handleOpen}>＋</button>
       </div>
 
-            <table className="class-table">
+      <table className="class-table">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>No</th>
             <th>Class Name</th>
-            <th>Homeroom Teacher</th>
-            <th>Total Students</th>
+            <th>Teacher</th>
+            <th>School Year</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {classData.map((kelas, index) => (
-            <tr key={kelas.id}>
+          {kelass.map((kelas, index) => (
+            <tr key={kelas.id_kelas}>
               <td>{index + 1}</td>
-              <td>{kelas.name}</td>
-              <td>{kelas.homeroom}</td>
-              <td>{kelas.total}</td>
+              <td>{kelas.nama_kelas}</td>
+              <td>{getNamaGuruById(kelas.id_guru)}</td>
+              <td>{kelas.tahun_ajaran}</td>
               <td className="action-icons">
-                <span title="Edit">✏️</span>
-                <span title="Delete">🗑️</span>
-                <span title="More">⋯</span>
+                <span title="Edit" onClick={() => handleEdit(kelas)}>✏️</span>
+                <span title="Delete" onClick={() => handleDelete(kelas.id_kelas)}>🗑️</span>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      {/* Modal Add Class */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h3>Class Information</h3>
+            <h3>{editKelas ? 'Edit Class' : 'Add Class'}</h3>
             <hr />
-
-            <div className="form-row">
-              <div className="form-group">
-                <label>Teacher Name</label>
-                <input type="text" placeholder="Name" />
+            <form onSubmit={editKelas ? handleUpdate : handleSubmit}>
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Teacher</label>
+                  <select
+                    value={IDGuru}
+                    onChange={(e) => setIDGuru(e.target.value)}
+                    required
+                  >
+                    <option value="">Pilih Guru</option>
+                    {gurus.map((guru) => (
+                      <option key={guru.id_guru} value={guru.id_guru}>
+                        {guru.nama_guru}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
-            </div>
 
-            <div className="form-row">
-              <div className="form-group">
-                <label>Class</label>
-                <input type="text" />
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Class</label>
+                  <input
+                    type="text"
+                    value={namaKelas}
+                    onChange={(e) => setNamaKelas(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label>School Year</label>
+                  <input
+                    type="text"
+                    value={tahunAjaran}
+                    onChange={(e) => setTahunAjaran(e.target.value)}
+                    required
+                  />
+                </div>
               </div>
-              <div className="form-group">
-                <label>School Year</label>
-                <input type="string" />
-              </div>
-            </div>
 
-            <div className="button-group">
-              <button onClick={handleClose} className="cancel-btn">cancel</button>
-              <button type="reset" className="reset-btn">reset</button>
-              <button className="save-btn">save</button>
-            </div>
+              <div className="button-group">
+                <button type="button" onClick={handleClose} className="cancel-btn">cancel</button>
+                <button type="submit" className="save-btn">{editKelas ? 'update' : 'save'}</button>
+              </div>
+            </form>
           </div>
         </div>
       )}

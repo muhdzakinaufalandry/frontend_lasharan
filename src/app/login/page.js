@@ -1,18 +1,54 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import '../../styles/login.css';
-
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Logika login di sini (sementara console.log)
-    console.log('Username:', username);
-    console.log('Password:', password);
+
+    try {
+      const res = await fetch('http://localhost:8080/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!res.ok) {
+        alert('Login gagal. Periksa kembali username dan password.');
+        return;
+      }
+
+      const data = await res.json();
+
+      // Simpan ke localStorage
+      localStorage.setItem('token', data.token); // dummy-token
+      localStorage.setItem('id_user', data.id_user);
+      localStorage.setItem('id_role', data.id_role);
+
+      // Redirect berdasarkan id_role
+      if (data.id_role == 1) {
+        router.push('/dashboard/admin');
+      } else if (data.id_role == 2) {
+        router.push('/dashboard/Teacher');
+      } else if (data.id_role == 3) {
+        router.push('/dashboard/Student');
+      } else {
+        console.error("Role tidak dikenali:", data.id_role);
+        alert("Role tidak dikenali. Hubungi admin.");
+      }
+
+    } catch (error) {
+      console.error('Terjadi kesalahan saat login:', error);
+      alert('Terjadi kesalahan saat login.');
+    }
   };
 
   return (
@@ -31,7 +67,7 @@ export default function LoginPage() {
             required
           />
           <input
-            type="password"
+            type="text"
             placeholder="Password"
             className="login-input"
             value={password}

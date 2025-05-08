@@ -1,36 +1,152 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import '@/styles/subject.css'
 
 export default function SubjectPage() {
+  const [mataPelajarans, setMataPelajarans] = useState([])
+  const [kelas, setKelas] = useState([])  // Daftar kelas
+  const [editMataPelajaran, setEditMataPelajaran] = useState(null)
   const [showModal, setShowModal] = useState(false)
-  const [subjects, setSubjects] = useState([
-    { id: 1, code: 'SUBJ001', name: 'Mathematics' },
-    { id: 2, code: 'SUBJ002', name: 'Science' },
-    { id: 3, code: 'SUBJ003', name: 'English' },
-  ])
-  const [formData, setFormData] = useState({ code: '', name: '' })
+  const [loading, setLoading] = useState(true)
 
-  const handleOpen = () => setShowModal(true)
+  const [IDMapel, setIDMapel] = useState('')
+  const [selectedKelas, setSelectedKelas] = useState('')  // Untuk memilih kelas
+  const [namaMataPelajaran, setNamaMataPelajaran] = useState('')
+
+  useEffect(() => {
+    const fetchMataPelajarans = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/matapelajaran')
+        const data = await response.json()
+        setMataPelajarans(data)
+      } catch (error) {
+        console.error("Error fetching mata pelajaran:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    const fetchKelas = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/kelas')  // Endpoint kelas
+        const data = await response.json()
+        setKelas(data)
+      } catch (error) {
+        console.error("Error fetching kelas:", error)
+      }
+    }
+
+    fetchMataPelajarans()
+    fetchKelas()
+  }, [])
+
+  const handleOpen = () => {
+    setShowModal(true)
+    setEditMataPelajaran(null) // Reset edit
+  }
+
   const handleClose = () => {
     setShowModal(false)
-    setFormData({ code: '', name: '' })
+    setIDMapel('')
+    setSelectedKelas('')
+    setNamaMataPelajaran('')
   }
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
-  }
-
-  const handleSave = () => {
-    if (formData.code && formData.name) {
-      setSubjects([...subjects, {
-        id: subjects.length + 1,
-        code: formData.code,
-        name: formData.name
-      }])
-      handleClose()
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const newMataPelajaran = {
+      id_mapel: parseInt(IDMapel),
+      id_kelas: parseInt(selectedKelas),
+      nama_mata_pelajaran: namaMataPelajaran,
     }
+
+    try {
+      const response = await fetch('http://localhost:8080/matapelajaran', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newMataPelajaran),
+      })
+
+      if (response.ok) {
+        const updated = await response.json()
+        setMataPelajarans([...mataPelajarans, updated])
+        alert('Mata Pelajaran berhasil ditambahkan!')
+        handleClose()
+      } else {
+        const errorText = await response.text()
+        console.error("Response error:", errorText)
+        alert('Gagal menambahkan Mata Pelajaran. Lihat console.')
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      alert('Terjadi kesalahan.')
+    }
+  }
+
+  const handleDeleteMataPelajaran = async (id) => {
+    if (!window.confirm("Yakin ingin menghapus Mata Pelajaran ini?")) return
+
+    try {
+      const response = await fetch(`http://localhost:8080/matapelajaran/${id}`, {
+        method: 'DELETE',
+      })
+
+      if (response.ok) {
+        setMataPelajarans(mataPelajarans.filter(s => s.id_mapel !== id))
+        alert("Mata Pelajaran berhasil dihapus.")
+      } else {
+        alert("Gagal menghapus mata pelajaran.")
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      alert('Terjadi kesalahan saat menghapus mata pelajaran.')
+    }
+  }
+
+  const handleEditMataPelajaran = (matapelajaran) => {
+    setEditMataPelajaran(matapelajaran)
+    setIDMapel(matapelajaran.id_mapel.toString())
+    setSelectedKelas(matapelajaran.id_kelas.toString())  // Set kelas yang sudah dipilih
+    setNamaMataPelajaran(matapelajaran.nama_mata_pelajaran)
+    setShowModal(true)
+  }
+
+  const handleUpdateMataPelajaran = async () => {
+    const updatedData = {
+      id_mapel: parseInt(IDMapel),
+      id_kelas: parseInt(selectedKelas),
+      nama_mata_pelajaran: namaMataPelajaran,
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8080/matapelajaran/${IDMapel}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedData),
+      })
+
+      if (response.ok) {
+        const updated = await response.json()
+        setMataPelajarans(mataPelajarans.map(m =>
+          m.id_mapel === updated.id_mapel ? updated : m
+        ))
+        alert("Mata Pelajaran berhasil diperbarui.")
+        handleClose()
+      } else {
+        const errorText = await response.text()
+        console.error("Error updating mata pelajaran:", errorText)
+        alert("Gagal memperbarui mata pelajaran.")
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      alert("Terjadi kesalahan saat memperbarui mata pelajaran.")
+    }
+  }
+
+  // Fungsi untuk mendapatkan nama kelas berdasarkan id_kelas
+  const getKelasName = (id_kelas) => {
+    const kelasData = kelas.find(k => k.id_kelas === id_kelas)
+    return kelasData ? kelasData.nama_kelas : "Unknown"
   }
 
   return (
@@ -40,61 +156,88 @@ export default function SubjectPage() {
         <button className="btn-add" onClick={handleOpen}>+</button>
       </div>
 
-      <table className="subject-table">
-        <thead>
-          <tr>
-            <th>Subject Code</th>
-            <th>Subject Name</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {subjects.map((subj) => (
-            <tr key={subj.id}>
-              <td>{subj.code}</td>
-              <td>{subj.name}</td>
-              <td>
-                <button>✏️</button>
-                <button>🗑️</button>
-              </td>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <table className="subject-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Class Name</th>
+              <th>Subject Name</th>
+              <th>Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {mataPelajarans.map((subj) => (
+              <tr key={subj.id_mapel}>
+                <td>{subj.id_mapel}</td>
+                <td>{getKelasName(subj.id_kelas)}</td>
+                <td>{subj.nama_mata_pelajaran}</td>
+                <td>
+                  <button onClick={() => handleEditMataPelajaran(subj)}>✏️</button>
+                  <button onClick={() => handleDeleteMataPelajaran(subj.id_mapel)}>🗑️</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
 
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content center-modal">
-            <h3>Add New Subject</h3>
+            <h3>{editMataPelajaran ? "Edit Subject" : "Add New Subject"}</h3>
             <hr />
 
-            <div className="form-group">
-              <label>Subject Code</label>
-              <input
-                type="text"
-                name="code"
-                placeholder="e.g., MATH101"
-                value={formData.code}
-                onChange={handleChange}
-              />
-            </div>
+            <form onSubmit={editMataPelajaran ? handleUpdateMataPelajaran : handleSubmit}>
+              <div className="form-group">
+                <label>ID Mata Pelajaran</label>
+                <input
+                  type="number"
+                  value={IDMapel}
+                  onChange={(e) => setIDMapel(e.target.value)}
+                  required
+                  disabled={editMataPelajaran}
+                />
+              </div>
 
-            <div className="form-group">
-              <label>Subject Name</label>
-              <input
-                type="text"
-                name="name"
-                placeholder="e.g., Mathematics"
-                value={formData.name}
-                onChange={handleChange}
-              />
-            </div>
+              <div className="form-group">
+                <label>Class Name</label>
+                <select
+                  value={selectedKelas}
+                  onChange={(e) => setSelectedKelas(e.target.value)}
+                  required
+                >
+                  <option value="">Select a Class</option>
+                  {kelas.map((k) => (
+                    <option key={k.id_kelas} value={k.id_kelas}>
+                      {k.nama_kelas}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            <div className="button-group">
-              <button onClick={handleClose} className="cancel-btn">cancel</button>
-              <button onClick={() => setFormData({ code: '', name: '' })} className="reset-btn">reset</button>
-              <button onClick={handleSave} className="save-btn">save</button>
-            </div>
+              <div className="form-group">
+                <label>Nama Mata Pelajaran</label>
+                <input
+                  type="text"
+                  value={namaMataPelajaran}
+                  onChange={(e) => setNamaMataPelajaran(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="button-group">
+                <button type="button" onClick={handleClose} className="cancel-btn">cancel</button>
+                <button type="reset" onClick={() => {
+                  setIDMapel('')
+                  setSelectedKelas('')
+                  setNamaMataPelajaran('')
+                }} className="reset-btn">reset</button>
+                <button type="submit" className="save-btn">save</button>
+              </div>
+            </form>
           </div>
         </div>
       )}

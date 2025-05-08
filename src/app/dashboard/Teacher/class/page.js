@@ -1,23 +1,69 @@
 'use client';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import '@/styles/teacherclass.css'; // atau gunakan Tailwind jika tersedia
-
-const classData = [
-  { id: '12A', name: '12 - A', year: '2023-2024', participants: 70 },
-  { id: '12B', name: '12 - B', year: '2023-2024', participants: 30 },
-  { id: '12C', name: '12 - C', year: '2023-2024', participants: 120 },
-  { id: '11A', name: '11 - A', year: '2024-2025', participants: 37 },
-  { id: '11B', name: '11 - B', year: '2024-2025', participants: 77 },
-  { id: '11C', name: '11 - C', year: '2024-2025', participants: 27 },
-  { id: '10A', name: '10 - A', year: '2024-2025', participants: 120 },
-  { id: '10B', name: '10 - B', year: '2024-2025', participants: 33 },
-  { id: '10C', name: '10 - C', year: '2024-2025', participants: 67 },
-];
+import '@/styles/teacherclass.css';
 
 export default function ClassPage() {
+  const [classData, setClassData] = useState([]);
+  const [loading, setLoading] = useState(true);  // Untuk menangani state loading
+
+  useEffect(() => {
+    const fetchClasses = async () => {
+      const idUser = localStorage.getItem('id_user');
+      if (!idUser) {
+        console.error("ID User tidak ditemukan di localStorage");
+        return;
+      }
+
+      try {
+        // Step 1: Ambil id_guru dari id_user
+        const resGuru = await fetch(`http://localhost:8080/guru/user/${idUser}`);
+        const guruData = await resGuru.json();
+        console.log("Guru Data:", guruData);  // Cek data guru yang diterima
+
+        if (!guruData.id_guru) {
+          console.error("id_guru tidak ditemukan");
+          return;
+        }
+
+        const idGuru = guruData.id_guru;
+
+        // Step 2: Ambil kelas yang diajar oleh guru berdasarkan id_guru
+        const resKelas = await fetch(`http://localhost:8080/kelas/guru/${idGuru}`);
+        const kelas = await resKelas.json();
+        console.log("Kelas Data:", kelas);  // Cek data kelas yang diterima
+
+        setClassData(kelas);  // Menyimpan data kelas ke state
+      } catch (error) {
+        console.error('Gagal fetch data:', error);
+      } finally {
+        setLoading(false);  // Set loading false setelah data selesai diambil
+      }
+    };
+
+    fetchClasses();
+  }, []);
+
+  // Fungsi untuk menentukan warna berdasarkan jumlah siswa
+  function getColor(count) {
+    if (count >= 100) return 'red';
+    if (count >= 50) return 'orange';
+    return 'green';
+  }
+
+  // Menampilkan UI saat data sedang dimuat
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  // Jika tidak ada kelas
+  if (classData.length === 0) {
+    return <div>No classes found</div>;
+  }
+
   return (
     <div className="class-page">
-      <h2>Class</h2>
+      <h2>Classes You Teach</h2>
       <div className="legend">
         <span className="dot green" /> Less
         <span className="dot orange" /> Much
@@ -25,23 +71,17 @@ export default function ClassPage() {
       </div>
       <div className="class-grid">
         {classData.map((cls) => (
-          <Link href={`/dashboard/Teacher/class/${cls.id}`} key={cls.id}>
-            <div className={`class-box ${getColor(cls.participants)}`}>
+          <Link href={`/dashboard/Teacher/class/${cls.id_kelas}`} key={cls.id_kelas}>
+            <div className={`class-box ${getColor(cls.jumlah_siswa || 0)}`}>
               <div className="box-header">
-                <span>{cls.name}</span>
-                <span>{cls.year}</span>
+                <span>{cls.nama_kelas}</span>
+                <span>{cls.tahun_ajaran}</span>
               </div>
-              <div className="participants">{cls.participants} Participants</div>
+              <div className="participants">{cls.jumlah_siswa || 0} Participants</div>
             </div>
           </Link>
         ))}
       </div>
     </div>
   );
-}
-
-function getColor(count) {
-  if (count >= 100) return 'red';
-  if (count >= 50) return 'orange';
-  return 'green';
 }

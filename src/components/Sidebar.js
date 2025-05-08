@@ -55,7 +55,8 @@ export default function Sidebar() {
 
       {/* Bottom Logout */}
       <div className="sidebar-bottom">
-        <Link href="/logout" className="sidebar-link logout">
+        {/* When the user clicks this, redirect to login page */}
+        <Link href="/login" className="sidebar-link logout">
           <span role="img" aria-label="logout">🚪</span>
           Logout
         </Link>
