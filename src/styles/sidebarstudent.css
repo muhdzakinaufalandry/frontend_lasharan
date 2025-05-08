@@ -9,7 +9,7 @@
   border-radius: 0 10px 10px 0;
 }
 
-.sidebar-top-horizontal {
+.sidebar-top-horizontal{
   display: flex;
   align-items: center;
   gap: 0.5rem;
