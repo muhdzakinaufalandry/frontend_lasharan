@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import '@/styles/sidebarStudent.css'; 
+import '@/styles/sidebarstudent.css'; 
 
 export default function SidebarStudent() {
   return (
