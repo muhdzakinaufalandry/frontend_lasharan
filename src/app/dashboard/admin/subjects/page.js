@@ -47,7 +47,6 @@ export default function SubjectPage() {
 
   const handleClose = () => {
     setShowModal(false)
-    setIDMapel('')
     setSelectedKelas('')
     setNamaMataPelajaran('')
   }
@@ -55,7 +54,6 @@ export default function SubjectPage() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     const newMataPelajaran = {
-      id_mapel: parseInt(IDMapel),
       id_kelas: parseInt(selectedKelas),
       nama_mata_pelajaran: namaMataPelajaran,
     }
@@ -113,7 +111,6 @@ export default function SubjectPage() {
 
   const handleUpdateMataPelajaran = async () => {
     const updatedData = {
-      id_mapel: parseInt(IDMapel),
       id_kelas: parseInt(selectedKelas),
       nama_mata_pelajaran: namaMataPelajaran,
     }
@@ -191,16 +188,6 @@ export default function SubjectPage() {
             <hr />
 
             <form onSubmit={editMataPelajaran ? handleUpdateMataPelajaran : handleSubmit}>
-              <div className="form-group">
-                <label>ID Mata Pelajaran</label>
-                <input
-                  type="number"
-                  value={IDMapel}
-                  onChange={(e) => setIDMapel(e.target.value)}
-                  required
-                  disabled={editMataPelajaran}
-                />
-              </div>
 
               <div className="form-group">
                 <label>Class Name</label>
