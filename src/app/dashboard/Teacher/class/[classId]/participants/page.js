@@ -2,6 +2,7 @@
 import '@/styles/participants.css';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 export default function ParticipantsPage() {
   const { classId } = useParams(); // Ambil classId dari URL
