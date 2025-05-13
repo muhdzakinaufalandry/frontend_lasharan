@@ -93,4 +93,56 @@
     font-size: 18px;
     cursor: pointer;
     margin-right: 10px;
+
+  }.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  }
+
+  .modal {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    width: 400px;
+  }
+
+  .modal input {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+
+  .modal-actions button:first-child {
+    background-color: #2563eb;
+    color: white;
+    border-radius: 4px;
+  }
+
+  .modal-actions button:last-child {
+    background-color: #e5e7eb;
+    border-radius: 4px;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
   }
