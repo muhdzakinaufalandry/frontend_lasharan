@@ -55,7 +55,7 @@ export default function SubjectDetailPage() {
         </div>
       </div>
 
-      <Link href={`/dashboard/Teacher/class/12A/participants`}>
+      <Link href={`/dashboard/Teacher/subjects/subjectdetails/subjectparticipants`}>
          <div className="participant-box" style={{ cursor: 'pointer' }}>
             <h3>{subjectDetails.participants}</h3>
             <p>Participants</p>

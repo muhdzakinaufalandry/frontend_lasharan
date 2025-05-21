@@ -58,10 +58,10 @@ export default function ClassDetailPage() {
           <p>Participants</p>
         </Link>
 
-        <Link href={`/dashboard/Teacher/subjects/class/${classId}`} className="stat-card blue">
+        <div className="stat-card blue">
           <h3>{classData.mata_pelajaran?.length || '0'}</h3>  {/* Menampilkan jumlah mata pelajaran */}
           <p>Subjects</p>
-        </Link>
+        </div>
 
         <div className="online-users">
           <h4>Online Users</h4>
@@ -80,9 +80,11 @@ export default function ClassDetailPage() {
           <div className="subject-list">
             {/* Menampilkan mata pelajaran dari data */}
             {classData.mata_pelajaran?.map((subj, i) => (
-              <div className="subject-card" key={i}>
+               <Link
+            href={`/dashboard/Teacher/subjects/subjectdetails`}
+            className="subject-card" key={i}>
                 {subj.nama_mata_pelajaran}
-              </div>
+               </Link>
             ))}
           </div>
         </div>
