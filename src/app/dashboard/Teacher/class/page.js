@@ -17,7 +17,7 @@ export default function ClassPage() {
 
       try {
         // Step 1: Ambil id_guru dari id_user
-        const resGuru = await fetch(`http://localhost:8080/guru/user/${idUser}`);
+        const resGuru = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/guru/user/${idUser}`);
         const guruData = await resGuru.json();
         console.log("Guru Data:", guruData);  // Cek data guru yang diterima
 

@@ -14,7 +14,7 @@ export default function ClassPage() {
   useEffect(() => {
     const fetchKelass = async () => {
       try {
-        const response = await fetch('http://localhost:8080/kelas');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/kelas`);
         const data = await response.json();
         setKelass(data);
       } catch (error) {
@@ -27,7 +27,7 @@ export default function ClassPage() {
   useEffect(() => {
     const fetchGurus = async () => {
       try {
-        const response = await fetch('http://localhost:8080/guru');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/guru`);
         const data = await response.json();
         setGurus(data);
       } catch (error) {
@@ -64,14 +64,14 @@ export default function ClassPage() {
     };
 
     try {
-      const response = await fetch('http://localhost:8080/kelas', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/kelas`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
 
       if (response.ok) {
-        const updated = await fetch('http://localhost:8080/kelas');
+        const updated = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/kelas`);
         const data = await updated.json();
         setKelass(data);
         alert('Kelas berhasil ditambahkan!');
@@ -105,7 +105,7 @@ export default function ClassPage() {
     };
 
     try {
-      const response = await fetch(`http://localhost:8080/kelas/${editKelas.id_kelas}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/kelas/${editKelas.id_kelas}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedKelas),
@@ -131,7 +131,7 @@ export default function ClassPage() {
     if (!window.confirm('Yakin ingin menghapus kelas ini?')) return;
 
     try {
-      const response = await fetch(`http://localhost:8080/kelas/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/kelas/${id}`, {
         method: 'DELETE',
       });
 

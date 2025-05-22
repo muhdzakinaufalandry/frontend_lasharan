@@ -16,7 +16,7 @@ export default function SubjectPage() {
   useEffect(() => {
     const fetchMataPelajarans = async () => {
       try {
-        const response = await fetch('http://localhost:8080/matapelajaran')
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/matapelajaran`)
         const data = await response.json()
         setMataPelajarans(data)
       } catch (error) {
@@ -28,7 +28,7 @@ export default function SubjectPage() {
 
     const fetchKelas = async () => {
       try {
-        const response = await fetch('http://localhost:8080/kelas')  // Endpoint kelas
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/kelas`)  // Endpoint kelas
         const data = await response.json()
         setKelas(data)
       } catch (error) {
@@ -59,7 +59,7 @@ export default function SubjectPage() {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/matapelajaran', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/matapelajaran`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newMataPelajaran),
@@ -85,7 +85,7 @@ export default function SubjectPage() {
     if (!window.confirm("Yakin ingin menghapus Mata Pelajaran ini?")) return
 
     try {
-      const response = await fetch(`http://localhost:8080/matapelajaran/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/matapelajaran/${id}`, {
         method: 'DELETE',
       })
 
@@ -116,7 +116,7 @@ export default function SubjectPage() {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/matapelajaran/${IDMapel}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/matapelajaran/${IDMapel}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedData),

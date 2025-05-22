@@ -3,27 +3,73 @@
 import { useEffect, useState } from 'react';
 import SidebarStudent from '@/components/SidebarStudent';
 import '@/styles/grades.css';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
-export default function GradePage({ params }) {
-  const { subjectId } = params;
-  const [gradeData, setGradeData] = useState(null);
+export default function GradePage() {
+  const params = useParams();
+  const subjectId = params.subjectId;
+  const [idSiswa, setIdSiswa] = useState(null);
+  const [gradeData, setGradeData] = useState({
+    subject: 'Subject',
+    teacher: '',
+    year: '2024/2025',
+    student: 'Component',
+    grades: [],
+  });
 
   useEffect(() => {
-    const data = {
-      subject: 'Accounting',
-      teacher: 'Jane Cooper',
-      year: '2022-2023 [2]',
-      student: 'Kevin William',
-      grades: [
-        { item: 'Attendance', weight: '100.00%', grade: '100.00 (A)', range: '0 - 100' },
-        { item: 'Assignment 1', weight: '100.00%', grade: '100.00 (A)', range: '0 - 100' },
-        { item: 'Assignment 2', weight: '100.00%', grade: '100.00 (A)', range: '0 - 100' },
-        { item: 'Assignment 3', weight: '100.00%', grade: '', range: '0 - 100' },
-        { item: 'Course Total', weight: '-', grade: '', range: '0 - 100' },
-      ],
-    };
-    setGradeData(data);
-  }, [subjectId]);
+    const idUser = localStorage.getItem('id_user');
+
+    if (!idUser) {
+      console.error('id_user tidak ditemukan di localStorage');
+      return;
+    }
+
+    // Ambil id_siswa berdasarkan id_user
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/siswa/user/${idUser}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const fetchedIdSiswa = data.id_siswa;
+        setIdSiswa(fetchedIdSiswa);
+      })
+      .catch((err) => {
+        console.error('Gagal mengambil id_siswa:', err);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (idSiswa && subjectId) {
+      fetch(`http://localhost:8080/nilai-detail?id_mapel=${subjectId}&id_siswa=${idSiswa}`)
+        .then((res) => res.json())
+        .then((data) => {
+          const penilaian = data.penilaian || [];
+          const total = data.total || '-';
+
+          const grades = penilaian.map((item) => ({
+            item: item.nama_nilai,
+            weight: item.bobot,
+            grade: `${item.nilai}`,
+            range: item.range,
+          }));
+
+          grades.push({
+            item: 'Course Total',
+            weight: '-',
+            grade: total,
+            range: '0 - 100',
+          });
+
+          setGradeData((prev) => ({
+            ...prev,
+            grades,
+          }));
+        })
+        .catch((err) => {
+          console.error('Gagal mengambil data nilai:', err);
+        });
+    }
+  }, [idSiswa, subjectId]);
 
   if (!gradeData) return <div>Loading...</div>;
 
@@ -37,7 +83,7 @@ export default function GradePage({ params }) {
             <button>All classes</button>
           </div>
           <div className="subject-header">
-            <h2>{`${gradeData.subject} - ${gradeData.teacher}`}</h2>
+            <h2>{`${gradeData.subject} ${gradeData.teacher}`}</h2>
             <span className="year">{gradeData.year}</span>
           </div>
         </div>

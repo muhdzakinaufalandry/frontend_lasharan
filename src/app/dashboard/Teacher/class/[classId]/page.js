@@ -5,44 +5,33 @@ import Link from 'next/link';
 import '@/styles/classDetail.css';
 
 export default function ClassDetailPage() {
-  const { classId } = useParams();  // Ambil ID kelas dari URL
-  const [classData, setClassData] = useState(null);  // State untuk data kelas
-  const [loading, setLoading] = useState(true);  // State loading
-  const [error, setError] = useState(null);  // State error jika gagal fetch data
+  const { classId } = useParams();
+  const [classData, setClassData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchClassDetails = async () => {
       try {
-        // Fetch data kelas berdasarkan classId yang diterima
-        const res = await fetch(`http://localhost:8080/kelass/${classId}`);  // Ganti dengan endpoint yang sesuai
-        if (!res.ok) {
-          throw new Error('Gagal mengambil data kelas');
-        }
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/kelass/${classId}`);
+        if (!res.ok) throw new Error('Gagal mengambil data kelas');
 
         const data = await res.json();
-        setClassData(data);  // Menyimpan data kelas yang diterima
+        setClassData(data);
       } catch (error) {
         console.error('Gagal fetch data kelas:', error);
-        setError(error.message);  // Menyimpan pesan error
+        setError(error.message);
       } finally {
-        setLoading(false);  // Set loading false setelah data selesai diambil
+        setLoading(false);
       }
     };
 
     fetchClassDetails();
-  }, [classId]);  // Menggunakan classId sebagai dependensi agar data kelas terupdate
+  }, [classId]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  if (!classData) {
-    return <div>No class data available</div>;
-  }
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!classData) return <div>No class data available</div>;
 
   return (
     <div className="class-detail-page">
@@ -52,21 +41,19 @@ export default function ClassDetailPage() {
       </div>
 
       <div className="class-stats">
-        {/* Menampilkan jumlah siswa */}
         <Link href={`/dashboard/Teacher/class/${classId}/participants`} className="stat-card orange">
-          <h3>{classData.jumlah_siswa || 0}</h3>  {/* Menampilkan jumlah siswa dari data kelas */}
+          <h3>{classData.jumlah_siswa || 0}</h3>
           <p>Participants</p>
         </Link>
 
         <div className="stat-card blue">
-          <h3>{classData.mata_pelajaran?.length || '0'}</h3>  {/* Menampilkan jumlah mata pelajaran */}
+          <h3>{classData.mata_pelajaran?.length || '0'}</h3>
           <p>Subjects</p>
         </div>
 
         <div className="online-users">
           <h4>Online Users</h4>
           <ul>
-            {/* Daftar pengguna online jika tersedia */}
             <li>👤 Tessa Brandon</li>
             <li>👤 Roberto Alonzo</li>
             <li>👤 George Harrison</li>
@@ -78,13 +65,13 @@ export default function ClassDetailPage() {
         <div className="subjects-box">
           <h3>Subjects</h3>
           <div className="subject-list">
-            {/* Menampilkan mata pelajaran dari data */}
             {classData.mata_pelajaran?.map((subj, i) => (
-               <Link
-            href={`/dashboard/Teacher/subjects/subjectdetails`}
-            className="subject-card" key={i}>
+              <Link
+                href={`/dashboard/Teacher/subjects/${subj.id_mapel}`}
+                className="subject-card"
+                key={i}>
                 {subj.nama_mata_pelajaran}
-               </Link>
+              </Link>
             ))}
           </div>
         </div>

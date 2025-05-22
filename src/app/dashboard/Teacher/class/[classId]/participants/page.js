@@ -14,7 +14,7 @@ export default function ParticipantsPage() {
     const fetchStudents = async () => {
       try {
         // Fetch data siswa berdasarkan classId
-        const res = await fetch(`http://localhost:8080/siswaa/${classId}`); // Endpoint untuk mengambil siswa di kelas tertentu
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/siswaa/${classId}`); // Endpoint untuk mengambil siswa di kelas tertentu
         if (!res.ok) {
           throw new Error('Gagal mengambil data siswa');
         }

@@ -12,7 +12,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchGurus = async () => {
       try {
-        const response = await fetch('http://localhost:8080/guru');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/guru`);
         const data = await response.json();
         setGurus(data);
       } catch (error) {
@@ -29,7 +29,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchSiswas = async () => {
       try {
-        const response = await fetch('http://localhost:8080/siswa');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/siswa`);
         const data = await response.json();
         setSiswas(data);
       } catch (error) {
@@ -46,7 +46,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchKelass = async () => {
       try {
-        const response = await fetch('http://localhost:8080/kelas');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/kelas`);
         const data = await response.json();
         setKelass(data);
       } catch (error) {
