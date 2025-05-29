@@ -29,7 +29,7 @@ export default function ClassPage() {
         const idGuru = guruData.id_guru;
 
         // Step 2: Ambil kelas yang diajar oleh guru berdasarkan id_guru
-        const resKelas = await fetch(`http://localhost:8080/kelas/guru/${idGuru}`);
+        const resKelas = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/kelas/guru/${idGuru}`);
         const kelas = await resKelas.json();
         console.log("Kelas Data:", kelas);  // Cek data kelas yang diterima
 

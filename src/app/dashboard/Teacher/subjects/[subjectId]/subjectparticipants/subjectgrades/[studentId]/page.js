@@ -72,7 +72,7 @@ export default function ParticipantsDetailsPage() {
     try {
       let res;
       if (isEditing) {
-        res = await fetch(`http://localhost:8080/penilaian/${editId}`, {
+        res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/penilaian/${editId}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
@@ -85,7 +85,7 @@ export default function ParticipantsDetailsPage() {
           penilaian: prev.penilaian.map((item) => (item.id_penilaian === editId ? updated : item)),
         }));
       } else {
-        res = await fetch('http://localhost:8080/penilaian', {
+        res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/penilaian`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
@@ -109,7 +109,7 @@ export default function ParticipantsDetailsPage() {
     if (!confirm('Yakin ingin menghapus nilai ini?')) return;
 
     try {
-      const res = await fetch(`http://localhost:8080/penilaian/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/penilaian/${id}`, {
         method: 'DELETE',
       });
 

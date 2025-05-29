@@ -13,7 +13,7 @@ export default function AddStudent() {
   useEffect(() => {
     const fetchKelas = async () => {
       try {
-        const response = await fetch('http://localhost:8080/kelas');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/kelas`);
         const data = await response.json();
         setKelasList(data);
       } catch (error) {
@@ -38,7 +38,7 @@ export default function AddStudent() {
     console.log("Data yang dikirim:", newSiswa);
 
     try {
-      const response = await fetch('http://localhost:8080/siswa', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/siswa`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newSiswa),

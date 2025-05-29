@@ -9,7 +9,7 @@ export default function TeacherPage() {
 
   // Fetch data guru
   useEffect(() => {
-    fetch('http://localhost:8080/guru')
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/guru`)
       .then((response) => response.json())
       .then((data) => setGurus(data))
       .catch((error) => console.error('Error fetching data:', error));
@@ -20,7 +20,7 @@ export default function TeacherPage() {
     if (!window.confirm("Yakin ingin menghapus guru ini?")) return;
 
     try {
-      const response = await fetch(`http://localhost:8080/guru/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/guru/${id}`, {
         method: 'DELETE',
       });
 
@@ -46,7 +46,7 @@ export default function TeacherPage() {
     if (!editGuru) return;
 
     try {
-      const response = await fetch(`http://localhost:8080/guru/${editGuru.id_guru}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/guru/${editGuru.id_guru}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editGuru),

@@ -13,7 +13,7 @@ export default function AddTeacherPage() {
   useEffect(() => {
     const fetchSubjects = async () => {
       try {
-        const response = await fetch('http://localhost:8080/matapelajaran');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/matapelajaran`);
         const data = await response.json();
         setSubjects(data);
       } catch (error) {
@@ -42,7 +42,7 @@ export default function AddTeacherPage() {
     };
 
     try {
-      const response = await fetch('http://localhost:8080/guru', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/guru`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newGuru),

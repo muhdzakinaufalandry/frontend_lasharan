@@ -12,8 +12,8 @@ export default function StudentPage() {
     const fetchData = async () => {
       try {
         const [siswaRes, kelasRes] = await Promise.all([
-          fetch('http://localhost:8080/siswa'),
-          fetch('http://localhost:8080/kelas')
+          fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/siswa`),
+          fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/kelas`)
         ]);
 
         const [siswaData, kelasData] = await Promise.all([
