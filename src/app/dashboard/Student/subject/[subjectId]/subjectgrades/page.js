@@ -40,7 +40,7 @@ export default function GradePage() {
 
   useEffect(() => {
     if (idSiswa && subjectId) {
-      fetch(`http://localhost:8080/nilai-detail?id_mapel=${subjectId}&id_siswa=${idSiswa}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/nilai-detail?id_mapel=${subjectId}&id_siswa=${idSiswa}`)
         .then((res) => res.json())
         .then((data) => {
           const penilaian = data.penilaian || [];
