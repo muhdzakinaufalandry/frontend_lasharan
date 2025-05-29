@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 export default function StudentPage() {
   const [siswas, setSiswas] = useState([]);
+  const [editSiswa, setEditSiswa] = useState(null);
   const [kelasList, setKelasList] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -32,6 +33,53 @@ export default function StudentPage() {
 
     fetchData();
   }, []);
+
+  const handleDeleteSiswa = async (id) => {
+    if (!window.confirm("Yakin ingin menghapus siswa ini?")) return;
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/siswa/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        setSiswas(siswas.filter(s => s.id_siswa !== id));
+        alert("Siswa berhasil dihapus.");
+      } else {
+        alert("Gagal menghapus siswa.");
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Terjadi kesalahan saat menghapus siswa.');
+    }
+  };
+
+  const handleEditSiswa = (siswa) => {
+    setEditSiswa(siswa);
+  };
+
+  const handleUpdateGuru = async () => {
+    if (!editSiswa) return;
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/siswa/${editSiswa.id_siswa}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editSiswa),
+      });
+
+      if (response.ok) {
+        setSiswas(siswas.map(s => s.id_siswa === editSiswa.id_siswa ? editSiswa : s));
+        alert("Siswa berhasil diperbarui.");
+        setEditSiswa(null); // Reset after update
+      } else {
+        alert("Gagal memperbarui siswa.");
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert("Terjadi kesalahan saat memperbarui siswa.");
+    }
+  };
 
   // Fungsi bantu: ambil nama kelas dari id_kelas
   const getNamaKelas = (id_kelas) => {
@@ -78,8 +126,8 @@ export default function StudentPage() {
                 <td>{student.alamat}</td>
                 <td>{student.tanggal_lahir}</td>
                 <td className="action-icons">
-                  <span title="Edit">✏️</span>
-                  <span title="Delete">🗑️</span>
+                  <span title="Edit" onClick={() => handleEditSiswa(student)}>✏️</span>
+                  <span title="Delete" onClick={() => handleDeleteSiswa(student.id_siswa)}>🗑️</span>
                   <span title="More">⋯</span>
                 </td>
               </tr>
@@ -91,6 +139,42 @@ export default function StudentPage() {
           )}
         </tbody>
       </table>
+
+      {editSiswa && (
+        <div className="edit-siswa-modal">
+          <h3>Edit Student</h3>
+          <input
+            type="text"
+            placeholder="Student Name"
+            value={editSiswa.nama_siswa}
+            onChange={(e) => setEditSiswa({ ...editSiswa, nama_siswa: e.target.value })}
+          />
+          <select
+            value={editSiswa.id_kelas}
+            onChange={(e) => setEditSiswa({ ...editSiswa, id_kelas: parseInt(e.target.value) })}
+          >
+            <option value="">Select Class</option>
+            {kelasList.map((kelas) => (
+              <option key={kelas.id_kelas} value={kelas.id_kelas}>
+                {kelas.nama_kelas}
+              </option>
+            ))}
+          </select>
+          <input
+            type="text"
+            placeholder="Address"
+            value={editSiswa.alamat}
+            onChange={(e) => setEditSiswa({ ...editSiswa, alamat: e.target.value })}
+          />
+          <input
+            type="date"
+            value={editSiswa.tanggal_lahir}
+            onChange={(e) => setEditSiswa({ ...editSiswa, tanggal_lahir: e.target.value })}
+          />
+          <button onClick={handleUpdateGuru}>Save</button>
+          <button onClick={() => setEditSiswa(null)}>Cancel</button>
+        </div>
+      )}
     </div>
   );
 }
