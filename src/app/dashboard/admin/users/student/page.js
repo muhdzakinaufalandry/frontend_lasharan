@@ -128,7 +128,6 @@ export default function StudentPage() {
                 <td className="action-icons">
                   <span title="Edit" onClick={() => handleEditSiswa(student)}>✏️</span>
                   <span title="Delete" onClick={() => handleDeleteSiswa(student.id_siswa)}>🗑️</span>
-                  <span title="More">⋯</span>
                 </td>
               </tr>
             ))
@@ -141,38 +140,42 @@ export default function StudentPage() {
       </table>
 
       {editSiswa && (
-        <div className="edit-siswa-modal">
-          <h3>Edit Student</h3>
-          <input
-            type="text"
-            placeholder="Student Name"
-            value={editSiswa.nama_siswa}
-            onChange={(e) => setEditSiswa({ ...editSiswa, nama_siswa: e.target.value })}
-          />
-          <select
-            value={editSiswa.id_kelas}
-            onChange={(e) => setEditSiswa({ ...editSiswa, id_kelas: parseInt(e.target.value) })}
-          >
-            <option value="">Select Class</option>
-            {kelasList.map((kelas) => (
-              <option key={kelas.id_kelas} value={kelas.id_kelas}>
-                {kelas.nama_kelas}
-              </option>
-            ))}
-          </select>
-          <input
-            type="text"
-            placeholder="Address"
-            value={editSiswa.alamat}
-            onChange={(e) => setEditSiswa({ ...editSiswa, alamat: e.target.value })}
-          />
-          <input
-            type="date"
-            value={editSiswa.tanggal_lahir}
-            onChange={(e) => setEditSiswa({ ...editSiswa, tanggal_lahir: e.target.value })}
-          />
-          <button onClick={handleUpdateGuru}>Save</button>
-          <button onClick={() => setEditSiswa(null)}>Cancel</button>
+        <div className="modal-overlay" onClick={() => setEditSiswa(null)}>
+          <div className="edit-siswa-modal" onClick={(e) => e.stopPropagation()}>
+            <h3>Edit Student</h3>
+            <input
+              type="text"
+              placeholder="Student Name"
+              value={editSiswa.nama_siswa}
+              onChange={(e) => setEditSiswa({ ...editSiswa, nama_siswa: e.target.value })}
+            />
+            <select
+              value={editSiswa.id_kelas}
+              onChange={(e) => setEditSiswa({ ...editSiswa, id_kelas: parseInt(e.target.value) })}
+            >
+              <option value="">Select Class</option>
+              {kelasList.map((kelas) => (
+                <option key={kelas.id_kelas} value={kelas.id_kelas}>
+                  {kelas.nama_kelas}
+                </option>
+              ))}
+            </select>
+            <input
+              type="text"
+              placeholder="Address"
+              value={editSiswa.alamat}
+              onChange={(e) => setEditSiswa({ ...editSiswa, alamat: e.target.value })}
+            />
+            <input
+              type="date"
+              value={editSiswa.tanggal_lahir}
+              onChange={(e) => setEditSiswa({ ...editSiswa, tanggal_lahir: e.target.value })}
+            />
+            <div className="modal-actions">
+              <button className="btn-rounded save-btn" onClick={handleUpdateGuru}>Save</button>
+              <button className="btn-rounded cancel-btn" onClick={() => setEditSiswa(null)}>Cancel</button>
+            </div>
+          </div>
         </div>
       )}
     </div>

@@ -68,8 +68,15 @@
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     text-align: center;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease;
   }
-  
+
+.subject-card:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+  }
   .side-info > div {
     margin-bottom: 2rem;
     padding: 1rem;

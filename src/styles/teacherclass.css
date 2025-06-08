@@ -32,7 +32,8 @@
   
   .class-box {
     border-radius: 12px;
-    padding: 1rem;
+    padding: 1rem 1rem 1rem 1rem;
+    padding-top: 0.8rem;
     color: black;
     cursor: pointer;
     transition: transform 0.2s ease;
@@ -53,7 +54,7 @@
     display: flex;
     justify-content: space-between;
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0;
   }
   
   .class-box .participants {
@@ -79,4 +80,48 @@
   .class-box.green { background-color: #d1fae5; }
   .class-box.orange { background-color: #fde68a; }
   .class-box.red { background-color: #fecaca; }
-  
+
+  .no-link-style {
+  color: inherit !important;
+  text-decoration: none !important;
+  display: block;
+  height: 100%;
+}
+
+.no-link-style:active, .no-link-style:visited, .no-link-style:focus {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.class-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.class-year {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.class-count {
+  font-size: 3.4rem;
+  font-weight: 700;
+  margin: 10px 0 0 0;
+  line-height: 1;
+}
+
+.class-footer {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #4b5563;
+  margin-bottom: 2px;
+  margin-top: -8px;
+  letter-spacing: 0.5px;
+}
+
+.class-line {
+  border-bottom: 1.5px solid #76797e;
+  margin: 0 0 14px 0;
+  width: 100%;
+}
