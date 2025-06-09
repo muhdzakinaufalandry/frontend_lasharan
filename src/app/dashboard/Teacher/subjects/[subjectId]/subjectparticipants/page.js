@@ -40,7 +40,6 @@ export default function SubjectParticipantsPage() {
               <th>Student Name</th>
               <th>Date of Birth</th>
               <th>Address</th>
-              <th>Action</th>
             </tr>
           </thead>
 
@@ -50,12 +49,12 @@ export default function SubjectParticipantsPage() {
                 <td>{stu.id_siswa}</td>
                 <td className="avatar-cell clickable-cell">
                   <Link
-  href={`/dashboard/Teacher/subjects/${subjectId}/subjectparticipants/subjectgrades/${stu.id_siswa}`}
-  className="name-link"
->
-  <span className="avatar">👤</span>
-  {stu.nama_siswa}
-</Link>
+                    href={`/dashboard/Teacher/subjects/${subjectId}/subjectparticipants/subjectgrades/${stu.id_siswa}`}
+                    className="name-link"
+                  >
+                    <span className="avatar">👤</span>
+                    {stu.nama_siswa}
+                  </Link>
                 </td>
                 <td>{stu.tanggal_lahir}</td>
                 <td>{stu.alamat}</td>

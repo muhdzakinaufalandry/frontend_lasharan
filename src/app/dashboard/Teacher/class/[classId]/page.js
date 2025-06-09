@@ -50,15 +50,6 @@ export default function ClassDetailPage() {
           <h3>{classData.mata_pelajaran?.length || '0'}</h3>
           <p>Subjects</p>
         </div>
-
-        <div className="online-users">
-          <h4>Online Users</h4>
-          <ul>
-            <li>👤 Tessa Brandon</li>
-            <li>👤 Roberto Alonzo</li>
-            <li>👤 George Harrison</li>
-          </ul>
-        </div>
       </div>
 
       <div className="class-main-grid">

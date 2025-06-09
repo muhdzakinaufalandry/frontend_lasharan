@@ -71,13 +71,17 @@ export default function ClassPage() {
       </div>
       <div className="class-grid">
         {classData.map((cls) => (
-          <Link href={`/dashboard/Teacher/class/${cls.id_kelas}`} key={cls.id_kelas}>
+          <Link href={`/dashboard/Teacher/class/${cls.id_kelas}`} key={cls.id_kelas} 
+          className="no-link-style"
+>
             <div className={`class-box ${getColor(cls.jumlah_siswa || 0)}`}>
               <div className="box-header">
-                <span>{cls.nama_kelas}</span>
-                <span>{cls.tahun_ajaran}</span>
+                <span className="class-title">{cls.nama_kelas}</span>
+                <span className="class-year">{cls.tahun_ajaran}</span>
               </div>
-              <div className="participants">{cls.jumlah_siswa || 0} Participants</div>
+              <div className="class-line" />  
+              <div className="class-count">{cls.jumlah_siswa || 0}</div>
+              <div className="class-footer">Participants</div>
             </div>
           </Link>
         ))}

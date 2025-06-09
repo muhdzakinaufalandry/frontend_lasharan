@@ -32,10 +32,12 @@ export default function SidebarTeacher() {
         </Link> */}
       </nav>
 
+      {/* Bottom Logout */}
       <div className="sidebar-bottom">
-        <Link href="/logout" className="sidebar-link logout">
-        <span role="img" aria-label="logout">🚪</span>
-          <i className="icon-logout" /> Logout
+        {/* When the user clicks this, redirect to login page */}
+        <Link href="/login" className="sidebar-link logout">
+          <span role="img" aria-label="logout">🚪</span>
+          Logout
         </Link>
       </div>
     </div>
