@@ -1,5 +1,6 @@
 'use client';
-import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell, faEnvelope, faCog } from '@fortawesome/free-solid-svg-icons';
 import React, { useEffect, useState } from 'react';
 import '@/styles/subjectList.css';
 
@@ -36,6 +37,12 @@ export default function SubjectsPage() {
       subject.id_mapel.toString().includes(searchTerm)
   );
 
+  // Handle row click
+  const handleRowClick = (id) => {
+    // Navigasi ke halaman detail
+    window.location.href = `/dashboard/Student/subject/${id}`;
+  };
+
   return (
     <div className="subject-page">
       <main className="subject-main">
@@ -48,9 +55,15 @@ export default function SubjectsPage() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <div className="header-icons">
-            <button className="icon-btn">🔔</button>
-            <button className="icon-btn">📧</button>
-            <button className="icon-btn">⚙️</button>
+            <button className="icon-btn">
+              <FontAwesomeIcon icon={faBell} />
+            </button>
+            <button className="icon-btn">
+              <FontAwesomeIcon icon={faEnvelope} />
+            </button>
+            <button className="icon-btn">
+              <FontAwesomeIcon icon={faCog} />
+            </button>
             <div className="avatar-circle" />
           </div>
         </div>
@@ -67,12 +80,8 @@ export default function SubjectsPage() {
             </thead>
             <tbody>
               {filteredSubjects.map((subj) => (
-                <tr key={subj.id_mapel}>
-                  <td>
-                    <Link href={`/dashboard/Student/subject/${subj.id_mapel}`}>
-                      {subj.id_mapel}
-                    </Link>
-                  </td>
+                <tr key={subj.id_mapel} onClick={() => handleRowClick(subj.id_mapel)}>
+                  <td>{subj.id_mapel}</td>
                   <td>{subj.nama_mata_pelajaran}</td>
                 </tr>
               ))}
