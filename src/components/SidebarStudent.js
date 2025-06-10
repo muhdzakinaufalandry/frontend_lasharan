@@ -12,14 +12,11 @@ export default function SidebarStudent() {
   const pathname = usePathname();
   const [activeMenu, setActiveMenu] = useState('');
 
-  useEffect(() => {
-    if (pathname.includes('/dashboard/Student/subject')) {
-      setActiveMenu('subjects');
-    } else if (pathname.includes('/dashboard/Student/history')) {
-      setActiveMenu('history');
-    } else if (pathname.includes('/dashboard/Student')) {
-      setActiveMenu('dashboard');
-    }
+   useEffect(() => {
+    if (pathname.includes('/subject')) setActiveMenu('subjects');
+    else if (pathname.includes('/history')) setActiveMenu('history');
+    else if (pathname.includes('/Student')) setActiveMenu('dashboard');
+    else setActiveMenu('dashboard');
   }, [pathname]);
 
   // Handle Logout with SweetAlert confirmation
@@ -49,7 +46,7 @@ export default function SidebarStudent() {
 
       <nav className="sidebar-nav">
         <Link href="/dashboard/Student" 
-          className={`sidebar-link ${activeMenu === 'Student' ? 'active' : ''}`} >
+          className={`sidebar-link ${activeMenu === 'dashboard' ? 'active' : ''}`} >
           <FontAwesomeIcon icon={faHome} />
           Dashboard
         </Link>

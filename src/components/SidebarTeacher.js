@@ -13,8 +13,8 @@ export default function SidebarTeacher() {
   const [activeMenu, setActiveMenu] = useState('');
 
   useEffect(() => {
-    if (pathname.includes('/dashboard/Teacher')) setActiveMenu('dashboard');
-    else if (pathname.includes('/dashboard/Teacher/class')) setActiveMenu('class');
+    if (pathname.includes('/class')) setActiveMenu('class');
+    else if (pathname.includes('/Teacher')) setActiveMenu('dashboard');
   }, [pathname]);
 
   // SweetAlert Logout Confirmation

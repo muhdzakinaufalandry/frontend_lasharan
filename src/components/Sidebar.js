@@ -27,6 +27,7 @@ export default function Sidebar() {
     if (pathname.includes('/datauser')) setActiveMenu('datauser');
     else if (pathname.includes('/users')) setActiveMenu('role');
     else if (pathname.includes('/class')) setActiveMenu('class');
+    else if (pathname.includes('/subjects')) setActiveMenu('subjects');
     else setActiveMenu('dashboard');
   }, [pathname]);
   
