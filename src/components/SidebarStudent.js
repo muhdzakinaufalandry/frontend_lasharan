@@ -67,6 +67,7 @@ export default function SidebarStudent() {
         </Link>
       </nav>
 
+      {/* Bottom Logout */}
       <div className="sidebar-bottom">
         <button className="sidebar-link logout" onClick={handleLogout}>
           <FontAwesomeIcon icon={faSignOutAlt} />

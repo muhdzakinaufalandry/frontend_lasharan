@@ -108,7 +108,6 @@ export default function TeacherPage() {
               <td className="action-icons">
                 <span title="Edit" onClick={() => handleEditGuru(teacher)}>✏️</span>
                 <span title="Delete" onClick={() => handleDeleteGuru(teacher.id_guru)}>🗑️</span>
-                <span title="More">⋯</span>
               </td>
             </tr>
           ))}
@@ -137,8 +136,8 @@ export default function TeacherPage() {
               />
             </div>
             <div className="form-actions">
-              <button onClick={handleUpdateGuru}>Save</button>
-              <button onClick={() => setEditGuru(null)}>Cancel</button>
+              <button className="btn-rounded save-btn" onClick={handleUpdateGuru}>Save</button>
+              <button className="btn-rounded cancel-btn" onClick={() => setEditGuru(null)}>Cancel</button>
             </div>
           </div>
         </div>
