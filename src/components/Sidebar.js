@@ -23,11 +23,10 @@ export default function Sidebar() {
   const [activeRole, setActiveRole] = useState('');
 
 
-   useEffect(() => {
+    useEffect(() => {
     if (pathname.includes('/datauser')) setActiveMenu('datauser');
     else if (pathname.includes('/users')) setActiveMenu('role');
     else if (pathname.includes('/class')) setActiveMenu('class');
-    else if (pathname.includes('/subjects')) setActiveMenu('subjects');
     else setActiveMenu('dashboard');
   }, [pathname]);
   
@@ -37,21 +36,20 @@ export default function Sidebar() {
   };
 
   const handleLogout = () => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'You will be logged out from this session.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#0ea5e9',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, logout',
-      reverseButtons: true,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Arahkan ke halaman login
-        window.location.href = '/login';
-      }
-    });
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You will be logged out.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, log out!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Redirect to login page after confirmation
+          window.location.href = '/'; // Ensure to navigate to the correct page
+        }
+      });
   };
 
  return (

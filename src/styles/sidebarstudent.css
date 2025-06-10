@@ -1,15 +1,17 @@
+/* Sidebar Container */
 .sidebar {
   background-color: #2f4298;
   width: 250px;
   height: 100vh;
-  padding: 1rem;
+  padding: 1rem 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border-radius: 0 10px 10px 0;
 }
 
-.sidebar-top-horizontal{
+/* Logo + Admin greeting */
+.sidebar-top-horizontal {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -17,8 +19,8 @@
 }
 
 .sidebar-logo {
-  width: 55px;
-  height: 55px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   margin-bottom: 0.5rem;
 }
@@ -29,21 +31,25 @@
   color: white;
 }
 
+/* Nav Section */
 .sidebar-nav {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  margin-top: 1rem;
 }
 
+/* Link Styling */
 .sidebar-link {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  color: white;
+  gap: 1rem;
+  font-size: 1rem;
   font-weight: 500;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  color: white;
   text-decoration: none;
-  padding: 0.5rem;
-  border-radius: 8px;
   transition: background-color 0.2s ease-in-out;
 }
 
@@ -51,10 +57,32 @@
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+.sidebar-link.active {
+  background-color: #ffffff; /* Light blue background */
+  color: #0284c7;  /* Blue text color */
+  font-weight: 600; /* Bold text */
+}
+
+.sidebar-link.active svg {
+  color: #0ea5e9;
+}
+
+/* Logout Section */
 .sidebar-bottom {
   margin-top: auto;
 }
 
 .sidebar-link.logout {
-  color: #b0b0b0;
+  color: #ccc;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+.sidebar-link.logout:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: white;
 }
