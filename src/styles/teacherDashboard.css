@@ -13,7 +13,7 @@
   .dashboard-content-wrapper {
     flex: 1;
     padding: 2rem;
-    background-color: #ffffff;
+    background-color: #f5f6fa;
     overflow-y: hidden;
     display: flex;
     flex-direction: column;

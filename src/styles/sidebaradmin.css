@@ -56,24 +56,6 @@
     color: #b0b0b0;
   }
   
-  /* Icon Styling for Links */
-  .icon-home::before {
-    content: "🏠";
-  }
-  
-  .icon-book::before {
-    content: "📘";
-  }
-  
-  .icon-clock::before {
-    content: "🕒";
-  }
-  
-  .icon-logout::before {
-    content: "🔚";
-  }
-  
- 
   .sidebar-top-horizontal {
     display: flex;
     align-items: center;

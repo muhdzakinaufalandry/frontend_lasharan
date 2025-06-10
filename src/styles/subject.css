@@ -1,5 +1,8 @@
 .subject-container {
   padding: 2rem;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fff;
+  border-radius: 25px;
 }
 
 .subject-header {

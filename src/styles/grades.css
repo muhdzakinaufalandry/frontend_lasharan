@@ -7,7 +7,10 @@
     flex: 1;
     padding: 30px;
     background-color: #FFFFFF;
-  }
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff;
+    border-radius: 25px;
+}
   
   .header-section {
     margin-bottom: 20px;
@@ -67,6 +70,7 @@
   .grade-table {
     width: 100%;
     border-collapse: collapse;
+    border-radius: 20px;
   }
   
   .grade-table th,

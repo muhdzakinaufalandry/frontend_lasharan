@@ -94,8 +94,7 @@ export default function AddTeacherPage() {
         <div className="form-row">
           <div className="form-group">
             <label>User ID *</label>
-            <input
-              type="text"
+            <select
               placeholder="e.g. 5"
               value={IDUser}
               onChange={(e) => setIDUser(e.target.value)}
