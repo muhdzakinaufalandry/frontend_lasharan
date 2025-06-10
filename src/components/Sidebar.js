@@ -1,65 +1,140 @@
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import '@/styles/sidebaradmin.css'; // pastikan path ini sesuai struktur folder kamu
+import Swal from 'sweetalert2';
+import {
+   faHome,
+  faUsers,
+  faUserShield,
+  faBook,
+  faChalkboard,
+  faRightFromBracket,
+  faChevronUp,
+  faChevronDown,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Sidebar() {
+  const pathname = usePathname();
+  const [activeMenu, setActiveMenu] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [activeRole, setActiveRole] = useState('');
+
+
+   useEffect(() => {
+    if (pathname.includes('/datauser')) setActiveMenu('datauser');
+    else if (pathname.includes('/users')) setActiveMenu('role');
+    else if (pathname.includes('/class')) setActiveMenu('class');
+    else if (pathname.includes('/subjects')) setActiveMenu('subjects');
+    else setActiveMenu('dashboard');
+  }, [pathname]);
+  
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  return (
+  const handleLogout = () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will be logged out from this session.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#0ea5e9',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, logout',
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Arahkan ke halaman login
+        window.location.href = '/login';
+      }
+    });
+  };
+
+ return (
     <div className="sidebar">
-      {/* Top Section */}
       <div className="sidebar-top-horizontal">
         <img src="/logo-smas.png" alt="Logo Sekolah" className="sidebar-logo" />
         <p className="sidebar-admin">Hi, Admin</p>
       </div>
 
-      {/* Navigation */}
       <nav className="sidebar-nav">
-        <Link href="/dashboard/admin" className="sidebar-link">
-          <span role="img" aria-label="dashboard">🏠</span>
-          Dashboard
+        <Link
+          href="/dashboard/admin"
+          className={`sidebar-link ${activeMenu === 'dashboard' ? 'active' : ''}`}
+        >
+          <FontAwesomeIcon icon={faHome} />
+          <span>Dashboard</span>
         </Link>
 
-        <Link href="/dashboard/admin/datauser" className="sidebar-link">
-          <span role="img" aria-label="class">👥</span>
-          Data User
+        <Link
+          href="/dashboard/admin/datauser"
+          className={`sidebar-link ${activeMenu === 'datauser' ? 'active' : ''}`}
+        >
+          <FontAwesomeIcon icon={faUsers} />
+          <span>Data User</span>
         </Link>
 
-        <div className="dropdown-section">
-          <button className="sidebar-link dropdown-toggle" onClick={toggleDropdown}>
-            <span role="img" aria-label="user">🌐</span>
-            Role {isDropdownOpen ? '▲' : '▼'}
-          </button>
-          {isDropdownOpen && (
-            <div className="dropdown-menu">
-              <Link href="/dashboard/admin/users/teacher" className="dropdown-item">Teacher</Link>
-              <Link href="/dashboard/admin/users/student" className="dropdown-item">Student</Link>
-            </div>
+       <div className="dropdown-section">
+        <button
+          className={`sidebar-link dropdown-toggle ${activeMenu === 'role' ? 'active' : ''}`}
+          onClick={() => {
+            toggleDropdown();
+            setActiveMenu('role');
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <FontAwesomeIcon icon={faUserShield} />
+            <span>Role</span>
+            <FontAwesomeIcon icon={isDropdownOpen ? faChevronUp : faChevronDown} className="dropdown-arrow" />
+          </div>
+        </button>
+
+        {isDropdownOpen && (
+          <div className="dropdown-menu">
+            <Link
+              href="/dashboard/admin/users/teacher"
+              className={`dropdown-item ${activeRole === 'teacher' ? 'active-role-item' : ''}`}
+              onClick={() => setActiveRole('teacher')}
+            >
+              Teacher
+            </Link>
+            <Link
+              href="/dashboard/admin/users/student"
+              className={`dropdown-item ${activeRole === 'student' ? 'active-role-item' : ''}`}
+              onClick={() => setActiveRole('student')}
+            >
+              Student
+            </Link>
+          </div>
           )}
         </div>
 
-        <Link href="/dashboard/admin/class" className="sidebar-link">
-          <span role="img" aria-label="class">📚</span>
-          Class
+        <Link
+          href="/dashboard/admin/class"
+          className={`sidebar-link ${activeMenu === 'class' ? 'active' : ''}`}
+        >
+          <FontAwesomeIcon icon={faChalkboard} />
+          <span>Class</span>
         </Link>
 
-        <Link href="/dashboard/admin/subjects" className="sidebar-link">
-          <span role="img" aria-label="subjects">📖</span>
-          Subjects
+        <Link
+          href="/dashboard/admin/subjects"
+          className={`sidebar-link ${activeMenu === 'subjects' ? 'active' : ''}`}
+        >
+          <FontAwesomeIcon icon={faBook} />
+          <span>Subjects</span>
         </Link>
       </nav>
 
-      {/* Bottom Logout */}
       <div className="sidebar-bottom">
-        {/* When the user clicks this, redirect to login page */}
-        <Link href="/login" className="sidebar-link logout">
-          <span role="img" aria-label="logout">🚪</span>
-          Logout
-        </Link>
+        <button onClick={handleLogout} className="sidebar-link logout">
+          <FontAwesomeIcon icon={faRightFromBracket} />
+          <span>Logout</span>
+        </button>
       </div>
     </div>
   );
