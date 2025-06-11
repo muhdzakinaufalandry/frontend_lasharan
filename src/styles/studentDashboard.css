@@ -103,6 +103,7 @@ nav li.active {
     text-align: center;
 }
 
+.circle.blue,
 .circle {
     width: 80px;
     height: 80px;
@@ -117,10 +118,6 @@ nav li.active {
     color: #333;
 }
 
-.circle.blue {
-    border-color: #4f4fff;
-}
-
 .info-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -131,13 +128,11 @@ nav li.active {
 .notice-board,
 .documents,
 .activities {
-    flex: 1;
-    min-width: 250px;
-    background: white;
-    padding: 15px;
+    background-color: #ffffff;
+    padding: 20px;
     border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
-
 .notice {
     margin-top: 10px;
     padding: 10px;
@@ -174,3 +169,149 @@ table td {
     border: 1px solid #ddd;
     text-align: left;
 }
+
+.tag {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.tag.done {
+    background-color: #34d399;
+    color: white;
+}
+
+.tag.upcoming {
+    background-color: #60a5fa;
+    color: white;
+}
+
+.tag.pending {
+    background-color: #f7b267;
+    color: white;
+}
+
+/* Styling untuk Documents */
+.documents {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover transition */
+}
+
+.documents h4 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.documents ul {
+  list-style: none;
+  padding: 0;
+}
+
+.documents li {
+  font-size: 1rem;
+  color: #555;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: color 0.3s ease;
+}
+
+.documents li:hover {
+  color: #000000; /* Color change on hover */
+}
+
+.documents li::before {
+  content: '\2022'; /* Bullet point */
+  font-size: 1.5rem;
+  color: #000000; /* Color for bullet points */
+}
+
+/* Styling untuk Upcoming Activities */
+.activities {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover transition */
+}
+
+
+.activities h4 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.activities ul {
+  list-style: none;
+  padding: 0;
+  
+}
+
+.activities li {
+  font-size: 1rem;
+  color: #555;
+  margin: 12px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1px;
+  gap: 10px;
+  border-radius: 8px;
+
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.activities li:hover {
+  background-color: #f2f4fd;
+  color: #474754; /* Color on hover */
+}
+
+.activities .tag {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.activities .tag.done {
+  background-color: #34d399;
+  color: white;
+}
+
+.activities .tag.upcoming {
+  background-color: #60a5fa;
+  color: white;
+}
+
+.activities .tag.pending {
+  background-color: #f7b267;
+  color: white;
+}
+
+/* Adding Icons in the Upcoming Activities */
+.activities .icon {
+  font-size: 1.2rem;
+  margin-right: 10px;
+}
+
+
+.notice-board,
+.documents,
+.activities {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover transition */
+}
+

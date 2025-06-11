@@ -68,7 +68,6 @@ export default function LoginPage() {
               <i className="fa fa-user" />
             </span>
             <input
-              type="text"
               placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
