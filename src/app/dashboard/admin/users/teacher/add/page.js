@@ -8,7 +8,26 @@ export default function AddTeacherPage() {
   const [IDMapel, setIDMapel] = useState('');
   const [namaGuru, setNamaGuru] = useState('');
   const [mataPelajaran, setMataPelajaran] = useState('');
+  const [nip, setNip] = useState('');
+  const [alamat, setAlamat] = useState('');
+  const [email, setEmail] = useState('');
+  const [noTelp, setNoTelp] = useState('');
   const [subjects, setSubjects] = useState([]);
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user`);
+        const data = await response.json();
+        setUser(data);
+      } catch (error) {
+        console.error('Gagal memuat data user:', error);
+      }
+    }
+
+    fetchUser();
+  }, []);
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -24,11 +43,17 @@ export default function AddTeacherPage() {
     fetchSubjects();
   }, []);
 
+
   const handleSubjectChange = (e) => {
     const selectedId = parseInt(e.target.value);
     const selectedSubject = subjects.find((s) => s.id_mapel === selectedId);
+    setIDUser(selectedSubject?.id_user || '');
     setIDMapel(selectedSubject?.id_mapel || '');
     setMataPelajaran(selectedSubject?.nama_mata_pelajaran || '');
+    setNip(selectedSubject?.nip || '');
+    setAlamat(selectedSubject?.alamat || '');
+    setEmail(selectedSubject?.email || '');
+    setNoTelp(selectedSubject?.no_telp || '');
   };
 
   const handleSubmit = async (e) => {
@@ -39,6 +64,10 @@ export default function AddTeacherPage() {
       id_mapel: parseInt(IDMapel),
       nama_guru: namaGuru,
       mata_pelajaran: mataPelajaran,
+      nip: nip,
+      alamat: alamat,
+      email: email,
+      no_telp: noTelp
     };
 
     try {
@@ -54,6 +83,10 @@ export default function AddTeacherPage() {
         setIDMapel('');
         setNamaGuru('');
         setMataPelajaran('');
+        setNip('');
+        setAlamat('');
+        setEmail('');
+        setNoTelp('');
       } else {
         const err = await response.text();
         console.error('Gagal:', err);
@@ -93,24 +126,21 @@ export default function AddTeacherPage() {
         </div>
         <div className="form-row">
           <div className="form-group">
-            <label>User ID *</label>
+            <label>Username</label>
             <select
-              placeholder="e.g. 5"
               value={IDUser}
               onChange={(e) => setIDUser(e.target.value)}
               required
-            />
+            >
+              <option value="">Pilih User</option>
+              {user.map((u) => (
+                <option key={u.id_user} value={u.id_user}>
+                  {u.username}
+                </option>
+              ))}
+            </select>
           </div>
-          {/* <div className="form-group">
-            <label>NIP *</label>
-            <input
-              type="text"
-              placeholder="18 Digit"
-              value={IDMapel}
-              onChange={(e) => setIDMapel(e.target.value)}
-              required
-            />
-          </div> */}
+          
           <div className="form-group">
             <label>Subject</label>
             <select
@@ -125,6 +155,46 @@ export default function AddTeacherPage() {
                 </option>
               ))}
             </select>
+          </div>
+        </div>
+        <div className="form-row">
+          <div className="form-group">
+            <label>Address</label>
+            <input
+              type="text"
+              placeholder="e.g. Jl. Raya"
+              value={alamat}
+              onChange={(e) => setAlamat(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>Phone Number</label>
+            <input
+              type="text"
+              placeholder="e.g. 08123456789"
+              value={noTelp}
+              onChange={(e) => setNoTelp(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="form-row">
+          <div className="form-group">
+            <label>NIK</label>
+            <input
+              type="text"
+              placeholder="e.g. 123456789"
+              value={nip}
+              onChange={(e) => setNip(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              placeholder="e.g. 1x7oO@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
         </div>
       </form>

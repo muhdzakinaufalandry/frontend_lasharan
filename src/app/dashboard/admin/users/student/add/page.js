@@ -9,6 +9,8 @@ export default function AddStudent() {
   const [namaSiswa, setNamaSiswa] = useState('');
   const [alamat, setAlamat] = useState('');
   const [tanggalLahir, setTanggalLahir] = useState('');
+  const [nisn, setNISN] = useState('');
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
     const fetchKelas = async () => {
@@ -24,6 +26,20 @@ export default function AddStudent() {
     fetchKelas();
   }, []);
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user`);
+        const data = await response.json();
+        setUser(data);
+      } catch (error) {
+        console.error('Gagal memuat data user:', error);
+      }
+    }
+
+    fetchUser();
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,6 +49,7 @@ export default function AddStudent() {
       nama_siswa: namaSiswa,
       alamat: alamat,
       tanggal_lahir: tanggalLahir,
+      nisn: nisn
     };
 
     console.log("Data yang dikirim:", newSiswa);
@@ -51,6 +68,7 @@ export default function AddStudent() {
         setNamaSiswa('');
         setAlamat('');
         setTanggalLahir('');
+        setNISN('');
       } else {
         const errorText = await response.text();
         console.error("Response error:", errorText);
@@ -89,14 +107,15 @@ export default function AddStudent() {
           </div>
 
           <div className="form-group">
-            <label>User ID *</label>
-            <select
-              type="number"
-              placeholder="Enter user ID"
-              value={idUser}
-              onChange={(e) => setIDUser(e.target.value)}
-              required
-            />
+            <label>Username *</label>
+            <select value={idUser} onChange={(e) => setIDUser(e.target.value)} required>
+              <option value="">Pilih Username</option>
+              {user.map((user) => (
+                <option key={user.id_user} value={user.id_user}>
+                  {user.username}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="form-group">
@@ -130,6 +149,16 @@ export default function AddStudent() {
                 </option>
               ))}
             </select>
+          </div>
+
+          <div className="form-group">
+            <label>NISN</label>
+            <input
+              type="text"
+              placeholder="Enter NISN"
+              value={nisn}
+              onChange={(e) => setNISN(e.target.value)}
+            />
           </div>
         </div>
       </form>
