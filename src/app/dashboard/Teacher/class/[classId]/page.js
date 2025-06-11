@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import '@/styles/classDetail.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUsers, faBook } from '@fortawesome/free-solid-svg-icons';
+
 
 export default function ClassDetailPage() {
   const { classId } = useParams();
@@ -42,13 +45,23 @@ export default function ClassDetailPage() {
 
       <div className="class-stats">
         <Link href={`/dashboard/Teacher/class/${classId}/participants`} className="stat-card orange">
-          <h3>{classData.jumlah_siswa || 0}</h3>
-          <p>Participants</p>
+          <div className="stat-content">
+            <div className="stat-text">
+              <h3>{classData.jumlah_siswa || 0}</h3>
+              <p>Participants</p>
+            </div>
+            <FontAwesomeIcon icon={faUsers} className="stat-icon" />
+          </div>
         </Link>
 
         <div className="stat-card blue">
-          <h3>{classData.mata_pelajaran?.length || '0'}</h3>
-          <p>Subjects</p>
+          <div className="stat-content">
+            <div className="stat-text">
+              <h3>{classData.mata_pelajaran?.length || '0'}</h3>
+              <p>Subjects</p>
+            </div>
+            <FontAwesomeIcon icon={faBook} className="stat-icon" />
+          </div>
         </div>
       </div>
 

@@ -1,5 +1,8 @@
 .teacher-page {
   padding: 2rem;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fff;
+  border-radius: 25px;
 }
 
 .teacher-header {
@@ -81,10 +84,10 @@ background-color: white;
 
 
 .teacher-form-container {
-  padding: 30px;
-  font-family: sans-serif;
-  max-width: 1100px;
-  margin: auto;
+  padding: 2rem;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fff;
+  border-radius: 25px;
 }
 
 .form-header {

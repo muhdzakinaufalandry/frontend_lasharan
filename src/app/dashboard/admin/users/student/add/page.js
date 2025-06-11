@@ -90,7 +90,7 @@ export default function AddStudent() {
 
           <div className="form-group">
             <label>User ID *</label>
-            <input
+            <select
               type="number"
               placeholder="Enter user ID"
               value={idUser}
