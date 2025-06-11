@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: rgba(1, 186, 253, 1);
+    background-color: #354694;
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
   }

@@ -97,7 +97,6 @@ export default function GradePage() {
                   <th>Calculated Weight</th>
                   <th>Grade</th>
                   <th>Range</th>
-                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -107,14 +106,10 @@ export default function GradePage() {
                     <td>{grade.weight}</td>
                     <td>{grade.grade}</td>
                     <td>{grade.range}</td>
-                    <td>
                       {grade.item !== 'Course Total' && (
-                        <>
-                          <button className="action-btn">✏️</button>
-                          <button className="action-btn">🗑️</button>
+                        <>                        
                         </>
                       )}
-                    </td>
                   </tr>
                 ))}
               </tbody>

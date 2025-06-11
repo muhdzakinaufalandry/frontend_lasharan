@@ -1,96 +1,168 @@
-/* Sidebar Styling */
+/* Sidebar Container */
 .sidebar {
-    background-color: #2f4298;
-    width: 250px;
-    height: 100vh;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border-radius: 0 10px 10px 0;
-  }
+  background-color: #2f4298;
+  width: 250px;
+  height: 100vh;
+  padding: 1rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 0 10px 10px 0;
+}
+
+/* Logo + Admin greeting */
+.sidebar-top-horizontal {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.sidebar-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.sidebar-admin {
+  font-weight: bold;
+  font-size: 1rem;
+  color: white;
+}
+
+/* Nav Section */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 1rem;
+}
+
+/* Link Styling */
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.sidebar-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Active Menu Style */
+.sidebar-link.active {
+  background-color: white;
+  color: #0ea5e9;
+  font-weight: 600;
+}
+
+.sidebar-link.active svg {
+  color: #0ea5e9;
   
-  /* Logo and Greeting */
-  .sidebar-logo {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    margin-bottom: 0.5rem;
-  }
-  
-  .sidebar-greeting {
-    color: white;
-    font-weight: 500;
-    font-size: 0.9rem;
-  }
-  
-  /* Navigation */
-  .sidebar-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .sidebar-link {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: white;
-    font-weight: 500;
-    text-decoration: none;
-    padding: 0.5rem;
-    border-radius: 8px;
-    transition: background-color 0.2s ease-in-out;
-  }
-  
-  .sidebar-link:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-  
-  /* Bottom Section (Logout) */
-  .sidebar-bottom {
-    margin-top: auto;
-  }
-  
-  .sidebar-link.logout {
-    color: #b0b0b0;
-  }
-  
-  .sidebar-top-horizontal {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem;
-  }
-  
-  .sidebar-logo {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-  }
-  
-  .sidebar-admin {
-    font-weight: bold;
-    font-size: 1rem;
-    color: white;
-  }
-  
-  .sidebar-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 0 1rem;
-    margin-top: 0.5rem;
-  }
-  
-  .sidebar-link {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    padding: 0.5rem 0;
-  }
-  
-  .sidebar-link:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
-  }
+}
+
+/* Dropdown section */
+.dropdown-section {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Dropdown toggle button */
+.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* <-- tambahkan */
+  gap: 0.6rem;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  border-radius: 12px;
+  color: white;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.sidebar-link svg,
+.dropdown-toggle svg {
+  font-size: 1.1rem;
+  min-width: 1.2rem;
+}
+
+.dropdown-toggle.active {
+  background-color: white;
+  color: #0ea5e9;
+  font-weight: 600;
+}
+
+.dropdown-toggle .dropdown-arrow {
+  margin-left: 4px;
+   margin-right: 5px;
+  font-size: 0.8rem;
+  color: white;
+}
+
+.dropdown-toggle.active .dropdown-arrow {
+  color: #0ea5e9;
+}
+
+/* Dropdown container */
+.dropdown-menu {
+  background-color: white;
+  margin-left: 2.8rem;
+  margin-top: 0.2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 0;
+}
+
+/* Dropdown items */
+.dropdown-item {
+  display: block;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  text-decoration: none;
+  color: #1f2937;
+  transition: background-color 0.2s ease-in-out;
+  border-radius: 8px;
+}
+
+.dropdown-item:hover {
+  background-color: #f3f4f6;
+}
+
+.active-role-item {
+  background-color: #e0f2fe;
+  color: #0284c7;
+  font-weight: 600;
+}
+
+/* Logout */
+.sidebar-bottom {
+  margin-top: auto;
+  padding: 0.5rem 1rem;
+}
+
+.sidebar-link.logout {
+  color: #ccc;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.sidebar-link.logout:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: white;
+}

@@ -7,6 +7,7 @@ import '../../styles/login.css';
 export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const handleLogin = async (e) => {
@@ -49,32 +50,53 @@ export default function LoginPage() {
       console.error('Terjadi kesalahan saat login:', error);
       alert('Terjadi kesalahan saat login.');
     }
+ 
   };
 
+
   return (
-    <div className="login-container">
-      <div className="login-box">
+    <div className="login-bg">
+      <div className="login-card">
         <img src="/logo-smas.png" alt="Logo SMAS" className="login-logo" />
-        <h1 className="login-title">SMAS Islam lasharan jaya Gowa 
-          Portal login</h1>
-        <form onSubmit={handleLogin}>
-          <input
-            type="text"
-            placeholder="Username"
-            className="login-input"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Password"
-            className="login-input"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button type="submit" className="login-button">Masuk</button>
+        <div className="login-title">
+          SMAS Islam lasharan jaya Gowa <br />
+          <span className="login-subtitle">Portal login</span>
+        </div>
+        <form onSubmit={handleLogin} className="login-form">
+          <div className="input-group">
+            <span className="input-icon">
+              <i className="fa fa-user" />
+            </span>
+            <input
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              className="login-input"
+            />
+          </div>
+          <div className="input-group">
+            <span className="input-icon">
+              <i className="fa fa-lock" />
+            </span>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="login-input"
+            />
+            <span
+              className="input-icon-right"
+              onClick={() => setShowPassword((prev) => !prev)}
+              tabIndex={0}
+              style={{ cursor: 'pointer' }}
+            >
+              <i className={showPassword ? "fa fa-eye-slash" : "fa fa-eye"} />
+            </span>
+          </div>
+          <button type="submit" className="login-btn">Login</button>
         </form>
       </div>
     </div>

@@ -73,8 +73,8 @@
     border-radius: 20px;
   }
   
-  .grade-table th,
-  .grade-table td {
+  .grade-table th
+  {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #E5E7EB;
@@ -84,11 +84,6 @@
     background-color: #E6F0FA;
     font-weight: 600;
     color: #1F2937;
-  }
-  
-  .grade-table td {
-    font-size: 14px;
-    color: #6B7280;
   }
   
   .action-btn {
