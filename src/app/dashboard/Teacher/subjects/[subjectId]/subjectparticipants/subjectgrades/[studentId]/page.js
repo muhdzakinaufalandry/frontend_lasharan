@@ -168,24 +168,20 @@ export default function ParticipantsDetailsPage() {
           </div>
 
           <div className="subject-header">
-            <h2>Detail Nilai</h2>
+            <h2>Grade Details</h2>
             <span className="year">2024–2025</span>
           </div>
         </div>
 
         <section className="grade-section">
-          <div className="section-header">
-            <h3>Daftar Penilaian</h3>
-            <button onClick={openAddModal} className="btn-add-nilai">＋ Tambah Penilaian</button>
-          </div>
-
+          <h3>Grading List</h3>
           <div className="grade-table-container">
             <table className="grade-table">
               <thead>
                 <tr>
-                  <th>Nama Nilai</th>
-                  <th>Bobot</th>
-                  <th>Nilai</th>
+                  <th>Grade Item</th>
+                  <th>Calculated Weight</th>
+                  <th>Grade</th>
                   <th>Range</th>
                   <th>Action</th>
                 </tr>

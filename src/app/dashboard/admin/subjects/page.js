@@ -171,7 +171,7 @@ export default function SubjectPage() {
                 <td>{subj.id_mapel}</td>
                 <td>{getKelasName(subj.id_kelas)}</td>
                 <td>{subj.nama_mata_pelajaran}</td>
-                <td>
+                <td className="action-icons">
                   <button onClick={() => handleEditMataPelajaran(subj)}>✏️</button>
                   <button onClick={() => handleDeleteMataPelajaran(subj.id_mapel)}>🗑️</button>
                 </td>
