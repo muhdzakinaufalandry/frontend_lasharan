@@ -1,15 +1,15 @@
+/* Layout utama halaman */
 .grade-page {
-    display: flex;
-    min-height: 100vh;
-  }
-  
-  .grade-main {
-    flex: 1;
-    padding: 30px;
-    background-color: #FFFFFF;
-    font-family: 'Poppins', sans-serif;
-    background-color: #fff;
-    border-radius: 25px;
+  display: flex;
+  min-height: 100vh;
+}
+
+.grade-main {
+  flex: 1;
+  padding: 30px;
+  background-color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 25px;
 }
   
   .header-section {
@@ -92,8 +92,112 @@
     font-size: 18px;
     cursor: pointer;
     margin-right: 10px;
+  }
+  
+/* Header halaman */
+.header-section {
+  margin-bottom: 20px;
+}
 
-  }.modal-overlay {
+.subject-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.subject-header h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1F2937;
+}
+
+.year {
+  font-size: 14px;
+  color: #6B7280;
+}
+
+/* Search bar */
+.search-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #D1D5DB;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.search-bar button {
+  padding: 10px 20px;
+  border: 1px solid #D1D5DB;
+  border-radius: 20px;
+  background-color: #FFFFFF;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Bagian tabel nilai */
+.grade-section h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1F2937;
+  margin-bottom: 20px;
+}
+
+.grade-table-container {
+  overflow-x: auto;
+}
+
+.grade-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 20px;
+}
+
+.grade-table th,
+.grade-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.grade-table th {
+  background-color: #E6F0FA;
+  font-weight: 600;
+  color: #1F2937;
+}
+
+.grade-table td button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.grade-table td button:hover {
+  opacity: 0.7;
+}
+
+
+/* Tombol aksi */
+.action-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.action-btn:hover {
+  opacity: 0.8;
+}
+
+/* Modal overlay */
+.modal-overlay {
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.4);
@@ -101,47 +205,43 @@
   justify-content: center;
   align-items: center;
   z-index: 999;
-  }
+}
 
-  .modal {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    width: 400px;
-  }
+/* Modal konten */
+.modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  width: 400px;
+}
 
-  .modal input {
-    width: 100%;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-  }
+.modal input {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
 
-  .modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-  }
+/* Aksi di dalam modal */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
 
-  .modal-actions button:first-child {
-    background-color: #2563eb;
-    color: white;
-    border-radius: 4px;
-  }
+.modal-actions button:first-child {
+  background-color: #2563eb;
+  color: white;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  border: none;
+}
 
-  .modal-actions button:last-child {
-    background-color: #e5e7eb;
-    border-radius: 4px;
-  }
-
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-  }
+.modal-actions button:last-child {
+  background-color: #e5e7eb;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  border: none;
+}
