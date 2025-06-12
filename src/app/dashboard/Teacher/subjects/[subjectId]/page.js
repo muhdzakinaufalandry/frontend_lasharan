@@ -45,25 +45,6 @@ export default function SubjectDetailPage() {
           </div>
           <img src="/images/accounting.png" alt={subjectDetails.nama_mata_pelajaran} />
         </div>
-
-        <div className="side-panel">
-          <div className="online-users">
-            <h4>Online Users</h4>
-            <ul>
-              <li>👤 Siswa 1</li>
-              <li>👤 Siswa 2</li>
-              <li>👤 Siswa 3</li>
-            </ul>
-          </div>
-          <div className="discussion-box">
-            <h4>Discussion Forum</h4>
-            <ul>
-              <li>Topic 1: Introduction</li>
-              <li>Topic 2: Homework</li>
-              <li>Topic 3: Evaluation</li>
-            </ul>
-          </div>
-        </div>
       </div>
 
       {subjectDetails?.id_mapel && (
