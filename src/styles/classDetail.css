@@ -49,19 +49,21 @@
   }
   
   .class-main-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
+    display: flex;
     gap: 2rem;
+    align-items: center;
   }
+  
   
   .subjects-box h3 {
     margin-bottom: 1rem;
   }
   
   .subject-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    display: flex;
     gap: 1rem;
+    align-items: center;
+    justify-content: center;
   }
   
   .subject-card {

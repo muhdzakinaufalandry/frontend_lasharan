@@ -14,6 +14,7 @@ export default function ParticipantsDetailsPage() {
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const [formData, setFormData] = useState({
     nama_nilai: '',
     bobot: '',
@@ -156,14 +157,17 @@ export default function ParticipantsDetailsPage() {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
-  return (
+   return (
     <div className="grade-page">
       <main className="grade-main">
         <div className="header-section">
           <div className="search-bar">
-            <input type="text" placeholder="Search" />
-            <button>Search by Name or roll.</button>
-            <button>All Classes</button>
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
             <button onClick={openAddModal}>＋</button>
           </div>
 
@@ -187,17 +191,21 @@ export default function ParticipantsDetailsPage() {
                 </tr>
               </thead>
               <tbody>
-                {data.penilaian?.filter(Boolean).map((item, idx) => (
-                  <tr key={idx}>
-                    <td>{item.nama_nilai}</td>
-                    <td>{item.bobot}</td>
-                    <td style={{ color: '#10B981' }}>{item.nilai}</td>
-                    <td>0 - 100</td>
-                    <td>
-                      <button title="Edit" onClick={() => openEditModal(item)}>✏️</button>
-                      <button title="Delete" onClick={() => handleDelete(item.id_penilaian)}>🗑️</button>
-                    </td>
-                  </tr>
+                {data.penilaian
+                  .filter(item =>
+                    item.nama_nilai.toLowerCase().includes(searchQuery.toLowerCase())
+                  )
+                  .map((item, idx) => (
+                    <tr key={idx}>
+                      <td>{item.nama_nilai}</td>
+                      <td>{item.bobot}</td>
+                      <td style={{ color: '#10B981' }}>{item.nilai}</td>
+                      <td>0 - 100</td>
+                      <td>
+                        <button title="Edit" onClick={() => openEditModal(item)}>✏️</button>
+                        <button title="Delete" onClick={() => handleDelete(item.id_penilaian)}>🗑️</button>
+                      </td>
+                    </tr>
                 ))}
                 <tr>
                   <td><strong>Course Total</strong></td>
