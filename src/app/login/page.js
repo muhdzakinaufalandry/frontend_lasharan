@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { User, Lock, Eye, EyeOff } from 'lucide-react';
 import '../../styles/login.css';
 
 export default function LoginPage() {
@@ -28,13 +29,10 @@ export default function LoginPage() {
       }
 
       const data = await res.json();
-
-      // Simpan ke localStorage
-      localStorage.setItem('token', data.token); // dummy-token
+      localStorage.setItem('token', data.token);
       localStorage.setItem('id_user', data.id_user);
       localStorage.setItem('id_role', data.id_role);
 
-      // Redirect berdasarkan id_role
       if (data.id_role == 1) {
         router.push('/dashboard/admin');
       } else if (data.id_role == 2) {
@@ -50,9 +48,7 @@ export default function LoginPage() {
       console.error('Terjadi kesalahan saat login:', error);
       alert('Terjadi kesalahan saat login.');
     }
- 
   };
-
 
   return (
     <div className="login-bg">
@@ -65,7 +61,7 @@ export default function LoginPage() {
         <form onSubmit={handleLogin} className="login-form">
           <div className="input-group">
             <span className="input-icon">
-              <i className="fa fa-user" />
+              <User size={18} />
             </span>
             <input
               placeholder="Username"
@@ -77,7 +73,7 @@ export default function LoginPage() {
           </div>
           <div className="input-group">
             <span className="input-icon">
-              <i className="fa fa-lock" />
+              <Lock size={18} />
             </span>
             <input
               type={showPassword ? 'text' : 'password'}
@@ -91,9 +87,8 @@ export default function LoginPage() {
               className="input-icon-right"
               onClick={() => setShowPassword((prev) => !prev)}
               tabIndex={0}
-              style={{ cursor: 'pointer' }}
             >
-              <i className={showPassword ? "fa fa-eye-slash" : "fa fa-eye"} />
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </span>
           </div>
           <button type="submit" className="login-btn">Login</button>

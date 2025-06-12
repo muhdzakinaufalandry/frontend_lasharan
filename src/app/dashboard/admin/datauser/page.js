@@ -6,6 +6,7 @@ import '@/styles/datauser.css';
 
 export default function AddUserPage() {
   const router = useRouter();
+
   const [form, setForm] = useState({
     username: '',
     password: '',
@@ -16,6 +17,19 @@ export default function AddUserPage() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
+  };
+
+  const handleReset = () => {
+    setForm({
+      username: '',
+      password: '',
+      registrationDate: '',
+      role: '',
+    });
+  };
+
+  const handleCancel = () => {
+    router.back(); // atau router.push('/dashboard/admin/users')
   };
 
   const handleSubmit = (e) => {
@@ -29,9 +43,9 @@ export default function AddUserPage() {
       <div className="form-header">
         <h2>Add User</h2>
         <div className="form-buttons">
-          <button className="btn cancel">cancel</button>
-          <button className="btn reset">reset</button>
-          <button className="btn save" onClick={handleSubmit}>save</button>
+          <button type="button" className="btn cancel" onClick={handleCancel}>Cancel</button>
+          <button type="button" className="btn reset" onClick={handleReset}>Reset</button>
+          <button type="submit" className="btn save" onClick={handleSubmit}>Save</button>
         </div>
       </div>
 
@@ -40,7 +54,7 @@ export default function AddUserPage() {
       <form className="user-form" onSubmit={handleSubmit}>
         <div className="form-row">
           <div className="form-group">
-            <label>User *</label>
+            <label>Username *</label>
             <input
               type="text"
               name="username"
@@ -76,10 +90,17 @@ export default function AddUserPage() {
           </div>
           <div className="form-group">
             <label>Role *</label>
-            <select>
-              <option>A</option>
-              <option>B</option>
-              </select>
+            <select
+              name="role"
+              value={form.role}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Role</option>
+              <option value="admin">Admin</option>
+              <option value="guru">Guru</option>
+              <option value="siswa">Siswa</option>
+            </select>
           </div>
         </div>
       </form>

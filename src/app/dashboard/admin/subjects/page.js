@@ -1,16 +1,18 @@
 'use client'
+
 import React, { useState, useEffect } from 'react'
 import '@/styles/subject.css'
+import { Pencil, Trash2, Plus } from 'lucide-react'
 
 export default function SubjectPage() {
   const [mataPelajarans, setMataPelajarans] = useState([])
-  const [kelas, setKelas] = useState([])  // Daftar kelas
+  const [kelas, setKelas] = useState([])
   const [editMataPelajaran, setEditMataPelajaran] = useState(null)
   const [showModal, setShowModal] = useState(false)
   const [loading, setLoading] = useState(true)
 
   const [IDMapel, setIDMapel] = useState('')
-  const [selectedKelas, setSelectedKelas] = useState('')  // Untuk memilih kelas
+  const [selectedKelas, setSelectedKelas] = useState('')
   const [namaMataPelajaran, setNamaMataPelajaran] = useState('')
 
   useEffect(() => {
@@ -28,7 +30,7 @@ export default function SubjectPage() {
 
     const fetchKelas = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/kelas`)  // Endpoint kelas
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/kelas`)
         const data = await response.json()
         setKelas(data)
       } catch (error) {
@@ -42,7 +44,9 @@ export default function SubjectPage() {
 
   const handleOpen = () => {
     setShowModal(true)
-    setEditMataPelajaran(null) // Reset edit
+    setEditMataPelajaran(null)
+    setSelectedKelas('')
+    setNamaMataPelajaran('')
   }
 
   const handleClose = () => {
@@ -104,7 +108,7 @@ export default function SubjectPage() {
   const handleEditMataPelajaran = (matapelajaran) => {
     setEditMataPelajaran(matapelajaran)
     setIDMapel(matapelajaran.id_mapel.toString())
-    setSelectedKelas(matapelajaran.id_kelas.toString())  // Set kelas yang sudah dipilih
+    setSelectedKelas(matapelajaran.id_kelas.toString())
     setNamaMataPelajaran(matapelajaran.nama_mata_pelajaran)
     setShowModal(true)
   }
@@ -140,7 +144,6 @@ export default function SubjectPage() {
     }
   }
 
-  // Fungsi untuk mendapatkan nama kelas berdasarkan id_kelas
   const getKelasName = (id_kelas) => {
     const kelasData = kelas.find(k => k.id_kelas === id_kelas)
     return kelasData ? kelasData.nama_kelas : "Unknown"
@@ -150,7 +153,9 @@ export default function SubjectPage() {
     <div className="subject-container">
       <div className="subject-header">
         <h2>All Subject List</h2>
-        <button className="btn-add" onClick={handleOpen}>+</button>
+        <button className="btn-add" onClick={handleOpen}>
+          <Plus size={20} />
+        </button>
       </div>
 
       {loading ? (
@@ -171,10 +176,14 @@ export default function SubjectPage() {
                 <td>{subj.id_mapel}</td>
                 <td>{getKelasName(subj.id_kelas)}</td>
                 <td>{subj.nama_mata_pelajaran}</td>
-                <td>
-                  <button onClick={() => handleEditMataPelajaran(subj)}>✏️</button>
-                  <button onClick={() => handleDeleteMataPelajaran(subj.id_mapel)}>🗑️</button>
-                </td>
+                <td className="action-icons">
+                <button onClick={() => handleEditMataPelajaran(subj)} className="icon-button">
+                  <Pencil size={18} />
+                </button>
+                <button onClick={() => handleDeleteMataPelajaran(subj.id_mapel)} className="icon-button delete">
+                  <Trash2 size={18} />
+                </button>
+              </td>
               </tr>
             ))}
           </tbody>
@@ -188,7 +197,6 @@ export default function SubjectPage() {
             <hr />
 
             <form onSubmit={editMataPelajaran ? handleUpdateMataPelajaran : handleSubmit}>
-
               <div className="form-group">
                 <label>Class Name</label>
                 <select
