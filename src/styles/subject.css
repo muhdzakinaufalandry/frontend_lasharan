@@ -12,13 +12,16 @@
 }
 
 .btn-add {
-  background-color: #007bff;
+ background-color: #00bfff;
   color: white;
-  padding: 8px 16px;
-  border-radius: 50%;
-  font-size: 20px;
   border: none;
+  border-radius: 6px;
+  padding: 0.5rem 0.7rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
 }
 
 /* ✅ TABEL DIUBAH KE GAYA CARD */
@@ -143,4 +146,24 @@
 .save-btn {
   background-color: #007bff;
   color: white;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: 5px;
+}
+
+.icon-button:hover {
+  background-color: #f0f0f0;
+}
+
+.icon-button.delete {
+  color: #dc3545;
 }

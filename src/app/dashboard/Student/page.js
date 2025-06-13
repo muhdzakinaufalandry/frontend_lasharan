@@ -17,16 +17,16 @@ export default function StudentDashboardPage() {
           <div className="status-box">
             <h3>Attendance</h3>
             <div className="circle">
-              <span>53%</span>
+              <span>""%</span>
             </div>
-            <p>Present 53% | Absent 47%</p>
+            <p>Present ""% | Absent ""%</p>
           </div>
           <div className="status-box">
             <h3>Overall Task</h3>
             <div className="circle blue">
-              <span>70%</span>
+              <span>""%</span>
             </div>
-            <p>Done 70% | Unfinished 30%</p>
+            <p>Done ""% | Unfinished ""%</p>
           </div>
         </section>
 
@@ -35,20 +35,18 @@ export default function StudentDashboardPage() {
             <h4>Notice Board</h4>
             <div className="notice yellow">
               <strong>Sports Day Announcement</strong>
-              <p>The school’s Annual Sports Day...</p>
+              <p>""</p>
             </div>
             <div className="notice purple">
               <strong>Summer Break Start Date</strong>
-              <p>Summer break begins...</p>
+              <p>""</p>
             </div>
           </div>
 
           <div className="documents">
             <h4>Documents</h4>
             <ul>
-              <li>Class A 1st semester result</li>
-              <li>Kelvin college application</li>
-              <li>Class B attendance sheet</li>
+              <li>""</li>
             </ul>
           </div>
 

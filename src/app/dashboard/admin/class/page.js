@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import '@/styles/class.css';
+import { Pencil, Trash2, Plus } from 'lucide-react';
 
 export default function ClassPage() {
   const [kelass, setKelass] = useState([]);
@@ -151,7 +152,9 @@ export default function ClassPage() {
     <div className="class-container">
       <div className="class-header">
         <h2>All Class List</h2>
-        <button className="btn-add" onClick={handleOpen}>＋</button>
+        <button className="btn-add" onClick={handleOpen}>
+          <Plus size={18} />
+        </button>
       </div>
 
       <table className="class-table">
@@ -172,8 +175,18 @@ export default function ClassPage() {
               <td>{getNamaGuruById(kelas.id_guru)}</td>
               <td>{kelas.tahun_ajaran}</td>
               <td className="action-icons">
-                <span title="Edit" onClick={() => handleEdit(kelas)}>✏️</span>
-                <span title="Delete" onClick={() => handleDelete(kelas.id_kelas)}>🗑️</span>
+                <Pencil
+                  size={16}
+                  title="Edit"
+                  onClick={() => handleEdit(kelas)}
+                  style={{ cursor: 'pointer', marginRight: '10px' }}
+                />
+                <Trash2
+                  size={16}
+                  title="Delete"
+                  onClick={() => handleDelete(kelas.id_kelas)}
+                  style={{ cursor: 'pointer', color: '#c0392b' }}
+                />
               </td>
             </tr>
           ))}
@@ -226,8 +239,8 @@ export default function ClassPage() {
               </div>
 
               <div className="button-group">
-                <button type="button" onClick={handleClose} className="cancel-btn">cancel</button>
-                <button type="submit" className="save-btn">{editKelas ? 'update' : 'save'}</button>
+                <button type="button" onClick={handleClose} className="cancel-btn">Cancel</button>
+                <button type="submit" className="save-btn">{editKelas ? 'Update' : 'Save'}</button>
               </div>
             </form>
           </div>

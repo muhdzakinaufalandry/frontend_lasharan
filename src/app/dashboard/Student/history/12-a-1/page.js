@@ -1,11 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import SidebarStudent from '@/components/SidebarStudent';
+import { FileText, UserCheck } from 'lucide-react';
 import "@/styles/12-a-1.css";
 import Link from 'next/link';
 
 export default function HistoryDetailPage() {
+  const [searchTerm, setSearchTerm] = useState('');
+
   const subjects = [
     { subject: "Accounting", code: "00001", status: "100% Complete" },
     { subject: "English", code: "00002", status: "100% Complete" },
@@ -15,22 +17,22 @@ export default function HistoryDetailPage() {
     { subject: "IT (Information Technology)", code: "00006", status: "100% Complete" },
   ];
 
+  const filteredSubjects = subjects.filter((item) =>
+    item.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.code.includes(searchTerm)
+  );
+
   return (
     <div className="history-detail-container">
       <main className="main-content">
         <div className="topbar">
-          <input type="text" placeholder="Search" className="search-bar" />
-          <div className="top-icons">
-            <input type="text" placeholder="Search by Name or R" className="class-filter" />
-            <select className="class-dropdown">
-              <option value="all">All Classes</option>
-            </select>
-            <div className="icon-group">
-              <div className="icon" />
-              <div className="icon" />
-              <div className="icon blue" />
-            </div>
-          </div>
+          <input
+            type="text"
+            placeholder="Search subject or code"
+            className="search-bar"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
 
         <div className="detail-layout">
@@ -42,7 +44,7 @@ export default function HistoryDetailPage() {
           <div className="subjects-section">
             <h3>Subjects</h3>
             <div className="cards-grid">
-              {subjects.map((item, i) => {
+              {filteredSubjects.map((item, i) => {
                 const isAccounting = item.subject === "Accounting";
                 const content = (
                   <div className="subject-card">
@@ -91,17 +93,17 @@ export default function HistoryDetailPage() {
                     strokeDasharray="100, 100"
                     d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                   />
-                  <text x="18" y="20.35" className="percentage">100%</text>
                 </svg>
+                <FileText className="lucide-icon-overlay" />
                 <div className="labels">
                   <span>Done 100%</span>
-                  <span>unfinished 0%</span>
+                  <span>Unfinished 0%</span>
                 </div>
               </div>
             </div>
 
             <div className="progress-item">
-              <div className="progress-title">overall absence</div>
+              <div className="progress-title">overall Absence</div>
               <div className="progress-chart">
                 <svg viewBox="0 0 36 36" className="circular-chart">
                   <path
@@ -113,8 +115,8 @@ export default function HistoryDetailPage() {
                     strokeDasharray="90, 100"
                     d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                   />
-                  <text x="18" y="20.35" className="percentage">90%</text>
                 </svg>
+                <UserCheck className="lucide-icon-overlay" />
                 <div className="labels">
                   <span>Present 90%</span>
                   <span>Absent 10%</span>

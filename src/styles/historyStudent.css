@@ -1,184 +1,199 @@
 .history-container {
-    display: flex;
-    min-height: 100vh;
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+.search-bar {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  width: 250px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.status-labels {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.done-dot {
+  background-color: #d4f4dd;
+}
+
+.onprocess-dot {
+  background-color: #f8d7da;
+}
+
+.history-layout {
+  display: flex;
+  gap: 20px;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  flex: 3;
+}
+
+.card {
+  padding: 60px;
+  border-radius: 10px;
+  text-align: center;
+  transition: transform 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.done {
+  background-color: #d4f4dd;
+}
+
+.onprocess {
+  background-color: #f8d7da;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-grade {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.card-year {
+  font-size: 14px;
+  color: #666;
+}
+
+.progress-container {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.progress-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.progress-chart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.circular-wrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.circular-chart {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.circle-bg {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 2.8;
+}
+
+.circle {
+  fill: none;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  stroke: #2b6cb0;
+  animation: progress 1s ease-out forwards;
+}
+
+@keyframes progress {
+  0% {
+    stroke-dasharray: 0 100;
   }
-  
-  .main-content {
-    flex: 1;
-    padding: 20px;
-    background-color: #f5f5f5;
-  }
-  
-  .topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .search-bar {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    width: 200px;
-  }
-  
-  .top-icons {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .class-filter {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .class-dropdown {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .section-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .status-labels {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .dot {
-    height: 10px;
-    width: 10px;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 5px;
-  }
-  
-  .done-dot {
-    background-color: #d4f4dd;
-  }
-  
-  .onprocess-dot {
-    background-color: #f8d7da;
-  }
-  
-  .history-layout {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 2fr);
-    gap: 20px;
-    flex: 3;
-  }
-  
-  .card {
-    padding: 100px;
-    border-radius: 10px;
-    text-align: center;
-    transition: transform 0.2s;
-  }
-  
-  .card:hover {
-    transform: scale(1.05);
-  }
-  
-  .done {
-    background-color: #d4f4dd;
-  }
-  
-  .onprocess {
-    background-color: #f8d7da;
-  }
-  
-  .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .card-grade {
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  .card-year {
-    font-size: 14px;
-    color: #666;
-  }
-  
-  .progress-container {
-    flex: 1;
-    text-align: center;
-  }
-  
-  .progress-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-  }
-  
-  .progress-chart {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .circular-chart {
-    display: block;
-    margin: 10px auto;
-    max-width: 150px;
-    max-height: 150px;
-  }
-  
-  .circle-bg {
-    fill: none;
-    stroke: #eee;
-    stroke-width: 2.8;
-  }
-  
-  .circle {
-    fill: none;
-    stroke-width: 2.8;
-    stroke-linecap: round;
-    stroke: #2b6cb0;
-    animation: progress 1s ease-out forwards;
-  }
-  
-  @keyframes progress {
-    0% {
-      stroke-dasharray: 0 100;
-    }
-  }
-  
-  .percentage {
-    font-size: 6px;
-    text-anchor: middle;
-    fill: #000;
-  }
-  
-  .labels {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin-top: 10px;
-  }
-  
-  .done-label::before {
-    content: "• ";
-    color: #2b6cb0;
-  }
-  
-  .unfinished-label::before {
-    content: "• ";
-    color: #ccc;
-  }
+}
+
+.center-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.center-overlay .lucide-icon {
+  width: 26px;
+  height: 26px;
+  color: #2b6cb0;
+  margin-bottom: 2px;
+}
+
+.center-overlay .percentage {
+  font-size: 14px;
+  font-weight: bold;
+  color: #1f2937;
+  margin-top: 2px;
+}
+
+.labels {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 8px;
+  font-size: 14px;
+  color: #1f2937;
+}
+
+.done-label::before {
+  content: "• ";
+  color: #2b6cb0;
+}
+
+.unfinished-label::before {
+  content: "• ";
+  color: #ccc;
+}
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+}

@@ -6,6 +6,7 @@ import '@/styles/datauser.css';
 
 export default function AddUserPage() {
   const router = useRouter();
+
   const [form, setForm] = useState({
     username: '',
     password: '',
@@ -18,7 +19,21 @@ export default function AddUserPage() {
     setForm({ ...form, [name]: value });
   };
 
+  const handleReset = () => {
+    setForm({
+      username: '',
+      password: '',
+      registrationDate: '',
+      role: '',
+    });
+  };
+
+  const handleCancel = () => {
+    router.back(); // atau router.push('/dashboard/admin/users')
+  };
+  
   const handleSubmit = async (e) => {
+
     e.preventDefault();
 
     try {
@@ -77,7 +92,7 @@ export default function AddUserPage() {
       <form className="user-form" onSubmit={handleSubmit}>
         <div className="form-row">
           <div className="form-group">
-            <label>User *</label>
+            <label>Username *</label>
             <input
               type="text"
               name="username"

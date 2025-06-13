@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import SidebarStudent from '@/components/SidebarStudent';
 import '@/styles/grades.css';
-import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
 export default function GradePage() {
@@ -20,18 +19,15 @@ export default function GradePage() {
 
   useEffect(() => {
     const idUser = localStorage.getItem('id_user');
-
     if (!idUser) {
       console.error('id_user tidak ditemukan di localStorage');
       return;
     }
 
-    // Ambil id_siswa berdasarkan id_user
     fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/siswa/user/${idUser}`)
       .then((res) => res.json())
       .then((data) => {
-        const fetchedIdSiswa = data.id_siswa;
-        setIdSiswa(fetchedIdSiswa);
+        setIdSiswa(data.id_siswa);
       })
       .catch((err) => {
         console.error('Gagal mengambil id_siswa:', err);
@@ -77,11 +73,6 @@ export default function GradePage() {
     <div className="grade-page">
       <main className="grade-main">
         <div className="header-section">
-          <div className="search-bar">
-            <input type="text" placeholder="Search..." />
-            <button>Search by name or id</button>
-            <button>All classes</button>
-          </div>
           <div className="subject-header">
             <h2>{`${gradeData.subject} ${gradeData.teacher}`}</h2>
             <span className="year">{gradeData.year}</span>
@@ -106,10 +97,6 @@ export default function GradePage() {
                     <td>{grade.weight}</td>
                     <td>{grade.grade}</td>
                     <td>{grade.range}</td>
-                      {grade.item !== 'Course Total' && (
-                        <>                        
-                        </>
-                      )}
                   </tr>
                 ))}
               </tbody>

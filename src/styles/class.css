@@ -18,14 +18,20 @@
 }
 
 .btn-add {
-  background-color: #00aaff;
+   background-color: #00bfff;
   color: white;
-  font-size: 20px;
-  width: 40px;
-  height: 40px;
   border: none;
-  border-radius: 50%;
+  border-radius: 6px;
+  padding: 0.5rem 0.7rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.btn-add:hover {
+  background-color: #009acd;
 }
 
 /* TABEL */

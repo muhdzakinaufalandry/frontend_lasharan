@@ -2,11 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import '@/styles/student.css';
 import Link from 'next/link';
+import { Search, Plus, Pencil, Trash2 } from 'lucide-react';
 
 export default function StudentPage() {
   const [siswas, setSiswas] = useState([]);
+  const [filteredSiswas, setFilteredSiswas] = useState([]);
   const [editSiswa, setEditSiswa] = useState(null);
   const [kelasList, setKelasList] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,6 +26,7 @@ export default function StudentPage() {
         ]);
 
         setSiswas(siswaData);
+        setFilteredSiswas(siswaData);
         setKelasList(kelasData);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -34,6 +38,16 @@ export default function StudentPage() {
     fetchData();
   }, []);
 
+  const handleSearch = (e) => {
+    const term = e.target.value.toLowerCase();
+    setSearchTerm(term);
+    const filtered = siswas.filter((s) =>
+      s.nama_siswa.toLowerCase().includes(term) ||
+      s.alamat.toLowerCase().includes(term)
+    );
+    setFilteredSiswas(filtered);
+  };
+
   const handleDeleteSiswa = async (id) => {
     if (!window.confirm("Yakin ingin menghapus siswa ini?")) return;
 
@@ -43,7 +57,9 @@ export default function StudentPage() {
       });
 
       if (response.ok) {
-        setSiswas(siswas.filter(s => s.id_siswa !== id));
+        const updated = siswas.filter(s => s.id_siswa !== id);
+        setSiswas(updated);
+        setFilteredSiswas(updated);
         alert("Siswa berhasil dihapus.");
       } else {
         alert("Gagal menghapus siswa.");
@@ -58,7 +74,7 @@ export default function StudentPage() {
     setEditSiswa(siswa);
   };
 
-  const handleUpdateGuru = async () => {
+  const handleUpdateSiswa = async () => {
     if (!editSiswa) return;
 
     try {
@@ -69,9 +85,13 @@ export default function StudentPage() {
       });
 
       if (response.ok) {
-        setSiswas(siswas.map(s => s.id_siswa === editSiswa.id_siswa ? editSiswa : s));
+        const updated = siswas.map(s =>
+          s.id_siswa === editSiswa.id_siswa ? editSiswa : s
+        );
+        setSiswas(updated);
+        setFilteredSiswas(updated);
         alert("Siswa berhasil diperbarui.");
-        setEditSiswa(null); // Reset after update
+        setEditSiswa(null);
       } else {
         alert("Gagal memperbarui siswa.");
       }
@@ -81,7 +101,6 @@ export default function StudentPage() {
     }
   };
 
-  // Fungsi bantu: ambil nama kelas dari id_kelas
   const getNamaKelas = (id_kelas) => {
     const kelas = kelasList.find(k => k.id_kelas === id_kelas);
     return kelas ? kelas.nama_kelas : 'Kelas tidak ditemukan';
@@ -95,12 +114,29 @@ export default function StudentPage() {
           <p>All Student List</p>
         </div>
         <div className="header-actions">
-          <input type="text" placeholder="🔍 Search by Name or roll." className="search-input" />
-          <select className="filter-dropdown">
-            <option>All Classes</option>
-          </select>
-          <Link href="/dashboard/admin/users/student/add" className="add-new-btn">
-            + Add New
+          <div style={{ position: 'relative' }}>
+            <Search size={18} style={{
+              position: 'absolute',
+              left: '10px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              color: '#888'
+            }} />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={handleSearch}
+              placeholder="Search by name or address"
+              className="search-input"
+              style={{ paddingLeft: '2rem' }}
+            />
+          </div>
+          <Link
+            href="/dashboard/admin/users/student/add"
+            className="add-new-btn"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}
+          >
+            <Plus size={16} /> Add New
           </Link>
         </div>
       </div>
@@ -118,8 +154,8 @@ export default function StudentPage() {
           </tr>
         </thead>
         <tbody>
-          {!loading && siswas.length > 0 ? (
-            siswas.map((student, index) => (
+          {!loading && filteredSiswas.length > 0 ? (
+            filteredSiswas.map((student, index) => (
               <tr key={student.id_siswa}>
                 <td>{index + 1}</td>
                 <td>{student.nama_siswa}</td>
@@ -128,8 +164,18 @@ export default function StudentPage() {
                 <td>{student.tanggal_lahir}</td>
                 <td>{student.nisn}</td>
                 <td className="action-icons">
-                  <span title="Edit" onClick={() => handleEditSiswa(student)}>✏️</span>
-                  <span title="Delete" onClick={() => handleDeleteSiswa(student.id_siswa)}>🗑️</span>
+                  <Pencil
+                    size={16}
+                    title="Edit"
+                    onClick={() => handleEditSiswa(student)}
+                    style={{ cursor: 'pointer', marginRight: '8px' }}
+                  />
+                  <Trash2
+                    size={16}
+                    title="Delete"
+                    onClick={() => handleDeleteSiswa(student.id_siswa)}
+                    style={{ cursor: 'pointer', color: '#c0392b' }}
+                  />
                 </td>
               </tr>
             ))
@@ -153,7 +199,9 @@ export default function StudentPage() {
             />
             <select
               value={editSiswa.id_kelas}
-              onChange={(e) => setEditSiswa({ ...editSiswa, id_kelas: parseInt(e.target.value) })}
+              onChange={(e) =>
+                setEditSiswa({ ...editSiswa, id_kelas: parseInt(e.target.value) })
+              }
             >
               <option value="">Select Class</option>
               {kelasList.map((kelas) => (
@@ -180,7 +228,7 @@ export default function StudentPage() {
               onChange={(e) => setEditSiswa({ ...editSiswa, nisn: e.target.value })}
             />
             <div className="modal-actions">
-              <button className="btn-rounded save-btn" onClick={handleUpdateGuru}>Save</button>
+              <button className="btn-rounded save-btn" onClick={handleUpdateSiswa}>Save</button>
               <button className="btn-rounded cancel-btn" onClick={() => setEditSiswa(null)}>Cancel</button>
             </div>
           </div>

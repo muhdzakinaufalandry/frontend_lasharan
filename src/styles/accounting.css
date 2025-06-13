@@ -1,4 +1,4 @@
-/* Subject Detail Page */
+/* Subject Detail Page Layout */
 .subject-page {
   display: flex;
   flex-direction: column;
@@ -8,40 +8,15 @@
 .subject-detail-main {
   flex: 1;
   padding: 30px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
-.header-section {
-  margin-bottom: 20px;
-}
-
-.search-bar {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.search-bar input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #D1D5DB;
-  border-radius: 20px;
-  font-size: 14px;
-}
-
-.search-bar button {
-  padding: 10px 20px;
-  border: 1px solid #D1D5DB;
-  border-radius: 20px;
-  background-color: #FFFFFF;
-  font-size: 14px;
-  cursor: pointer;
-}
-
+/* Header Section */
 .subject-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .subject-header h2 {
@@ -55,6 +30,7 @@
   color: #6B7280;
 }
 
+/* Overview Section */
 .subject-overview {
   display: flex;
   gap: 20px;
@@ -69,6 +45,7 @@
   gap: 20px;
 }
 
+/* About Box */
 .about {
   background: #F9F9F9;
   padding: 25px;
@@ -93,87 +70,59 @@
   border-radius: 10px;
 }
 
+/* Box Grid */
 .overview-box {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
 }
 
-/* Flexbox for side-by-side layout */
-.participants-box, .grades-box {
+/* Participants & Grades Box Shared Styles */
+.participants-box,
+.grades-box {
   background: #E6F0FA;
   padding: 25px;
   border-radius: 15px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   flex: 1;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-}
-
-.participants-box h4, .grades-box h4 {
-  font-size: 18px;
-  font-weight: 600;
-  color: #1F2937;
-  
-}
-
-.icon {
-  font-size: 30px;
-  color: #1F2937;
-}
-
-.icon-box {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.icon-box .icon {
-  font-size: 30px;
-  color: #1F2937;
-}
-
-/* Align icon with the number */
-.participants-count, .grades-count {
-  font-size: 48px;
-  font-weight: 700;
-  color: #1F2937;
-}
-
-/* Grades Box Styling */
-.grades-box {
-  background: #E6F0FA; /* Light Green Background */
-  padding: 20px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
+  flex-direction: column;
+  gap: 12px;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  font-size: 18px;
-  font-weight: 600;
-  color: #1F2937;
 }
 
+.participants-box:hover,
 .grades-box:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
 }
 
-.grades-title {
-  margin-left: 10px;
+.participants-box h4,
+.grades-box h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1F2937;
 }
 
+/* Icon + Value alignment */
+.icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.icon-box .icon {
+  width: 32px;
+  height: 32px;
+  color: #1F2937;
+}
+
+/* Value Styles */
+.participants-count,
 .grades-value {
   font-size: 48px;
   font-weight: 700;
-  margin-left: 10px;
-}
-
-.extra-info {
-  margin-top: 30px;
-  display: flex;
-  gap: 20px;
+  color: #1F2937;
 }
