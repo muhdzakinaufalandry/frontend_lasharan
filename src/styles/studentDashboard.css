@@ -9,9 +9,8 @@
 
 .dashboard-layout {
     display: flex;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
+  height: 100vh;
+  overflow: hidden;
   }
 
 .school-logo {
@@ -62,10 +61,10 @@ nav li.active {
 }
 
 .dashboard-content {
-    flex: 1 1 0%;
-    padding: 2rem;
-    background-color: #f9f9f9;
-    overflow-y: auto;
+  flex: 1;
+  padding: 2rem;
+  background-color: #f5f7fa;
+  overflow-y: auto;
 }
 
 .dashboard-header input {
@@ -77,30 +76,54 @@ nav li.active {
 }
 
 .welcome-card {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  flex-wrap: wrap;
+}
+
+.welcome-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.welcome-text h2 {
+  margin: 0;
+}
+
+.welcome-ipsum {
+  margin: 1rem 0 0;  /* dorong paragraf ke bawah */
 }
 
 .status-section {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-top: 20px;
+  display: flex;
+  gap: 20px;
+  margin-top: 2rem;
 }
 
 .status-box {
-    flex: 1;
-    min-width: 200px;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
+  flex: 1;
+  min-width: 200px;
+  padding: 20px;
+  border-radius: 10px;
+  color: #1f2937;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-box h3 {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.status-box p {
+  margin: 0;
+  font-size: 1rem;
 }
 
 .circle.blue,
@@ -155,6 +178,14 @@ nav li.active {
     border-radius: 10px;
     margin-top: 20px;
     overflow-x: auto;
+}
+
+.subject-box {
+  background-color: #fbbf58; /* oranye lembut */
+}
+
+.grade-box {
+  background-color: #90caf9; /* biru lembut */
 }
 
 table {

@@ -1,9 +1,9 @@
+// src/app/grade/[subjectId]/page.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
 import SidebarStudent from '@/components/SidebarStudent';
 import '@/styles/gradeDetails.css';
-import { Pencil, Trash2 } from 'lucide-react';
 
 export default function GradePage({ params }) {
   const { subjectId } = params;
@@ -16,11 +16,11 @@ export default function GradePage({ params }) {
       year: '2022-2023 [1]',
       student: 'Kevin William',
       grades: [
-        { item: 'Attendance', weight: '100.00%', grade: '100.00 (A)', range: '0 - 100' },
+        { item: 'Attendance',   weight: '100.00%', grade: '100.00 (A)', range: '0 - 100' },
         { item: 'Assignment 1', weight: '100.00%', grade: '100.00 (A)', range: '0 - 100' },
         { item: 'Assignment 2', weight: '100.00%', grade: '100.00 (A)', range: '0 - 100' },
-        { item: 'Assignment 3', weight: '100.00%', grade: '', range: '0 - 100' },
-        { item: 'Course Total', weight: '-', grade: '', range: '0 - 100' },
+        { item: 'Assignment 3', weight: '100.00%', grade: '',           range: '0 - 100' },
+        { item: 'Course Total', weight: '-',       grade: '',           range: '0 - 100' },
       ],
     };
     setGradeData(data);
@@ -48,7 +48,6 @@ export default function GradePage({ params }) {
                   <th>Calculated Weight</th>
                   <th>Grade</th>
                   <th>Range</th>
-                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -58,14 +57,6 @@ export default function GradePage({ params }) {
                     <td>{grade.weight}</td>
                     <td>{grade.grade}</td>
                     <td>{grade.range}</td>
-                    <td>
-                      {grade.item !== 'Course Total' && (
-                        <>
-                          <button className="action-btn"><Pencil size={18} /></button>
-                          <button className="action-btn"><Trash2 size={18} /></button>
-                        </>
-                      )}
-                    </td>
                   </tr>
                 ))}
               </tbody>
