@@ -1,6 +1,4 @@
 'use client';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faEnvelope, faCog } from '@fortawesome/free-solid-svg-icons';
 import React, { useEffect, useState } from 'react';
 import '@/styles/subjectList.css';
 
@@ -8,18 +6,15 @@ export default function SubjectsPage() {
   const [subjects, setSubjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Ambil dari localStorage (anggap user login)
   const id_user = typeof window !== 'undefined' ? localStorage.getItem('id_user') : null;
 
   useEffect(() => {
     if (!id_user) return;
 
-    // 1. Ambil id_siswa dari id_user
     fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/siswa/user/${id_user}`)
       .then((res) => res.json())
       .then((data) => {
-        const id_siswa = data.id_siswa; // sesuai handler-mu
-        // 2. Ambil daftar mata pelajaran berdasarkan id_siswa
+        const id_siswa = data.id_siswa;
         return fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/matapelajaran/siswa/${id_siswa}`);
       })
       .then((res) => res.json())
@@ -37,9 +32,7 @@ export default function SubjectsPage() {
       subject.id_mapel.toString().includes(searchTerm)
   );
 
-  // Handle row click
   const handleRowClick = (id) => {
-    // Navigasi ke halaman detail
     window.location.href = `/dashboard/Student/subject/${id}`;
   };
 
@@ -54,18 +47,6 @@ export default function SubjectsPage() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <div className="header-icons">
-            <button className="icon-btn">
-              <FontAwesomeIcon icon={faBell} />
-            </button>
-            <button className="icon-btn">
-              <FontAwesomeIcon icon={faEnvelope} />
-            </button>
-            <button className="icon-btn">
-              <FontAwesomeIcon icon={faCog} />
-            </button>
-            <div className="avatar-circle" />
-          </div>
         </div>
 
         <h1 className="subject-list-title">Subject</h1>

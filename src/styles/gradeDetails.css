@@ -13,29 +13,6 @@
     margin-bottom: 20px;
   }
   
-  .search-bar {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .search-bar input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #D1D5DB;
-    border-radius: 20px;
-    font-size: 14px;
-  }
-  
-  .search-bar button {
-    padding: 10px 20px;
-    border: 1px solid #D1D5DB;
-    border-radius: 20px;
-    background-color: #FFFFFF;
-    font-size: 14px;
-    cursor: pointer;
-  }
-  
   .subject-header {
     display: flex;
     justify-content: space-between;

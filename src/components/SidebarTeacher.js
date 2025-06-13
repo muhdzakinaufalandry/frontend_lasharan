@@ -3,10 +3,9 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { Home, Presentation, LogOut } from 'lucide-react';
+import Swal from 'sweetalert2';
 import '@/styles/sidebarteacher.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faChalkboard, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import Swal from 'sweetalert2'; // Import SweetAlert2
 
 export default function SidebarTeacher() {
   const pathname = usePathname();
@@ -17,22 +16,20 @@ export default function SidebarTeacher() {
     else if (pathname.includes('/Teacher')) setActiveMenu('dashboard');
   }, [pathname]);
 
-  // SweetAlert Logout Confirmation
   const handleLogout = () => {
-      Swal.fire({
-        title: 'Are you sure?',
-        text: 'You will be logged out.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, log out!',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Redirect to login page after confirmation
-          window.location.href = '/'; // Ensure to navigate to the correct page
-        }
-      });
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will be logged out.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, log out!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = '/';
+      }
+    });
   };
 
   return (
@@ -47,7 +44,7 @@ export default function SidebarTeacher() {
           href="/dashboard/Teacher"
           className={`sidebar-link ${activeMenu === 'dashboard' ? 'active' : ''}`}
         >
-          <FontAwesomeIcon icon={faHome} />
+          <Home size={20} />
           <span>Dashboard</span>
         </Link>
 
@@ -55,15 +52,14 @@ export default function SidebarTeacher() {
           href="/dashboard/Teacher/class"
           className={`sidebar-link ${activeMenu === 'class' ? 'active' : ''}`}
         >
-          <FontAwesomeIcon icon={faChalkboard} />
+          <Presentation size={20} />
           <span>Class</span>
         </Link>
       </nav>
 
-      {/* Bottom Logout */}
       <div className="sidebar-bottom">
         <button className="sidebar-link logout" onClick={handleLogout}>
-          <FontAwesomeIcon icon={faSignOutAlt} />
+          <LogOut size={20} />
           <span>Logout</span>
         </button>
       </div>

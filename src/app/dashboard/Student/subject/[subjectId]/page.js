@@ -2,10 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
+import { Users, FileText } from 'lucide-react';
 import '@/styles/accounting.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsers, faFileAlt } from '@fortawesome/free-solid-svg-icons'; // Importing FA icons
-import Link from 'next/link';
 
 export default function SubjectDetailPage() {
   const params = useParams();
@@ -26,7 +24,7 @@ export default function SubjectDetailPage() {
           year: '2024-2025 [2]',
           description: 'Deskripsi belum tersedia',
           participants: 120,
-          grades: 87, // Single grade value
+          grades: 87,
         };
 
         setSubjectData(formattedData);
@@ -48,16 +46,9 @@ export default function SubjectDetailPage() {
   return (
     <div className="subject-page">
       <main className="subject-detail-main">
-        <div className="header-section">
-          <div className="search-bar">
-            <input type="text" placeholder="Search..." />
-            <button>Search by name or id</button>
-            <button>All classes</button>
-          </div>
-          <div className="subject-header">
-            <h2>{`${subjectData.name} - ${subjectData.teacher}`}</h2>
-            <span className="year">{subjectData.year}</span>
-          </div>
+        <div className="subject-header">
+          <h2>{`${subjectData.name} - ${subjectData.teacher}`}</h2>
+          <span className="year">{subjectData.year}</span>
         </div>
 
         <section className="subject-overview">
@@ -71,19 +62,27 @@ export default function SubjectDetailPage() {
             </div>
 
             <div className="overview-box">
+              {/* Participants Box */}
               <div className="participants-box">
                 <h4>Participants</h4>
                 <div className="icon-box">
-                  <FontAwesomeIcon icon={faUsers} className="icon" />
+                  <Users className="icon" />
                   <span className="participants-count">{subjectData.participants}</span>
                 </div>
               </div>
 
               {/* Grades Box */}
-              <div className="grades-box" onClick={() => window.location.href = `/dashboard/Student/subject/${subjectId}/subjectgrades`}>
-                <span className="grades-title">Grades</span>
-                <FontAwesomeIcon icon={faFileAlt} className="icon" />
-                <span className="grades-value">{subjectData.grades}</span>
+              <div
+                className="grades-box"
+                onClick={() =>
+                  window.location.href = `/dashboard/Student/subject/${subjectId}/subjectgrades`
+                }
+              >
+                <h4>Grades</h4>
+                <div className="icon-box">
+                  <FileText className="icon" />
+                  <span className="grades-value">{subjectData.grades}</span>
+                </div>
               </div>
             </div>
           </div>

@@ -4,22 +4,20 @@ import Link from 'next/link';
 import Swal from 'sweetalert2';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faBook, faHistory, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'; // Importing FA icons
-import '@/styles/sidebarstudent.css'; 
+import { Home, BookOpen, History, LogOut } from 'lucide-react';
+import '@/styles/sidebarstudent.css';
 
 export default function SidebarStudent() {
   const pathname = usePathname();
   const [activeMenu, setActiveMenu] = useState('');
 
-   useEffect(() => {
+  useEffect(() => {
     if (pathname.includes('/subject')) setActiveMenu('subjects');
     else if (pathname.includes('/history')) setActiveMenu('history');
     else if (pathname.includes('/Student')) setActiveMenu('dashboard');
     else setActiveMenu('dashboard');
   }, [pathname]);
 
-  // Handle Logout with SweetAlert confirmation
   const handleLogout = () => {
     Swal.fire({
       title: 'Are you sure?',
@@ -31,8 +29,7 @@ export default function SidebarStudent() {
       confirmButtonText: 'Yes, log out!',
     }).then((result) => {
       if (result.isConfirmed) {
-        // Redirect to login page after confirmation
-        window.location.href = '/'; // Ensure to navigate to the correct page
+        window.location.href = '/';
       }
     });
   };
@@ -45,30 +42,35 @@ export default function SidebarStudent() {
       </div>
 
       <nav className="sidebar-nav">
-        <Link href="/dashboard/Student" 
-          className={`sidebar-link ${activeMenu === 'dashboard' ? 'active' : ''}`} >
-          <FontAwesomeIcon icon={faHome} />
-          Dashboard
+        <Link
+          href="/dashboard/Student"
+          className={`sidebar-link ${activeMenu === 'dashboard' ? 'active' : ''}`}
+        >
+          <Home size={20} />
+          <span>Dashboard</span>
         </Link>
 
-        <Link href="/dashboard/Student/subject"  
-          className={`sidebar-link ${activeMenu === 'subjects' ? 'active' : ''}`} >
-          <FontAwesomeIcon icon={faBook} />
-          Subjects
+        <Link
+          href="/dashboard/Student/subject"
+          className={`sidebar-link ${activeMenu === 'subjects' ? 'active' : ''}`}
+        >
+          <BookOpen size={20} />
+          <span>Subjects</span>
         </Link>
 
-        <Link href="/dashboard/Student/history" 
-          className={`sidebar-link ${activeMenu === 'history' ? 'active' : ''}`} >
-          <FontAwesomeIcon icon={faHistory} />
-          History
+        <Link
+          href="/dashboard/Student/history"
+          className={`sidebar-link ${activeMenu === 'history' ? 'active' : ''}`}
+        >
+          <History size={20} />
+          <span>History</span>
         </Link>
       </nav>
 
-      {/* Bottom Logout */}
       <div className="sidebar-bottom">
         <button className="sidebar-link logout" onClick={handleLogout}>
-          <FontAwesomeIcon icon={faSignOutAlt} />
-          Logout
+          <LogOut size={20} />
+          <span>Logout</span>
         </button>
       </div>
     </div>

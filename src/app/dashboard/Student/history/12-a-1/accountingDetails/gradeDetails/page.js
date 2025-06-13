@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import SidebarStudent from '@/components/SidebarStudent';
 import '@/styles/gradeDetails.css';
+import { Pencil, Trash2 } from 'lucide-react';
 
 export default function GradePage({ params }) {
   const { subjectId } = params;
@@ -31,16 +32,12 @@ export default function GradePage({ params }) {
     <div className="grade-page">
       <main className="grade-main">
         <div className="header-section">
-          <div className="search-bar">
-            <input type="text" placeholder="Search..." />
-            <button>Search by name or id</button>
-            <button>All classes</button>
-          </div>
           <div className="subject-header">
             <h2>{`${gradeData.subject} - ${gradeData.teacher}`}</h2>
             <span className="year">{gradeData.year}</span>
           </div>
         </div>
+
         <section className="grade-section">
           <h3>{`${gradeData.student} Grades`}</h3>
           <div className="grade-table-container">
@@ -64,8 +61,8 @@ export default function GradePage({ params }) {
                     <td>
                       {grade.item !== 'Course Total' && (
                         <>
-                          <button className="action-btn">✏️</button>
-                          <button className="action-btn">🗑️</button>
+                          <button className="action-btn"><Pencil size={18} /></button>
+                          <button className="action-btn"><Trash2 size={18} /></button>
                         </>
                       )}
                     </td>
