@@ -58,13 +58,13 @@ export default function SidebarStudent() {
           <span>Subjects</span>
         </Link>
 
-        <Link
+        {/* <Link
           href="/dashboard/Student/history"
           className={`sidebar-link ${activeMenu === 'history' ? 'active' : ''}`}
         >
           <History size={20} />
           <span>History</span>
-        </Link>
+        </Link> */}
       </nav>
 
       <div className="sidebar-bottom">
