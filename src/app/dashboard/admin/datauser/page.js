@@ -29,11 +29,10 @@ export default function AddUserPage() {
   };
 
   const handleCancel = () => {
-    router.back(); // atau router.push('/dashboard/admin/users')
+    router.push('/dashboard/admin/datauser');
   };
-  
-  const handleSubmit = async (e) => {
 
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
@@ -61,19 +60,6 @@ export default function AddUserPage() {
       console.error('Error:', error);
       alert('Terjadi kesalahan saat menambahkan user.');
     }
-  };
-
-  const handleReset = () => {
-    setForm({
-      username: '',
-      password: '',
-      registrationDate: '',
-      role: '',
-    });
-  };
-
-  const handleCancel = () => {
-    router.push('/dashboard/admin/datauser');
   };
 
   return (
