@@ -55,13 +55,8 @@ export default function ParticipantsPage() {
               <th>ID</th>
               <th>Student Name</th>
               <th>NISN</th>
-              <th>Class</th>
-              <th>User Email</th>
               <th>Date of Birth</th>
               <th>Address</th>
-              <th>Contact</th>
-              <th>Points</th>
-              <th>Action</th>
             </tr>
           </thead>
 
@@ -75,23 +70,10 @@ export default function ParticipantsPage() {
                 </td>
                 {/* NISN */}
                 <td>{stu.nisn ? stu.nisn : 'N/A'}</td>
-                {/* Kelas */}
-                <td>{stu.id_kelas}</td>
-                {/* User Email */}
-                <td>{stu.email || 'N/A'}</td>
                 {/* Tanggal Lahir */}
                 <td>{stu.tanggal_lahir || 'N/A'}</td>
                 {/* Alamat */}
                 <td>{stu.alamat || 'N/A'}</td>
-                {/* Kontak */}
-                <td>{stu.contact || 'N/A'}</td>
-                {/* Points */}
-                <td>{stu.points || '0'}</td>
-                <td className="action-cell">
-                  <button title="Edit">✏️</button>
-                  <button title="Delete">🗑️</button>
-                  <button title="More">⋯</button>
-                </td>
               </tr>
             ))}
           </tbody>

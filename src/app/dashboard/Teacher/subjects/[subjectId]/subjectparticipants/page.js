@@ -38,6 +38,7 @@ export default function SubjectParticipantsPage() {
             <tr>
               <th>ID</th>
               <th>Student Name</th>
+              <th>NISN</th>
               <th>Date of Birth</th>
               <th>Address</th>
             </tr>
@@ -56,6 +57,7 @@ export default function SubjectParticipantsPage() {
                     {stu.nama_siswa}
                   </Link>
                 </td>
+                <td>{stu.nisn}</td>
                 <td>{stu.tanggal_lahir}</td>
                 <td>{stu.alamat}</td>
               </tr>

@@ -13,8 +13,7 @@
   }
   
   .subject-content {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
+    display: flex;
     gap: 2rem;
     margin-bottom: 2rem;
   }
@@ -27,6 +26,7 @@
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    width: 100%;
   }
   
   .about-text {
@@ -38,37 +38,37 @@
     height: auto;
   }
   
-  .side-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  .stat-card {
+  width: 438px;
+  height: 228px;
+  border-radius: 10px;
+  padding: 1rem;
+  background-color: #2e2e2e;
+  color: white;
+}
+
+ .orange {
+    background-color: #f7b267;
   }
   
-  .online-users,
-  .discussion-box {
-    background: #fff;
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  }
-  
-  .participant-box {
-    width: 438px;
-    height: 228px;
-    background-color: #333;
-    color: white;
-    border-radius: 12px;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    text-decoration: none;
-    transition: transform 0.2s ease;
-  }
-  
-  .participant-box:hover{
-    transform: scale(1.02);
-    cursor: pointer;
-  }
+.stat-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stat-text h3 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.stat-text p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  color: white;
+  margin-left: 1rem;
+}

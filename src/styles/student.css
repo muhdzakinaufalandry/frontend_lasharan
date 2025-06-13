@@ -1,5 +1,8 @@
 .student-page {
   padding: 2rem;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fff;
+  border-radius: 25px;
 }
 
 .student-header {
@@ -68,11 +71,14 @@
   margin-right: 10px;
   cursor: pointer;
   font-size: 16px;
+  gap: 12px;
 }
 
 .student-form-container {
-  padding: 30px;
-  font-family: sans-serif;
+  padding: 2rem;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fff;
+  border-radius: 25px;
 }
 
 .form-title {

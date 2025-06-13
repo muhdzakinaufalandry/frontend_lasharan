@@ -114,8 +114,11 @@ export default function TeacherPage() {
           <tr>
             <th>ID</th>
             <th>Teacher Name</th>
-            <th>User ID</th>
             <th>Subject</th>
+            <th>NIP</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Phone</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -124,8 +127,11 @@ export default function TeacherPage() {
             <tr key={teacher.id_guru}>
               <td>{index + 1}</td>
               <td>{teacher.nama_guru}</td>
-              <td>{teacher.id_user}</td>
               <td>{teacher.mata_pelajaran}</td>
+              <td>{teacher.nip}</td>
+              <td>{teacher.alamat}</td>
+              <td>{teacher.email}</td>
+              <td>{teacher.no_telp}</td>
               <td className="action-icons">
                 <Pencil
                   size={16}
@@ -148,9 +154,9 @@ export default function TeacherPage() {
       {editGuru && (
         <div className="edit-modal">
           <div className="modal-content">
-            <h3>Edit Guru</h3>
+            <h3>Edit Teacher</h3>
             <div className="form-group">
-              <label>Nama Guru</label>
+              <label>Name</label>
               <input
                 type="text"
                 value={editGuru.nama_guru}
@@ -160,13 +166,45 @@ export default function TeacherPage() {
               />
             </div>
             <div className="form-group">
-              <label>Mata Pelajaran</label>
+              <label>Subject</label>
               <input
                 type="text"
                 value={editGuru.mata_pelajaran}
                 onChange={(e) =>
                   setEditGuru({ ...editGuru, mata_pelajaran: e.target.value })
                 }
+              />
+            </div>
+            <div className="form-group">
+              <label>NIP</label>
+              <input
+                type="text"
+                value={editGuru.nip}
+                onChange={(e) => setEditGuru({ ...editGuru, nip: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <label>Address</label>
+              <input
+                type="text"
+                value={editGuru.alamat}
+                onChange={(e) => setEditGuru({ ...editGuru, alamat: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <label>Email</label>
+              <input
+                type="email"
+                value={editGuru.email}
+                onChange={(e) => setEditGuru({ ...editGuru, email: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <label>Phone</label>
+              <input
+                type="text"
+                value={editGuru.no_telp}
+                onChange={(e) => setEditGuru({ ...editGuru, no_telp: e.target.value })}
               />
             </div>
             <div className="form-actions">

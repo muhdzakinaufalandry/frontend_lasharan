@@ -13,7 +13,7 @@
   .dashboard-content-wrapper {
     flex: 1;
     padding: 2rem;
-    background-color: #ffffff;
+    background-color: #f5f6fa;
     overflow-y: hidden;
     display: flex;
     flex-direction: column;
@@ -31,8 +31,9 @@
   }
   
   .dashboard-body {
-    display: flex;
+    display: grid;
     gap: 1.5rem;
+    width: auto;
   }
   
   .dashboard-main {
@@ -42,101 +43,57 @@
     flex: 2;
   }
   
-  .attendance-card, .notice-board, .messages-section {
-    background: #fff;
-    border-radius: 12px;
-    padding: 1rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  }
-  
-  .attendance-circle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    margin: 1rem 0;
-  }
-  
-  .attendance-percentage {
-    position: absolute;
-    font-size: 1.1rem;
-    font-weight: bold;
-  }
-  
-  .attendance-note {
-    text-align: center;
-    font-size: 0.9rem;
-  }
-  
-  .notice-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-  
-  .notice-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  
-  .notice-item {
-    padding: 0.75rem;
-    border-radius: 10px;
-    font-size: 0.85rem;
-  }
-  
-  .notice-item.yellow {
-    background: #fff3cd;
-  }
-  
-  .notice-item.purple {
-    background: #e5d5ff;
-  }
-  
-  .add-post-btn {
-    margin-top: 1rem;
-    padding: 0.4rem 1rem;
-    border: none;
-    background-color: #2B3990;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  .messages-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .message-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .message-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-  
-  .message-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background-color: #ccc;
-  }
-  
-  .message-content span {
-    display: block;
-    font-size: 0.85rem;
-  }
-  
-  .message-time {
-    font-size: 0.75rem;
-    color: #888;
-    margin-left: auto;
-  }
+  .summary-cards {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin-top: 2rem;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.summary-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 1rem;
+  flex: 1;
+  color: #000;
+  font-weight: bold;
+  width: 100%;
+}
+
+.summary-card.orange {
+  background-color: #fbb35d;
+}
+
+.summary-card.blue {
+  background-color: #a7ccfc;
+}
+
+.summary-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.summary-count {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.summary-label {
+  font-size: 1.2rem;
+  font-weight: normal;
+}
+
+.summary-icon i,
+.summary-icon svg {
+  font-size: 3rem; 
+}

@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { Users, FileText } from 'lucide-react';
 import '@/styles/accounting.css';
+import Link from 'next/link';
+
 
 export default function SubjectDetailPage() {
   const params = useParams();
@@ -14,17 +16,18 @@ export default function SubjectDetailPage() {
   useEffect(() => {
     async function fetchSubject() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/matapelajaran/${subjectId}`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/mapel/simple-detail/${subjectId}`);
         if (!res.ok) throw new Error('Gagal fetch data');
         const data = await res.json();
 
         const formattedData = {
           name: data.nama_mata_pelajaran,
-          teacher: '',
-          year: '2024-2025 [2]',
-          description: 'Deskripsi belum tersedia',
-          participants: 120,
-          grades: 87,
+
+          teacher: data.nama_guru,
+          year: data.tahun_ajaran,
+          description: `Informasi singkat tentang mata pelajaran ${data.nama_mata_pelajaran} yang diajarkan oleh ${data.nama_guru}.`,
+          participants: data.jumlah_siswa || 0,
+
         };
 
         setSubjectData(formattedData);
@@ -57,7 +60,7 @@ export default function SubjectDetailPage() {
               <h4>About The Subject</h4>
               <p>{subjectData.description}</p>
               <div className="about-image">
-                <img src="https://via.placeholder.com/150" alt="Subject Illustration" />
+                <img src="/images/accounting.png" alt="Subject Illustration" />
               </div>
             </div>
 
@@ -74,6 +77,7 @@ export default function SubjectDetailPage() {
               {/* Grades Box */}
               <div
                 className="grades-box"
+
                 onClick={() =>
                   window.location.href = `/dashboard/Student/subject/${subjectId}/subjectgrades`
                 }
@@ -83,6 +87,7 @@ export default function SubjectDetailPage() {
                   <FileText className="icon" />
                   <span className="grades-value">{subjectData.grades}</span>
                 </div>
+
               </div>
             </div>
           </div>

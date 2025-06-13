@@ -1,15 +1,15 @@
+    html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden; /* Menghindari scroll */
+  }
+
   .dashboard-container {
     display: flex;
     min-height: 100vh;
     margin-bottom: 0.1rem;
-  }
-  
-  .dashboard-header {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    margin-bottom: 2rem;
+    overflow: hidden;
   }
   
   .dashboard-header h1 {
@@ -48,9 +48,10 @@
   
   .dashboard-content {
     flex: 1;
-    padding: 1rem;
+    padding: 2rem;
     margin-bottom: auto;
     background-color: #f5f6fa;
+    overflow-y: hidden;
   }
   .info-cards {
   display: flex;

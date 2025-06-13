@@ -177,6 +177,7 @@ export default function SubjectPage() {
                 <td>{getKelasName(subj.id_kelas)}</td>
                 <td>{subj.nama_mata_pelajaran}</td>
                 <td className="action-icons">
+
                 <button onClick={() => handleEditMataPelajaran(subj)} className="icon-button">
                   <Pencil size={18} />
                 </button>
@@ -184,6 +185,7 @@ export default function SubjectPage() {
                   <Trash2 size={18} />
                 </button>
               </td>
+
               </tr>
             ))}
           </tbody>

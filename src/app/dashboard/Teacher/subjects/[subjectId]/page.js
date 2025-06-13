@@ -4,6 +4,8 @@ import '@/styles/subjectDetail.css';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUsers } from '@fortawesome/free-solid-svg-icons';
 
 export default function SubjectDetailPage() {
   const { subjectId } = useParams();
@@ -43,35 +45,21 @@ export default function SubjectDetailPage() {
           </div>
           <img src="/images/accounting.png" alt={subjectDetails.nama_mata_pelajaran} />
         </div>
-
-        <div className="side-panel">
-          <div className="online-users">
-            <h4>Online Users</h4>
-            <ul>
-              <li>👤 Siswa 1</li>
-              <li>👤 Siswa 2</li>
-              <li>👤 Siswa 3</li>
-            </ul>
-          </div>
-          <div className="discussion-box">
-            <h4>Discussion Forum</h4>
-            <ul>
-              <li>Topic 1: Introduction</li>
-              <li>Topic 2: Homework</li>
-              <li>Topic 3: Evaluation</li>
-            </ul>
-          </div>
-        </div>
       </div>
 
       {subjectDetails?.id_mapel && (
-        <Link href={`/dashboard/Teacher/subjects/${subjectId}/subjectparticipants`}>
-          <div className="participant-box" style={{ cursor: 'pointer' }}>
-            <h3>{subjectDetails.jumlah_siswa}</h3>
-            <p>Participants</p>
+      <Link href={`/dashboard/Teacher/subjects/${subjectId}/subjectparticipants`}>
+        <div className="stat-card orange" style={{ cursor: 'pointer' }}>
+          <div className="stat-content">
+            <div className="stat-text">
+              <h3>{subjectDetails.jumlah_siswa || 0}</h3>
+              <p>Participants</p>
+            </div>
+            <FontAwesomeIcon icon={faUsers} className="stat-icon" />
           </div>
-        </Link>
-      )}
-    </div>
+        </div>
+      </Link>
+    )}
+  </div>
   );
 }

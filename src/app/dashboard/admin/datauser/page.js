@@ -31,11 +31,49 @@ export default function AddUserPage() {
   const handleCancel = () => {
     router.back(); // atau router.push('/dashboard/admin/users')
   };
+  
+  const handleSubmit = async (e) => {
 
-  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('User Data:', form);
-    router.push('/dashboard/admin/users');
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: form.username,
+          password: form.password,
+          tanggal_registrasi: form.registrationDate,
+          id_role: parseInt(form.role),
+        }),
+      });
+
+      if (response.ok) {
+        alert('User berhasil ditambahkan!');
+        router.push('/dashboard/admin/datauser');
+      } else {
+        const err = await response.json();
+        alert(`Gagal menambahkan user: ${err.message || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Terjadi kesalahan saat menambahkan user.');
+    }
+  };
+
+  const handleReset = () => {
+    setForm({
+      username: '',
+      password: '',
+      registrationDate: '',
+      role: '',
+    });
+  };
+
+  const handleCancel = () => {
+    router.push('/dashboard/admin/datauser');
   };
 
   return (
@@ -90,16 +128,11 @@ export default function AddUserPage() {
           </div>
           <div className="form-group">
             <label>Role *</label>
-            <select
-              name="role"
-              value={form.role}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select Role</option>
-              <option value="admin">Admin</option>
-              <option value="guru">Guru</option>
-              <option value="siswa">Siswa</option>
+            <select name="role" value={form.role} onChange={handleChange} required>
+              <option value="">-- Select Role --</option>
+              <option value="1">Teacher</option>
+              <option value="2">Student</option>
+              {/* Tambah lagi jika ada role lainnya */}
             </select>
           </div>
         </div>

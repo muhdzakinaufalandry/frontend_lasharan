@@ -149,6 +149,7 @@ export default function StudentPage() {
             <th>Class</th>
             <th>Address</th>
             <th>Date of Birth</th>
+            <th>NISN</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -161,6 +162,7 @@ export default function StudentPage() {
                 <td>{getNamaKelas(student.id_kelas)}</td>
                 <td>{student.alamat}</td>
                 <td>{student.tanggal_lahir}</td>
+                <td>{student.nisn}</td>
                 <td className="action-icons">
                   <Pencil
                     size={16}
@@ -218,6 +220,12 @@ export default function StudentPage() {
               type="date"
               value={editSiswa.tanggal_lahir}
               onChange={(e) => setEditSiswa({ ...editSiswa, tanggal_lahir: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="NISN"
+              value={editSiswa.nisn}
+              onChange={(e) => setEditSiswa({ ...editSiswa, nisn: e.target.value })}
             />
             <div className="modal-actions">
               <button className="btn-rounded save-btn" onClick={handleUpdateSiswa}>Save</button>
