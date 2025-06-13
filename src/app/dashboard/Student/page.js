@@ -5,8 +5,8 @@ import { BookOpen, Award } from 'lucide-react';
 import "@/styles/studentDashboard.css";
 
 export default function StudentDashboardPage() {
-  const subjectCount = 5;   // ganti sesuai data nyata
-  const gradeCount   = 10;  // ganti sesuai data nyata
+  const subjectCount = 6;   // ganti sesuai data nyata
+  const gradeCount   = 0;  // ganti sesuai data nyata
 
   return (
     <div className="dashboard-layout">
@@ -33,8 +33,7 @@ export default function StudentDashboardPage() {
 
           <div className="status-box grade-box">
             <div>
-              <h3>{gradeCount}</h3>
-              <p>Grade</p>
+              <h3>Grades</h3>
             </div>
             <Award size={48} />
           </div>
