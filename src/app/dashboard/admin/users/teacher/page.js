@@ -82,6 +82,20 @@ export default function TeacherPage() {
     }
   };
 
+const handlePhotoChange = (e) => {
+  const file = e.target.files[0];  // Ambil file pertama yang dipilih
+  if (file) {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setEditGuru({
+        ...editGuru,
+        photo: reader.result, // Simpan gambar dalam bentuk base64 untuk preview
+      });
+    };
+    reader.readAsDataURL(file);  // Membaca file dan mengonversinya menjadi data URL
+  }
+};
+
   return (
     <div className="teacher-page">
       <div className="teacher-header">
@@ -113,6 +127,7 @@ export default function TeacherPage() {
         <thead>
           <tr>
             <th>ID</th>
+            <th>Photo</th>
             <th>Teacher Name</th>
             <th>Subject</th>
             <th>NIP</th>
@@ -126,6 +141,9 @@ export default function TeacherPage() {
           {filteredGurus.map((teacher, index) => (
             <tr key={teacher.id_guru}>
               <td>{index + 1}</td>
+              <td>
+                <img src={teacher.photo || '/default-photo.jpg'} alt={teacher.nama_guru} className="teacher-photo" />
+              </td>
               <td>{teacher.nama_guru}</td>
               <td>{teacher.mata_pelajaran}</td>
               <td>{teacher.nip}</td>
@@ -207,6 +225,26 @@ export default function TeacherPage() {
                 onChange={(e) => setEditGuru({ ...editGuru, no_telp: e.target.value })}
               />
             </div>
+
+             {/* Photo Upload Section */}
+            <div className="form-group">
+              <label>Photo</label>
+              <div className="photo-upload-container" onClick={() => document.getElementById('file-upload').click()}>
+                {editGuru.photo ? (
+                  <img src={editGuru.photo} alt="Teacher" className="photo-preview" />
+                ) : (
+                  <div className="photo-placeholder">Upload Photo</div>
+                )}
+                <input
+                  type="file"
+                  id="file-upload"
+                  onChange={handlePhotoChange}  // Handle the file change event
+                  style={{ display: 'none' }}   // Hide the actual input
+                  accept="image/*"             // Only accept images
+                />
+              </div>
+            </div>
+
             <div className="form-actions">
               <button className="btn-rounded save-btn" onClick={handleUpdateGuru}>
                 Save

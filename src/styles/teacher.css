@@ -359,3 +359,36 @@ input, select {
 .cancel-btn:hover {
   background-color: #da190b;
 }
+
+/* modern photo upload */
+.photo-upload-container {
+  width: 150px;
+  height: 150px;
+  border: 2px dashed #ccc;
+  border-radius: 50%;
+  margin: 1rem auto;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+.photo-upload-container:hover {
+  border-color: #1e40af;
+  background-color: rgba(30, 64, 175, 0.05);
+}
+.photo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #999;
+  gap: 4px;
+}
+.photo-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
