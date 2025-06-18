@@ -11,6 +11,8 @@ export default function StudentPage() {
   const [kelasList, setKelasList] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
+  const [photo, setPhoto] = useState(null);
+  const [photoPreview, setPhotoPreview] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,10 +22,7 @@ export default function StudentPage() {
           fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/kelas`)
         ]);
 
-        const [siswaData, kelasData] = await Promise.all([
-          siswaRes.json(),
-          kelasRes.json()
-        ]);
+        const [siswaData, kelasData] = await Promise.all([siswaRes.json(), kelasRes.json()]);
 
         setSiswas(siswaData);
         setFilteredSiswas(siswaData);
@@ -72,16 +71,25 @@ export default function StudentPage() {
 
   const handleEditSiswa = (siswa) => {
     setEditSiswa(siswa);
+    setPhoto(siswa.photo); // Set the photo on edit
+    setPhotoPreview(siswa.photo); // Set the photo preview
   };
 
   const handleUpdateSiswa = async () => {
     if (!editSiswa) return;
 
     try {
+      const formData = new FormData();
+      formData.append("photo", photo);  // Append the photo if it exists
+      formData.append("nama_siswa", editSiswa.nama_siswa);
+      formData.append("id_kelas", editSiswa.id_kelas);
+      formData.append("alamat", editSiswa.alamat);
+      formData.append("tanggal_lahir", editSiswa.tanggal_lahir);
+      formData.append("nisn", editSiswa.nisn);
+
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/siswa/${editSiswa.id_siswa}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(editSiswa),
+        body: formData,
       });
 
       if (response.ok) {
@@ -104,6 +112,14 @@ export default function StudentPage() {
   const getNamaKelas = (id_kelas) => {
     const kelas = kelasList.find(k => k.id_kelas === id_kelas);
     return kelas ? kelas.nama_kelas : 'Kelas tidak ditemukan';
+  };
+
+  const handlePhotoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPhoto(file);
+      setPhotoPreview(URL.createObjectURL(file)); // Update the photo preview
+    }
   };
 
   return (
@@ -157,7 +173,18 @@ export default function StudentPage() {
           {!loading && filteredSiswas.length > 0 ? (
             filteredSiswas.map((student, index) => (
               <tr key={student.id_siswa}>
-                <td>{index + 1}</td>
+                <td>
+                  <div className="student-id-container">
+                    <span>{index + 1}</span>
+                    <div className="photo-container">
+                      {student.photo ? (
+                        <img src={student.photo} className="photo-preview" alt="student-photo" />
+                      ) : (
+                        <div className="photo-placeholder">No Photo</div>
+                      )}
+                    </div>
+                  </div>
+                </td>
                 <td>{student.nama_siswa}</td>
                 <td>{getNamaKelas(student.id_kelas)}</td>
                 <td>{student.alamat}</td>
@@ -227,9 +254,32 @@ export default function StudentPage() {
               value={editSiswa.nisn}
               onChange={(e) => setEditSiswa({ ...editSiswa, nisn: e.target.value })}
             />
+
+            {/* Foto Edit */}
+            <div className="photo-upload-container">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handlePhotoChange}
+                style={{ display: 'none' }}
+                id="file-upload"
+              />
+              {photoPreview ? (
+                <img src={photoPreview} className="photo-preview" alt="preview" />
+              ) : (
+                <label htmlFor="file-upload" className="photo-placeholder">
+                  Upload Photo
+                </label>
+              )}
+            </div>
+
             <div className="modal-actions">
-              <button className="btn-rounded save-btn" onClick={handleUpdateSiswa}>Save</button>
-              <button className="btn-rounded cancel-btn" onClick={() => setEditSiswa(null)}>Cancel</button>
+              <button className="btn-rounded save-btn" onClick={handleUpdateSiswa}>
+                Save
+              </button>
+              <button className="btn-rounded cancel-btn" onClick={() => setEditSiswa(null)}>
+                Cancel
+              </button>
             </div>
           </div>
         </div>
