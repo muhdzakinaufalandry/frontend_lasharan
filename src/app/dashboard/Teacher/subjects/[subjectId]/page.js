@@ -4,8 +4,7 @@ import '@/styles/subjectDetail.css';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsers } from '@fortawesome/free-solid-svg-icons';
+import { Users } from 'lucide-react'; // Import LucideReact Users icon
 
 export default function SubjectDetailPage() {
   const { subjectId } = useParams();
@@ -17,10 +16,10 @@ export default function SubjectDetailPage() {
     fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/mapel/simple-detail/${subjectId}`)
       .then(res => res.json())
       .then(data => {
-        console.log('DATA:', data); // Tambahkan log ini
+        console.log('DATA:', data); // Log the data for debugging
         setSubjectDetails(data);
       })
-      .catch(err => console.error('Gagal ambil data:', err));
+      .catch(err => console.error('Failed to fetch data:', err));
   }, [subjectId]);
 
   if (!subjectDetails) return <p>Loading...</p>;
@@ -43,23 +42,22 @@ export default function SubjectDetailPage() {
               yang diajarkan oleh {subjectDetails.nama_guru}.
             </p>
           </div>
-          <img src="/images/accounting.png" alt={subjectDetails.nama_mata_pelajaran} />
         </div>
       </div>
 
       {subjectDetails?.id_mapel && (
-      <Link href={`/dashboard/Teacher/subjects/${subjectId}/subjectparticipants`}>
-        <div className="stat-card orange" style={{ cursor: 'pointer' }}>
-          <div className="stat-content">
-            <div className="stat-text">
-              <h3>{subjectDetails.jumlah_siswa || 0}</h3>
-              <p>Peserta</p>
+        <Link href={`/dashboard/Teacher/subjects/${subjectId}/subjectparticipants`}>
+          <div className="stat-card orange" style={{ cursor: 'pointer' }}>
+            <div className="stat-content">
+              <div className="stat-text">
+                <h3>{subjectDetails.jumlah_siswa || 0}</h3>
+                <p>Peserta</p>
+              </div>
+              <Users size={36} className="stat-icon" /> {/* Using LucideReact's Users icon */}
             </div>
-            <FontAwesomeIcon icon={faUsers} className="stat-icon" />
           </div>
-        </div>
-      </Link>
-    )}
-  </div>
+        </Link>
+      )}
+    </div>
   );
 }

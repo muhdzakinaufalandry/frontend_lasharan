@@ -45,6 +45,12 @@
   padding: 1rem;
   background-color: #2e2e2e;
   color: white;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for background color and scaling */
+}
+
+.stat-card:hover {
+  background-color: #f7b267; /* Change background color on hover */
+  transform: scale(1.05); /* Slightly scale up the card */
 }
 
  .orange {
@@ -71,4 +77,8 @@
   font-size: 2.5rem;
   color: white;
   margin-left: 1rem;
+}
+
+a {
+  text-decoration: none;
 }

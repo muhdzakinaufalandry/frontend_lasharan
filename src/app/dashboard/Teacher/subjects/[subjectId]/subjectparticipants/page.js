@@ -53,7 +53,6 @@ export default function SubjectParticipantsPage() {
                     href={`/dashboard/Teacher/subjects/${subjectId}/subjectparticipants/subjectgrades/${stu.id_siswa}`}
                     className="name-link"
                   >
-                    <span className="avatar">👤</span>
                     {stu.nama_siswa}
                   </Link>
                 </td>
