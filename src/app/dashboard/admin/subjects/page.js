@@ -152,7 +152,7 @@ export default function SubjectPage() {
   return (
     <div className="subject-container">
       <div className="subject-header">
-        <h2>All Subject List</h2>
+        <h2>List Mata Pelajaran</h2>
         <button className="btn-add" onClick={handleOpen}>
           <Plus size={20} />
         </button>
@@ -177,7 +177,6 @@ export default function SubjectPage() {
                 <td>{getKelasName(subj.id_kelas)}</td>
                 <td>{subj.nama_mata_pelajaran}</td>
                 <td className="action-icons">
-
                 <button onClick={() => handleEditMataPelajaran(subj)} className="icon-button">
                   <Pencil size={18} />
                 </button>
@@ -185,7 +184,6 @@ export default function SubjectPage() {
                   <Trash2 size={18} />
                 </button>
               </td>
-
               </tr>
             ))}
           </tbody>

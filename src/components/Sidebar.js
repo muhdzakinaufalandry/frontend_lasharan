@@ -122,7 +122,7 @@ export default function Sidebar() {
           className={`sidebar-link ${activeMenu === 'subjects' ? 'active' : ''}`}
         >
           <BookOpen size={18} />
-          <span>Subjects</span>
+          <span>Mata Pelajaran</span>
         </Link>
       </nav>
 

@@ -3,6 +3,7 @@
   font-family: 'Poppins', sans-serif;
   background-color: #fff;
   border-radius: 25px;
+    overflow-x: auto;
 }
 
 .subject-header {
@@ -69,23 +70,12 @@
   cursor: pointer;
 }
 
-.subject-table tbody td:first-child {
-  border-left: 1px solid #e5e7eb;
-  border-top-left-radius: 12px;
-  border-bottom-left-radius: 12px;
-}
-
-.subject-table tbody td:last-child {
-  border-right: 1px solid #e5e7eb;
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
-
 .action-icons {
   display: flex;
-  gap: 10px;
-  justify-content: center;
+  gap: 12px;
+  justify-content: left;
 }
+
 
 .action-icons button {
   background: none;
