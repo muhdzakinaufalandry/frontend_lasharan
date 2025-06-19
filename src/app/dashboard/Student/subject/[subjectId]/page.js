@@ -57,17 +57,14 @@ export default function SubjectDetailPage() {
         <section className="subject-overview">
           <div className="overview-left">
             <div className="about">
-              <h4>About The Subject</h4>
+              <h4>Tentang Mata Pelajaran</h4>
               <p>{subjectData.description}</p>
-              <div className="about-image">
-                <img src="/images/accounting.png" alt="Subject Illustration" />
-              </div>
             </div>
 
             <div className="overview-box">
               {/* Participants Box */}
               <div className="participants-box">
-                <h4>Participants</h4>
+                <h4>Peserta</h4>
                 <div className="icon-box">
                   <Users className="icon" />
                   <span className="participants-count">{subjectData.participants}</span>
@@ -82,7 +79,7 @@ export default function SubjectDetailPage() {
                   window.location.href = `/dashboard/Student/subject/${subjectId}/subjectgrades`
                 }
               >
-                <h4>Grades</h4>
+                <h4>Nilai</h4>
                 <div className="icon-box">
                   <FileText className="icon" />
                   <span className="grades-value">{subjectData.grades}</span>

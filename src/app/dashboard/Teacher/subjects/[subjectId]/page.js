@@ -37,7 +37,7 @@ export default function SubjectDetailPage() {
       <div className="subject-content">
         <div className="subject-about">
           <div className="about-text">
-            <h4>About The Subject</h4>
+            <h4>Tentang Mata Pelajaran</h4>
             <p>
               Informasi singkat tentang mata pelajaran {subjectDetails.nama_mata_pelajaran} 
               yang diajarkan oleh {subjectDetails.nama_guru}.
@@ -53,7 +53,7 @@ export default function SubjectDetailPage() {
           <div className="stat-content">
             <div className="stat-text">
               <h3>{subjectDetails.jumlah_siswa || 0}</h3>
-              <p>Participants</p>
+              <p>Peserta</p>
             </div>
             <FontAwesomeIcon icon={faUsers} className="stat-icon" />
           </div>

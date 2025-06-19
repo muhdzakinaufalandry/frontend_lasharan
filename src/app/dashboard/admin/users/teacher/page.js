@@ -102,8 +102,8 @@ const handlePhotoChange = (e) => {
     <div className="teacher-page">
       <div className="teacher-header">
         <div className="header-text">
-          <h1>Teachers</h1>
-          <p>All Teacher List</p>
+          <h1>Guru</h1>
+          <p>List Guru</p>
         </div>
 
         <div className="header-actions">
@@ -120,7 +120,7 @@ const handlePhotoChange = (e) => {
           </div>
 
           <Link href="/dashboard/admin/users/teacher/add" className="add-new-btn" style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-            <Plus size={16} /> Add New
+            <Plus size={16} /> Tambah
           </Link>
         </div>
       </div>
@@ -129,14 +129,14 @@ const handlePhotoChange = (e) => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Photo</th>
-            <th>Teacher Name</th>
-            <th>Subject</th>
+            <th>foto</th>
+            <th>Nama Guru</th>
+            <th>Mata Pelajaran</th>
             <th>NIP</th>
-            <th>Address</th>
+            <th>Alamat</th>
             <th>Email</th>
-            <th>Phone</th>
-            <th>Action</th>
+            <th>No HP</th>
+            <th>Aksi</th>
           </tr>
         </thead>
         <tbody>
@@ -174,9 +174,9 @@ const handlePhotoChange = (e) => {
       {editGuru && (
         <div className="edit-modal">
           <div className="modal-content">
-            <h3>Edit Teacher</h3>
+            <h3>Edit Guru</h3>
             <div className="form-group">
-              <label>Name</label>
+              <label>Nama</label>
               <input
                 type="text"
                 value={editGuru.nama_guru}
@@ -186,7 +186,7 @@ const handlePhotoChange = (e) => {
               />
             </div>
             <div className="form-group">
-              <label>Subject</label>
+              <label>Mata Pelajaran</label>
               <input
                 type="text"
                 value={editGuru.mata_pelajaran}
@@ -204,7 +204,7 @@ const handlePhotoChange = (e) => {
               />
             </div>
             <div className="form-group">
-              <label>Address</label>
+              <label>Alamat</label>
               <input
                 type="text"
                 value={editGuru.alamat}
@@ -220,7 +220,7 @@ const handlePhotoChange = (e) => {
               />
             </div>
             <div className="form-group">
-              <label>Phone</label>
+              <label>No HP</label>
               <input
                 type="text"
                 value={editGuru.no_telp}
@@ -230,12 +230,12 @@ const handlePhotoChange = (e) => {
 
              {/* Photo Upload Section */}
             <div className="form-group">
-              <label>Photo</label>
+              <label>Foto</label>
               <div className="photo-upload-container" onClick={() => document.getElementById('file-upload').click()}>
                 {editGuru.photo ? (
                   <img src={editGuru.photo} alt="Teacher" className="photo-preview" />
                 ) : (
-                  <div className="photo-placeholder">Upload Photo</div>
+                  <div className="photo-placeholder">Unggah Foto</div>
                 )}
                 <input
                   type="file"
@@ -249,10 +249,10 @@ const handlePhotoChange = (e) => {
 
             <div className="form-actions">
               <button className="btn-rounded save-btn" onClick={handleUpdateGuru}>
-                Save
+                Simpan
               </button>
               <button className="btn-rounded cancel-btn" onClick={() => setEditGuru(null)}>
-                Cancel
+                Batal
               </button>
             </div>
           </div>

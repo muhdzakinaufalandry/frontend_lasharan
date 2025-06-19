@@ -34,7 +34,7 @@ export default function ClassDetailPage() {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-  if (!classData) return <div>No class data available</div>;
+  if (!classData) return <div>Kelas tidak ditemukan</div>;
 
   return (
     <div className="class-detail-page">
@@ -48,7 +48,7 @@ export default function ClassDetailPage() {
           <div className="stat-content">
             <div className="stat-text">
               <h3>{classData.jumlah_siswa || 0}</h3>
-              <p>Participants</p>
+              <p>Peserta</p>
             </div>
             <FontAwesomeIcon icon={faUsers} className="stat-icon" />
           </div>
@@ -58,7 +58,7 @@ export default function ClassDetailPage() {
           <div className="stat-content">
             <div className="stat-text">
               <h3>{classData.mata_pelajaran?.length || '0'}</h3>
-              <p>Subjects</p>
+              <p>Mata Pelajaran</p>
             </div>
             <FontAwesomeIcon icon={faBook} className="stat-icon" />
           </div>
@@ -67,7 +67,7 @@ export default function ClassDetailPage() {
 
       <div className="class-main-grid">
         <div className="subjects-box">
-          <h3>Subjects</h3>
+          <h3>Mata Pelajaran</h3>
           <div className="subject-list">
             {classData.mata_pelajaran?.map((subj, i) => (
               <Link

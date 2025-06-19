@@ -64,24 +64,23 @@ export default function AdminDashboard() {
       <main className="dashboard-content">
         <div className="dashboard-top">
           <div className="dashboard-header">
-            <h1>Welcome, Admin Higher Secondary School Team!</h1>
+            <h1>Selamat Datang, Admin SMAS Lasharan Jaya Gowa Team!</h1>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ultrices nunc sed,
-              pharetra ante. Quisque gravida facilisis dui.
+              Semoga dengan tersedianya website ini, masyarakat akan lebih mudah mengakses informasi dan mendapatkan pelayanan yang lebih cepat, mudah, valid dan  akuntabel. Selain itu, diharapkan website ini mampu meningkatkan kreatifitas dan semangat berkarya bagi segenap guru dan karyawan SMAS ISLAM LASHARAN JAYA GOWA. 
             </p>
           </div>
 
           <div className="info-cards">
             <div className="info-card yellow">
-              <h2>Students</h2>
+              <h2>Siswa</h2>
               <p>{siswas.length}</p> {/* Menampilkan jumlah siswa */}
             </div>
             <div className="info-card purple">
-              <h2>Teachers</h2>
+              <h2>Guru</h2>
               <p>{gurus.length}</p> {/* Menampilkan jumlah guru */}
             </div>
             <div className="info-card yellow">
-              <h2>Class</h2>
+              <h2>Kelas</h2>
               <p>{kelass.length}</p> {/* Menampilkan jumlah kelas */}
             </div>
           </div>

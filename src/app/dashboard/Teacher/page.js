@@ -20,10 +20,9 @@ export default function TeacherDashboardPage() {
     <div className="teacher-dashboard">
       <main className="dashboard-content-wrapper">
         <div className="dashboard-header">
-          <h2>Welcome, Admin Higher Secondary School Team!</h2>
+          <h2>Selamat Datang, Guru SMAS Lasharan Jaya Gowa!</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed nulla suscipit,
-            ultricies nunc sed, pharetra ante. Quisque gravida facilisis dui.
+           Saya menyampaikan ucapan terima kasih kepada semua pihak yang telah membantu tersedianya website sekolah ini. Kritik dan saran yang konstruktif sangat kami harapkan demi perbaikan dan peningkatan kualitas serta kemanfaatan yang lebih luas.
           </p>
         </div>
 
@@ -33,7 +32,7 @@ export default function TeacherDashboardPage() {
             <div className="summary-card orange">
               <div className="summary-left">
                 <div className="summary-count">5</div>
-                <div className="summary-label">Classes</div>
+                <div className="summary-label">Kelas</div>
               </div>
               <div className="summary-icon">
                 <FontAwesomeIcon icon={faUsers} className="summary-icon" />
@@ -44,7 +43,7 @@ export default function TeacherDashboardPage() {
             <div className="summary-card blue">
               <div className="summary-left">
                 <div className="summary-count">120</div>
-                <div className="summary-label">Students</div>
+                <div className="summary-label">Siswa</div>
               </div>
               <div className="summary-icon">
                 <FontAwesomeIcon icon={faUsers} className="summary-icon" />

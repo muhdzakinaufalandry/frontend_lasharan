@@ -164,7 +164,7 @@ export default function ParticipantsDetailsPage() {
           <div className="search-bar">
             <input
               type="text"
-              placeholder="Search"
+              placeholder="cari"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -172,22 +172,22 @@ export default function ParticipantsDetailsPage() {
           </div>
 
           <div className="subject-header">
-            <h2>Grade Details</h2>
+            <h2>Detail Nilai</h2>
             <span className="year">2024–2025</span>
           </div>
         </div>
 
         <section className="grade-section">
-          <h3>Grading List</h3>
+          <h3>List Nilai</h3>
           <div className="grade-table-container">
             <table className="grade-table">
               <thead>
                 <tr>
-                  <th>Grade Item</th>
-                  <th>Calculated Weight</th>
-                  <th>Grade</th>
-                  <th>Range</th>
-                  <th>Action</th>
+                  <th>Item Nilai</th>
+                  <th>Bobot Nilai</th>
+                  <th>Nilai</th>
+                  <th>Rentang Nilai</th>
+                  <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -208,7 +208,7 @@ export default function ParticipantsDetailsPage() {
                     </tr>
                 ))}
                 <tr>
-                  <td><strong>Course Total</strong></td>
+                  <td><strong>Total tugas</strong></td>
                   <td>-</td>
                   <td style={{ color: '#0ea5e9' }}><strong>{data.total}</strong></td>
                   <td>0 - 100</td>

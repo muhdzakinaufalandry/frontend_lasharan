@@ -105,33 +105,33 @@ export default function AddTeacherPage() {
   return (
     <div className="teacher-form-container">
       <div className="form-header">
-        <h2>Add Teacher</h2>
+        <h2>Tambah Guru</h2>
         <div className="form-buttons">
           <button
             type="button"
             className="btn cancel"
             onClick={handleCancel}
           >
-            cancel
+            Batal
           </button>
           <button
             type="button"
             className="btn reset"
             onClick={resetForm}
           >
-            reset
+            Reset
           </button>
           <button
             type="submit"
             className="btn save"
             onClick={handleSubmit}
           >
-            save
+            Simpan
           </button>
         </div>
       </div>
 
-      <div className="form-section-title">Personal Details</div>
+      <div className="form-section-title">Detail guru</div>
 
       <form className="teacher-form" onSubmit={handleSubmit}>
         {/* Photo Upload */}
@@ -153,7 +153,7 @@ export default function AddTeacherPage() {
             : (
               <div className="photo-placeholder">
                 <Plus size={32}/>
-                <span>Upload Foto</span>
+                <span>Unggah Foto</span>
               </div>
             )
           }
@@ -162,7 +162,7 @@ export default function AddTeacherPage() {
         {/* Form Fields */}
         <div className="form-row">
           <div className="form-group">
-            <label>Name *</label>
+            <label>Nama *</label>
             <input
               type="text"
               value={namaGuru}
@@ -191,7 +191,7 @@ export default function AddTeacherPage() {
           </div>
 
           <div className="form-group">
-            <label>Subject</label>
+            <label>Mata Pelajaran</label>
             <select
               value={IDMapel}
               onChange={handleSubjectChange}
@@ -209,7 +209,7 @@ export default function AddTeacherPage() {
 
         <div className="form-row">
           <div className="form-group">
-            <label>Address</label>
+            <label>Alamat</label>
             <input
               type="text"
               value={alamat}
@@ -218,7 +218,7 @@ export default function AddTeacherPage() {
             />
           </div>
           <div className="form-group">
-            <label>Phone Number</label>
+            <label>No HP</label>
             <input
               type="text"
               value={noTelp}

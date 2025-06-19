@@ -163,12 +163,12 @@ export default function StudentPage() {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Student Name</th>
-            <th>Class</th>
-            <th>Address</th>
-            <th>Date of Birth</th>
+            <th>Nama Siswa</th>
+            <th>Kelas</th>
+            <th>Alamat</th>
+            <th>Tanggal Lahir</th>
             <th>NISN</th>
-            <th>Action</th>
+            <th>Aksi</th>
           </tr>
         </thead>
         <tbody>
@@ -221,7 +221,7 @@ export default function StudentPage() {
       {editSiswa && (
         <div className="modal-overlay" onClick={() => setEditSiswa(null)}>
           <div className="edit-siswa-modal" onClick={(e) => e.stopPropagation()}>
-            <h3>Edit Student</h3>
+            <h3>Edit Siswa</h3>
             <input
               type="text"
               placeholder="Student Name"
@@ -272,17 +272,17 @@ export default function StudentPage() {
                 <img src={photoPreview} className="photo-preview" alt="preview" />
               ) : (
                 <label htmlFor="file-upload" className="photo-placeholder">
-                  Upload Photo
+                  Unggah foto
                 </label>
               )}
             </div>
 
             <div className="modal-actions">
               <button className="btn-rounded save-btn" onClick={handleUpdateSiswa}>
-                Save
+                Simpan
               </button>
               <button className="btn-rounded cancel-btn" onClick={() => setEditSiswa(null)}>
-                Cancel
+                Batal
               </button>
             </div>
           </div>

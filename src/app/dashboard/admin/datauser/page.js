@@ -65,11 +65,11 @@ export default function AddUserPage() {
   return (
     <div className="user-form-container">
       <div className="form-header">
-        <h2>Add User</h2>
+        <h2>Tambah Pengguna</h2>
         <div className="form-buttons">
-          <button type="button" className="btn cancel" onClick={handleCancel}>Cancel</button>
+          <button type="button" className="btn cancel" onClick={handleCancel}>batal</button>
           <button type="button" className="btn reset" onClick={handleReset}>Reset</button>
-          <button type="submit" className="btn save" onClick={handleSubmit}>Save</button>
+          <button type="submit" className="btn save" onClick={handleSubmit}>Simpan</button>
         </div>
       </div>
 
@@ -103,7 +103,7 @@ export default function AddUserPage() {
 
         <div className="form-row">
           <div className="form-group">
-            <label>Registration Date *</label>
+            <label>Tanggal Registrasi *</label>
             <input
               type="date"
               name="registrationDate"
@@ -115,9 +115,9 @@ export default function AddUserPage() {
           <div className="form-group">
             <label>Role *</label>
             <select name="role" value={form.role} onChange={handleChange} required>
-              <option value="">-- Select Role --</option>
-              <option value="1">Teacher</option>
-              <option value="2">Student</option>
+              <option value="">-- Pilih Role --</option>
+              <option value="1">Guru</option>
+              <option value="2">Siswa</option>
               {/* Tambah lagi jika ada role lainnya */}
             </select>
           </div>

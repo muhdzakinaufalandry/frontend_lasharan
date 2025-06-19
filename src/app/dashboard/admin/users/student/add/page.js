@@ -89,10 +89,10 @@ export default function AddStudent() {
   return (
     <div className="student-form-container">
       <div className="form-header">
-        <h2>Add New Student</h2>
+        <h2>Tmabah Siswa</h2>
       </div>
 
-      <div className="form-section-title">Student Detail</div>
+      <div className="form-section-title">Detail Siswa</div>
 
       <form className="student-form" onSubmit={handleSubmit}>
         {/* Photo Upload */}
@@ -112,7 +112,7 @@ export default function AddStudent() {
             : (
               <div className="photo-placeholder">
                 <Plus size={32} />
-                <span>Upload Photo</span>
+                <span>Unggah Foto</span>
               </div>
             )
           }
@@ -121,7 +121,7 @@ export default function AddStudent() {
         {/* Form Fields */}
         <div className="form-row">
           <div className="form-group">
-            <label>Name *</label>
+            <label>Nama *</label>
             <input
               type="text"
               placeholder="Enter name"
@@ -146,7 +146,7 @@ export default function AddStudent() {
           </div>
 
           <div className="form-group">
-            <label>Class *</label>
+            <label>Kelas *</label>
             <select value={idKelas} onChange={(e) => setIDKelas(e.target.value)} required>
               <option value="">Pilih Kelas</option>
               {kelasList.map((kelas) => (
@@ -160,7 +160,7 @@ export default function AddStudent() {
 
         <div className="form-row">
           <div className="form-group">
-            <label>Address</label>
+            <label>Alamat</label>
             <input
               type="text"
               placeholder="Enter student address"
@@ -171,7 +171,7 @@ export default function AddStudent() {
           </div>
 
           <div className="form-group">
-             <label>Date of Birth *</label>
+             <label>Tanggal Lahir *</label>
             <input
               type="date"
               value={tanggalLahir}
@@ -200,20 +200,20 @@ export default function AddStudent() {
             className="btn cancel"
             onClick={handleCancel}
           >
-            cancel
+            Batal
           </button>
           <button
             type="button"
             className="btn reset"
             onClick={handleReset}
           >
-            reset
+            Reset
           </button>
           <button
             type="submit"
             className="btn save"
           >
-            save
+            Simpan
           </button>
         </div>
       </form>
