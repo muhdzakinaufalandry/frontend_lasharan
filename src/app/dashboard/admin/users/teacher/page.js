@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import '@/styles/teacher.css';
 import Link from 'next/link';
 import { Search, Plus, Pencil, Trash2 } from 'lucide-react';
+import Image from 'next/image';
+import baseImage from '../../../../../../public/logo-smas.png'
 
 export default function TeacherPage() {
   const [gurus, setGurus] = useState([]);
@@ -142,7 +144,7 @@ const handlePhotoChange = (e) => {
             <tr key={teacher.id_guru}>
               <td>{index + 1}</td>
               <td>
-                <img src={teacher.photo || '/default-photo.jpg'} alt={teacher.nama_guru} className="teacher-photo" />
+                <Image src={teacher.photo || baseImage} alt={teacher.nama_guru} className="teacher-photo" width={50} height={50} />
               </td>
               <td>{teacher.nama_guru}</td>
               <td>{teacher.mata_pelajaran}</td>
