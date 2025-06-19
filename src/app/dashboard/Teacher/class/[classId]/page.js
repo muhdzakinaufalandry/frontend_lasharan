@@ -71,7 +71,7 @@ export default function ClassDetailPage() {
           <div className="subject-list">
             {classData.mata_pelajaran?.map((subj, i) => (
               <Link
-                href={`/dashboard/Teacher/subjects/${subj.id_mapel}`}
+                href={`/dashboard/Teacher/subjects/${subj.id_mapel}/subjectparticipants`}
                 className="subject-card"
                 key={i}>
                 {subj.nama_mata_pelajaran}
