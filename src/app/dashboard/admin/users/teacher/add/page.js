@@ -77,24 +77,49 @@ export default function AddTeacherPage() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const formData = new FormData();
-    if (teacherPhoto) formData.append('photo', teacherPhoto);
-    formData.append('id_user', IDUser);
-    formData.append('id_mapel', IDMapel);
-    formData.append('nama_guru', namaGuru);
-    formData.append('mata_pelajaran', mataPelajaran);
-    formData.append('nip', nip);
-    formData.append('alamat', alamat);
-    formData.append('email', email);
-    formData.append('no_telp', noTelp);
+
+    const dataGuru = {
+      id_user: parseInt(IDUser),
+      id_mapel: parseInt(IDMapel),
+      nama_guru: namaGuru,
+      mata_pelajaran: mataPelajaran,
+      nip,
+      alamat,
+      email,
+      no_telp: noTelp
+    };
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/guru`, {
         method: 'POST',
-        body: formData
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dataGuru)
       });
+
       if (!res.ok) throw new Error(await res.text());
-      alert('Guru berhasil ditambahkan!');
+      const result = await res.json(); // backend harus mengembalikan id_guru
+
+      // Upload foto jika ada
+      if (teacherPhoto && result.id_guru) {
+        const formData = new FormData();
+        formData.append('id_guru', result.id_guru);
+        formData.append('foto', teacherPhoto);
+
+        const uploadRes = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/upload-foto-guru`, {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!uploadRes.ok) {
+          console.warn("Data guru ditambah, tapi upload foto gagal.");
+          alert('Guru berhasil ditambahkan, tetapi foto gagal diunggah.');
+        } else {
+          alert('Guru dan foto berhasil ditambahkan!');
+        }
+      } else {
+        alert('Guru berhasil ditambahkan!');
+      }
+
       resetForm();
     } catch (err) {
       console.error(err);
@@ -107,27 +132,9 @@ export default function AddTeacherPage() {
       <div className="form-header">
         <h2>Tambah Guru</h2>
         <div className="form-buttons">
-          <button
-            type="button"
-            className="btn cancel"
-            onClick={handleCancel}
-          >
-            Batal
-          </button>
-          <button
-            type="button"
-            className="btn reset"
-            onClick={resetForm}
-          >
-            Reset
-          </button>
-          <button
-            type="submit"
-            className="btn save"
-            onClick={handleSubmit}
-          >
-            Simpan
-          </button>
+          <button type="button" className="btn cancel" onClick={handleCancel}>Batal</button>
+          <button type="button" className="btn reset" onClick={resetForm}>Reset</button>
+          <button type="submit" className="btn save" onClick={handleSubmit}>Simpan</button>
         </div>
       </div>
 
@@ -148,15 +155,14 @@ export default function AddTeacherPage() {
             onChange={handlePhotoChange}
             style={{ display: 'none' }}
           />
-          {photoPreview
-            ? <img src={photoPreview} className="photo-preview" alt="preview" />
-            : (
-              <div className="photo-placeholder">
-                <Plus size={32}/>
-                <span>Unggah Foto</span>
-              </div>
-            )
-          }
+          {photoPreview ? (
+            <img src={photoPreview} className="photo-preview" alt="preview" />
+          ) : (
+            <div className="photo-placeholder">
+              <Plus size={32} />
+              <span>Unggah Foto</span>
+            </div>
+          )}
         </div>
 
         {/* Form Fields */}
@@ -183,9 +189,7 @@ export default function AddTeacherPage() {
             >
               <option value="">Pilih User</option>
               {user.map(u =>
-                <option key={u.id_user} value={u.id_user}>
-                  {u.username}
-                </option>
+                <option key={u.id_user} value={u.id_user}>{u.username}</option>
               )}
             </select>
           </div>
@@ -199,9 +203,7 @@ export default function AddTeacherPage() {
             >
               <option value="">Pilih Mata Pelajaran</option>
               {subjects.map(s =>
-                <option key={s.id_mapel} value={s.id_mapel}>
-                  {s.nama_mata_pelajaran}
-                </option>
+                <option key={s.id_mapel} value={s.id_mapel}>{s.nama_mata_pelajaran}</option>
               )}
             </select>
           </div>
