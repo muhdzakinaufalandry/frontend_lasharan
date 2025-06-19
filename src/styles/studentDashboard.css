@@ -5,6 +5,7 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    overflow-y: auto; /* Vertical scrolling */
   }
 
 .dashboard-layout {

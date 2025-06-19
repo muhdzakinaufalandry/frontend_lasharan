@@ -112,6 +112,7 @@
   border-radius: 8px;
   width: 500px;
   max-width: 90%;
+   overflow-y: auto;
 }
 
 .form-group {

@@ -64,7 +64,7 @@
   }
   
   .grade-table-container {
-    overflow-x: auto;
+    overflow: auto;
   }
   
   .grade-table {
@@ -149,7 +149,7 @@
 }
 
 .grade-table-container {
-  overflow-x: auto;
+  overflow: auto;
 }
 
 .grade-table th,

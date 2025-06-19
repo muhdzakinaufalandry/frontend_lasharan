@@ -51,7 +51,7 @@
     padding: 2rem;
     margin-bottom: auto;
     background-color: #f5f6fa;
-    overflow-y: hidden;
+    overflow-y: auto;
   }
   .info-cards {
   display: flex;
