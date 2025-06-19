@@ -225,7 +225,6 @@ export default function ParticipantsDetailsPage() {
                   <td>-</td>
                   <td style={{ color: '#0ea5e9' }}><strong>{data.total}</strong></td>
                   <td>0 - 100</td>
-                  <td></td> {/* No button here for Total tasks */}
                 </tr>
               </tbody>
             </table>
