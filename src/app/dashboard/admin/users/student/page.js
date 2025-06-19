@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import '@/styles/student.css';
 import Link from 'next/link';
 import { Search, Plus, Pencil, Trash2 } from 'lucide-react';
+import Image from 'next/image'; // Pastikan import Image dari Next.js
+import baseImage from '../../../../../../public/logo-smas.png';
 
 export default function StudentPage() {
   const [siswas, setSiswas] = useState([]);
@@ -177,11 +179,13 @@ export default function StudentPage() {
                   <div className="student-id-container">
                     <span>{index + 1}</span>
                     <div className="photo-container">
-                      {student.photo ? (
-                        <img src={student.photo} className="photo-preview" alt="student-photo" />
-                      ) : (
-                        <div className="photo-placeholder">No Photo</div>
-                      )}
+                      <Image
+                        src={student.photo || baseImage} 
+                        alt="student-photo"
+                        className="photo-preview"
+                        width={50}
+                        height={50}
+                      />
                     </div>
                   </div>
                 </td>
