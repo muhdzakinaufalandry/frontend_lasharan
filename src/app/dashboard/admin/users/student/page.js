@@ -1,10 +1,9 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import '@/styles/student.css';
 import Link from 'next/link';
 import { Search, Plus, Pencil, Trash2 } from 'lucide-react';
-import Image from 'next/image'; // Pastikan import Image dari Next.js
-import baseImage from '../../../../../../public/logo-smas.png';
+import Image from 'next/image';
 
 export default function StudentPage() {
   const [siswas, setSiswas] = useState([]);
@@ -13,8 +12,10 @@ export default function StudentPage() {
   const [kelasList, setKelasList] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
-  const [photo, setPhoto] = useState(null);
+  const [photoFile, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
+  const fileInputRef = useRef();
+  const baseImage = "/logo-smas.png";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,11 +43,12 @@ export default function StudentPage() {
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
-    const filtered = siswas.filter((s) =>
-      s.nama_siswa.toLowerCase().includes(term) ||
-      s.alamat.toLowerCase().includes(term)
+    setFilteredSiswas(
+      siswas.filter(s =>
+        s.nama_siswa.toLowerCase().includes(term) ||
+        s.alamat.toLowerCase().includes(term)
+      )
     );
-    setFilteredSiswas(filtered);
   };
 
   const handleDeleteSiswa = async (id) => {
@@ -73,38 +75,52 @@ export default function StudentPage() {
 
   const handleEditSiswa = (siswa) => {
     setEditSiswa(siswa);
-    setPhoto(siswa.photo); // Set the photo on edit
-    setPhotoPreview(siswa.photo); // Set the photo preview
+    setPhotoPreview(siswa.foto); // gunakan key "foto"
+    setPhotoFile(null);
   };
 
   const handleUpdateSiswa = async () => {
     if (!editSiswa) return;
 
     try {
-      const formData = new FormData();
-      formData.append("photo", photo);  // Append the photo if it exists
-      formData.append("nama_siswa", editSiswa.nama_siswa);
-      formData.append("id_kelas", editSiswa.id_kelas);
-      formData.append("alamat", editSiswa.alamat);
-      formData.append("tanggal_lahir", editSiswa.tanggal_lahir);
-      formData.append("nisn", editSiswa.nisn);
-
+      // 1. Update data siswa tanpa foto
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/siswa/${editSiswa.id_siswa}`, {
         method: 'PUT',
-        body: formData,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editSiswa),
       });
 
-      if (response.ok) {
-        const updated = siswas.map(s =>
-          s.id_siswa === editSiswa.id_siswa ? editSiswa : s
-        );
-        setSiswas(updated);
-        setFilteredSiswas(updated);
-        alert("Siswa berhasil diperbarui.");
-        setEditSiswa(null);
+      if (!response.ok) throw new Error('Gagal update data siswa.');
+
+      // 2. Jika ada foto baru, upload ke S3
+      if (photoFile) {
+        const formData = new FormData();
+        formData.append("id_siswa", editSiswa.id_siswa);
+        formData.append("foto", photoFile);
+
+        const uploadRes = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/upload-foto-siswa`, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!uploadRes.ok) {
+          console.warn("Update data berhasil, tapi upload foto gagal.");
+          alert("Siswa berhasil diperbarui, tapi foto gagal diunggah.");
+        } else {
+          alert("Siswa dan foto berhasil diperbarui.");
+        }
       } else {
-        alert("Gagal memperbarui siswa.");
+        alert("Siswa berhasil diperbarui.");
       }
+
+      // refresh data
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/siswa`);
+      const updatedData = await res.json();
+      setSiswas(updatedData);
+      setFilteredSiswas(updatedData);
+      setEditSiswa(null);
+      setPhotoFile(null);
+      setPhotoPreview(null);
     } catch (error) {
       console.error('Error:', error);
       alert("Terjadi kesalahan saat memperbarui siswa.");
@@ -119,8 +135,8 @@ export default function StudentPage() {
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setPhoto(file);
-      setPhotoPreview(URL.createObjectURL(file)); // Update the photo preview
+      setPhotoFile(file);
+      setPhotoPreview(URL.createObjectURL(file));
     }
   };
 
@@ -179,17 +195,15 @@ export default function StudentPage() {
                 <td>
                   <div className="student-id-container">
                     <span>{index + 1}</span>
-                  </div>
-                </td>
-                <td>
-                  <div className="photo-container">
-                    <Image
-                      src={student.photo || baseImage} 
-                      alt="student-photo"
-                      className="photo-preview"
-                      width={50}
-                      height={50}
-                    />
+                    <div className="photo-container">
+                      <Image
+                        src={student.foto || baseImage}
+                        alt="student-photo"
+                        className="photo-preview"
+                        width={50}
+                        height={50}
+                      />
+                    </div>
                   </div>
                 </td>
                 <td>{student.nama_siswa}</td>
@@ -215,7 +229,7 @@ export default function StudentPage() {
             ))
           ) : (
             <tr>
-              <td colSpan="6">{loading ? 'Loading...' : 'No students found.'}</td>
+              <td colSpan="7">{loading ? 'Loading...' : 'No students found.'}</td>
             </tr>
           )}
         </tbody>
@@ -233,9 +247,7 @@ export default function StudentPage() {
             />
             <select
               value={editSiswa.id_kelas}
-              onChange={(e) =>
-                setEditSiswa({ ...editSiswa, id_kelas: parseInt(e.target.value) })
-              }
+              onChange={(e) => setEditSiswa({ ...editSiswa, id_kelas: parseInt(e.target.value) })}
             >
               <option value="">Select Class</option>
               {kelasList.map((kelas) => (
@@ -263,20 +275,18 @@ export default function StudentPage() {
             />
 
             {/* Foto Edit */}
-            <div className="photo-upload-container">
+            <div className="photo-upload-container" onClick={() => fileInputRef.current.click()}>
               <input
                 type="file"
                 accept="image/*"
+                ref={fileInputRef}
                 onChange={handlePhotoChange}
                 style={{ display: 'none' }}
-                id="file-upload"
               />
               {photoPreview ? (
                 <img src={photoPreview} className="photo-preview" alt="preview" />
               ) : (
-                <label htmlFor="file-upload" className="photo-placeholder">
-                  Unggah foto
-                </label>
+                <div className="photo-placeholder">Unggah Foto</div>
               )}
             </div>
 
@@ -294,3 +304,4 @@ export default function StudentPage() {
     </div>
   );
 }
+

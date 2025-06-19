@@ -38,29 +38,52 @@ export default function AddStudent() {
     const file = e.target.files[0];
     if (file) {
       setPhoto(file);
-      setPhotoPreview(URL.createObjectURL(file)); // Display photo preview
+      setPhotoPreview(URL.createObjectURL(file));
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    if (photo) formData.append('photo', photo);
-    formData.append('id_user', idUser);
-    formData.append('id_kelas', idKelas);
-    formData.append('nama_siswa', namaSiswa);
-    formData.append('alamat', alamat);
-    formData.append('tanggal_lahir', tanggalLahir);
-    formData.append('nisn', nisn);
-    formData.append('no_telp', noTelp);
+
+    const dataSiswa = {
+      id_user: parseInt(idUser),
+      id_kelas: parseInt(idKelas),
+      nama_siswa: namaSiswa,
+      alamat,
+      tanggal_lahir: tanggalLahir,
+      nisn,
+      no_telp: noTelp
+    };
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/siswa`, {
         method: 'POST',
-        body: formData,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dataSiswa)
       });
+
       if (!res.ok) throw new Error(await res.text());
-      alert('Siswa berhasil ditambahkan!');
+      const result = await res.json(); // harus mengembalikan id_siswa
+
+      if (photo && result.id_siswa) {
+        const formData = new FormData();
+        formData.append('id_siswa', result.id_siswa);
+        formData.append('foto', photo);
+
+        const uploadRes = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/upload-foto-siswa`, {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!uploadRes.ok) {
+          alert('Siswa berhasil ditambahkan, tetapi upload foto gagal.');
+        } else {
+          alert('Siswa dan foto berhasil ditambahkan!');
+        }
+      } else {
+        alert('Siswa berhasil ditambahkan!');
+      }
+
       handleReset();
     } catch (err) {
       console.error(err);
@@ -95,7 +118,6 @@ export default function AddStudent() {
       <div className="form-section-title">Detail Siswa</div>
 
       <form className="student-form" onSubmit={handleSubmit}>
-        {/* Photo Upload */}
         <div
           className="photo-upload-container"
           onClick={() => fileInputRef.current.click()}
@@ -107,18 +129,16 @@ export default function AddStudent() {
             onChange={handlePhotoChange}
             style={{ display: 'none' }}
           />
-          {photoPreview
-            ? <img src={photoPreview} className="photo-preview" alt="preview" />
-            : (
-              <div className="photo-placeholder">
-                <Plus size={32} />
-                <span>Unggah Foto</span>
-              </div>
-            )
-          }
+          {photoPreview ? (
+            <img src={photoPreview} className="photo-preview" alt="preview" />
+          ) : (
+            <div className="photo-placeholder">
+              <Plus size={32} />
+              <span>Unggah Foto</span>
+            </div>
+          )}
         </div>
 
-        {/* Form Fields */}
         <div className="form-row">
           <div className="form-group">
             <label>Nama *</label>
@@ -171,7 +191,7 @@ export default function AddStudent() {
           </div>
 
           <div className="form-group">
-             <label>Tanggal Lahir *</label>
+            <label>Tanggal Lahir *</label>
             <input
               type="date"
               value={tanggalLahir}
@@ -191,9 +211,17 @@ export default function AddStudent() {
               onChange={(e) => setNISN(e.target.value)}
             />
           </div>
+          <div className="form-group">
+            <label>No Telp</label>
+            <input
+              type="text"
+              placeholder="Enter no telp"
+              value={noTelp}
+              onChange={(e) => setNoTelp(e.target.value)}
+            />
+          </div>
         </div>
 
-        {/* Footer Buttons */}
         <div className="form-footer-buttons">
           <button
             type="button"

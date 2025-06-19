@@ -4,13 +4,14 @@ import '@/styles/teacher.css';
 import Link from 'next/link';
 import { Search, Plus, Pencil, Trash2 } from 'lucide-react';
 import Image from 'next/image';
-import baseImage from '../../../../../../public/logo-smas.png'
 
 export default function TeacherPage() {
   const [gurus, setGurus] = useState([]);
   const [filteredGurus, setFilteredGurus] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [editGuru, setEditGuru] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const baseImage = "/logo-smas.png";
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/guru`)
@@ -55,7 +56,10 @@ export default function TeacherPage() {
     }
   };
 
-  const handleEditGuru = (guru) => setEditGuru(guru);
+  const handleEditGuru = (guru) => {
+    setEditGuru(guru);
+    setSelectedFile(null); // reset foto lama
+  };
 
   const handleUpdateGuru = async () => {
     if (!editGuru) return;
@@ -68,8 +72,24 @@ export default function TeacherPage() {
       });
 
       if (response.ok) {
+        // Upload foto ke endpoint S3 jika ada file yang dipilih
+        if (selectedFile) {
+          const formData = new FormData();
+          formData.append("id_guru", editGuru.id_guru);
+          formData.append("foto", selectedFile);
+
+          const uploadRes = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/upload-foto-guru`, {
+            method: "POST",
+            body: formData,
+          });
+
+          if (!uploadRes.ok) {
+            alert("Data guru diperbarui, tapi upload foto gagal.");
+          }
+        }
+
         const updated = gurus.map((g) =>
-          g.id_guru === editGuru.id_guru ? editGuru : g
+          g.id_guru === editGuru.id_guru ? { ...editGuru } : g
         );
         setGurus(updated);
         setFilteredGurus(updated);
@@ -84,19 +104,17 @@ export default function TeacherPage() {
     }
   };
 
-const handlePhotoChange = (e) => {
-  const file = e.target.files[0];  // Ambil file pertama yang dipilih
-  if (file) {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setEditGuru({
-        ...editGuru,
-        photo: reader.result, // Simpan gambar dalam bentuk base64 untuk preview
-      });
-    };
-    reader.readAsDataURL(file);  // Membaca file dan mengonversinya menjadi data URL
-  }
-};
+  const handlePhotoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setEditGuru({ ...editGuru, photo: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div className="teacher-page">
@@ -144,7 +162,13 @@ const handlePhotoChange = (e) => {
             <tr key={teacher.id_guru}>
               <td>{index + 1}</td>
               <td>
-                <Image src={teacher.photo || baseImage} alt={teacher.nama_guru} className="teacher-photo" width={50} height={50} />
+                <Image
+                  src={teacher.foto || baseImage}
+                  alt={teacher.nama_guru || "Guru"}
+                  className="teacher-photo"
+                  width={50}
+                  height={50}
+                />
               </td>
               <td>{teacher.nama_guru}</td>
               <td>{teacher.mata_pelajaran}</td>
@@ -180,9 +204,7 @@ const handlePhotoChange = (e) => {
               <input
                 type="text"
                 value={editGuru.nama_guru}
-                onChange={(e) =>
-                  setEditGuru({ ...editGuru, nama_guru: e.target.value })
-                }
+                onChange={(e) => setEditGuru({ ...editGuru, nama_guru: e.target.value })}
               />
             </div>
             <div className="form-group">
@@ -190,9 +212,7 @@ const handlePhotoChange = (e) => {
               <input
                 type="text"
                 value={editGuru.mata_pelajaran}
-                onChange={(e) =>
-                  setEditGuru({ ...editGuru, mata_pelajaran: e.target.value })
-                }
+                onChange={(e) => setEditGuru({ ...editGuru, mata_pelajaran: e.target.value })}
               />
             </div>
             <div className="form-group">
@@ -228,7 +248,6 @@ const handlePhotoChange = (e) => {
               />
             </div>
 
-             {/* Photo Upload Section */}
             <div className="form-group">
               <label>Foto</label>
               <div className="photo-upload-container" onClick={() => document.getElementById('file-upload').click()}>
@@ -240,9 +259,9 @@ const handlePhotoChange = (e) => {
                 <input
                   type="file"
                   id="file-upload"
-                  onChange={handlePhotoChange}  // Handle the file change event
-                  style={{ display: 'none' }}   // Hide the actual input
-                  accept="image/*"             // Only accept images
+                  onChange={handlePhotoChange}
+                  style={{ display: 'none' }}
+                  accept="image/*"
                 />
               </div>
             </div>
