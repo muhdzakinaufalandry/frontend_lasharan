@@ -89,7 +89,7 @@ export default function AddStudent() {
   return (
     <div className="student-form-container">
       <div className="form-header">
-        <h2>Tmabah Siswa</h2>
+        <h2>Tambah Siswa</h2>
       </div>
 
       <div className="form-section-title">Detail Siswa</div>

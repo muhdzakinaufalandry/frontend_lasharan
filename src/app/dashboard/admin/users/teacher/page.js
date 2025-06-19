@@ -129,7 +129,7 @@ const handlePhotoChange = (e) => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>foto</th>
+            <th>Foto</th>
             <th>Nama Guru</th>
             <th>Mata Pelajaran</th>
             <th>NIP</th>
