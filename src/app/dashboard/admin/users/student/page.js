@@ -179,7 +179,7 @@ export default function StudentPage() {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Foto</th> {/* Fixed the closing tag here */}
+            <th>Foto</th>
             <th>Nama Siswa</th>
             <th>Kelas</th>
             <th>Alamat</th>
@@ -195,7 +195,10 @@ export default function StudentPage() {
                 <td>
                   <div className="student-id-container">
                     <span>{index + 1}</span>
-                    <div className="photo-container">
+                  </div>
+                </td>
+                <td>
+                  <div className="photo-container">
                       <Image
                         src={student.foto || baseImage}
                         alt="student-photo"
@@ -204,7 +207,6 @@ export default function StudentPage() {
                         height={50}
                       />
                     </div>
-                  </div>
                 </td>
                 <td>{student.nama_siswa}</td>
                 <td>{getNamaKelas(student.id_kelas)}</td>

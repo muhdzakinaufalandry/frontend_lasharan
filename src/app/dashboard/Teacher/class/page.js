@@ -19,7 +19,6 @@ export default function ClassPage() {
         // Step 1: Ambil id_guru dari id_user
         const resGuru = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/guru/user/${idUser}`);
         const guruData = await resGuru.json();
-        console.log("Guru Data:", guruData);  // Cek data guru yang diterima
 
         if (!guruData.id_guru) {
           console.error("id_guru tidak ditemukan");
@@ -31,7 +30,6 @@ export default function ClassPage() {
         // Step 2: Ambil kelas yang diajar oleh guru berdasarkan id_guru
         const resKelas = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/kelas/guru/${idGuru}`);
         const kelas = await resKelas.json();
-        console.log("Kelas Data:", kelas);  // Cek data kelas yang diterima
 
         setClassData(kelas);  // Menyimpan data kelas ke state
       } catch (error) {
