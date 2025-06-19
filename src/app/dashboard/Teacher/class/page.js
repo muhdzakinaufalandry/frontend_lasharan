@@ -58,16 +58,16 @@ export default function ClassPage() {
 
   // Jika tidak ada kelas
   if (classData.length === 0) {
-    return <div>No classes found</div>;
+    return <div>Kelas tidak ditemukan</div>;
   }
 
   return (
     <div className="class-page">
-      <h2>Classes You Teach</h2>
+      <h2>Kelas yang diajarkan</h2>
       <div className="legend">
-        <span className="dot green" /> Less
-        <span className="dot orange" /> Much
-        <span className="dot red" /> Full
+        <span className="dot green" /> Kurang
+        <span className="dot orange" /> banyak
+        <span className="dot red" /> Penuh
       </div>
       <div className="class-grid">
         {classData.map((cls) => (
@@ -81,7 +81,7 @@ export default function ClassPage() {
               </div>
               <div className="class-line" />  
               <div className="class-count">{cls.jumlah_siswa || 0}</div>
-              <div className="class-footer">Participants</div>
+              <div className="class-footer">Peserta</div>
             </div>
           </Link>
         ))}

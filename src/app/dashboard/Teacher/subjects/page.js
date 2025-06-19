@@ -13,7 +13,7 @@ const subjects = [
 export default function SubjectsPage() {
   return (
     <div className="subjects-page">
-      <h2>Subjects</h2>
+      <h2>Mata Pelajaran</h2>
       <div className="subjects-grid">
         {subjects.map((subject, idx) => (
           <div key={idx} className="subject-card">

@@ -36,7 +36,7 @@ export default function SidebarTeacher() {
     <div className="sidebar">
       <div className="sidebar-top-horizontal">
         <img src="/logo-smas.png" alt="Logo Sekolah" className="sidebar-logo" />
-        <p className="sidebar-admin">Hi, Teacher</p>
+        <p className="sidebar-admin">Hi, Guru</p>
       </div>
 
       <nav className="sidebar-nav">
@@ -53,14 +53,14 @@ export default function SidebarTeacher() {
           className={`sidebar-link ${activeMenu === 'class' ? 'active' : ''}`}
         >
           <Presentation size={20} />
-          <span>Class</span>
+          <span>Kelas</span>
         </Link>
       </nav>
 
       <div className="sidebar-bottom">
         <button className="sidebar-link logout" onClick={handleLogout}>
           <LogOut size={20} />
-          <span>Logout</span>
+          <span>Keluar</span>
         </button>
       </div>
     </div>

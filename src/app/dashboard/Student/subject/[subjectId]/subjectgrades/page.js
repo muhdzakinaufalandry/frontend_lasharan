@@ -10,10 +10,10 @@ export default function GradePage() {
   const subjectId = params.subjectId;
   const [idSiswa, setIdSiswa] = useState(null);
   const [gradeData, setGradeData] = useState({
-    subject: 'Subject',
+    subject: 'Mata Pelajaran',
     teacher: '',
     year: '2024/2025',
-    student: 'Component',
+    student: 'Komponen',
     grades: [],
   });
 
@@ -84,10 +84,10 @@ export default function GradePage() {
             <table className="grade-table">
               <thead>
                 <tr>
-                  <th>Grade Item</th>
-                  <th>Calculated Weight</th>
-                  <th>Grade</th>
-                  <th>Range</th>
+                  <th>Item Kelas</th>
+                  <th>Bobot Nilai</th>
+                  <th>Nilai</th>
+                  <th>Rentang Nilai</th>
                 </tr>
               </thead>
               <tbody>

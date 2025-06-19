@@ -165,9 +165,9 @@ export default function SubjectPage() {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Class Name</th>
-              <th>Subject Name</th>
-              <th>Action</th>
+              <th>Nama Kelas</th>
+              <th>Nama Mata Pelajaran</th>
+              <th>Aksi</th>
             </tr>
           </thead>
           <tbody>
@@ -200,13 +200,13 @@ export default function SubjectPage() {
 
             <form onSubmit={editMataPelajaran ? handleUpdateMataPelajaran : handleSubmit}>
               <div className="form-group">
-                <label>Class Name</label>
+                <label>Nama Kelas</label>
                 <select
                   value={selectedKelas}
                   onChange={(e) => setSelectedKelas(e.target.value)}
                   required
                 >
-                  <option value="">Select a Class</option>
+                  <option value="">Pilih kelas</option>
                   {kelas.map((k) => (
                     <option key={k.id_kelas} value={k.id_kelas}>
                       {k.nama_kelas}
@@ -226,13 +226,13 @@ export default function SubjectPage() {
               </div>
 
               <div className="button-group">
-                <button type="button" onClick={handleClose} className="cancel-btn">cancel</button>
+                <button type="button" onClick={handleClose} className="cancel-btn">batal</button>
                 <button type="reset" onClick={() => {
                   setIDMapel('')
                   setSelectedKelas('')
                   setNamaMataPelajaran('')
                 }} className="reset-btn">reset</button>
-                <button type="submit" className="save-btn">save</button>
+                <button type="submit" className="save-btn">Simpan</button>
               </div>
             </form>
           </div>

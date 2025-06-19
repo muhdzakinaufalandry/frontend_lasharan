@@ -43,20 +43,20 @@ export default function SubjectsPage() {
           <input
             type="text"
             className="search-input"
-            placeholder="Search by Name or ID..."
+            placeholder="Cari"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
-        <h1 className="subject-list-title">Subject</h1>
+        <h1 className="subject-list-title">Mata Pelajaran</h1>
 
         <div className="subject-table-container">
           <table className="subject-table">
             <thead>
               <tr>
-                <th>Subject ID</th>
-                <th>Subject Name</th>
+                <th>ID Mata Pelajaran</th>
+                <th>Nama Mata Pelajaran</th>
               </tr>
             </thead>
             <tbody>

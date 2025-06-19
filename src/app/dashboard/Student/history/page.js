@@ -34,11 +34,11 @@ export default function HistoryPage() {
           onChange={(e) => setSearch(e.target.value)}
         />
 
-        <h2 className="section-title">History</h2>
+        <h2 className="section-title">Riwayat</h2>
 
         <div className="status-labels">
-          <span className="dot done-dot" /> Done
-          <span className="dot onprocess-dot" style={{ marginLeft: '20px' }} /> On Process
+          <span className="dot done-dot" /> Selesai
+          <span className="dot onprocess-dot" style={{ marginLeft: '20px' }} /> Sedang Berjalan
         </div>
 
         <div className="history-layout">
@@ -56,7 +56,7 @@ export default function HistoryPage() {
           </div>
 
           <div className="progress-container">
-            <div className="progress-title">OVERALL TASK</div>
+            <div className="progress-title">Tugas Keseluruhan</div>
             <div className="progress-chart">
             <div className="circular-wrapper">
               <svg viewBox="0 0 36 36" className="circular-chart">
@@ -78,8 +78,8 @@ export default function HistoryPage() {
             </div>
 
             <div className="labels">
-              <span className="done-label">Done 83%</span>
-              <span className="unfinished-label">Unfinished 17%</span>
+              <span className="done-label">Selesai 83%</span>
+              <span className="unfinished-label">Belum Selesai 17%</span>
             </div>
             </div>
           </div>

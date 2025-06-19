@@ -41,22 +41,22 @@ export default function ParticipantsPage() {
   }
 
   if (!students.length) {
-    return <div>No students found in this class</div>;
+    return <div>Tidak ditemukan Siswa</div>;
   }
 
   return (
     <div className="participants-page">
-      <h2>Participants</h2>
+      <h2>Peserta</h2>
 
       <div className="table-wrapper">
         <table className="students-table">
           <thead>
             <tr>
               <th>ID</th>
-              <th>Student Name</th>
+              <th>Nama Siswa</th>
               <th>NISN</th>
-              <th>Date of Birth</th>
-              <th>Address</th>
+              <th>Tanggal Lahir</th>
+              <th>Alamat</th>
             </tr>
           </thead>
 
@@ -78,13 +78,6 @@ export default function ParticipantsPage() {
             ))}
           </tbody>
         </table>
-      </div>
-
-      {/* Navigasi halaman (dummy) */}
-      <div className="pagination">
-        <button disabled>Prev</button>
-        <span>Page 1 / 2</span>
-        <button>Next</button>
       </div>
     </div>
   );

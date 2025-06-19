@@ -35,15 +35,15 @@ export default function ParticipantsDetailsPage() {
         <div className="header-section">
           <div className="search-bar">
             <input type="text" placeholder="Search" />
-            <button>Search by Name or roll.</button>
-            <button>All Classes</button>
+            <button>Cari.</button>
+            <button>Kelas Keseluruhan</button>
             <button onClick={() => setShowModal(true)}>＋</button>
           </div>
 
           {showModal && (
             <div className="modal-overlay">
                 <div className="modal">
-                <h3>Add Grade</h3>
+                <h3>Tambahkan Nilai</h3>
                 <input
                     type='int'
                     placeholder="Grade Item"
@@ -102,11 +102,11 @@ export default function ParticipantsDetailsPage() {
             <table className="grade-table">
               <thead>
                 <tr>
-                  <th>Grade Item</th>
-                  <th>Calculated Weight</th>
-                  <th>Grade</th>
-                  <th>Range</th>
-                  <th>Action</th>
+                  <th>Item Kelas</th>
+                  <th>Bobot Nilai</th>
+                  <th>Nilai</th>
+                  <th>Rentang Nilai</th>
+                  <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>

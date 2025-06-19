@@ -1,8 +1,13 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Plus } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import '@/styles/student.css';
 
 export default function AddStudent() {
+  const router = useRouter();
+  const fileInputRef = useRef();
+
   const [idUser, setIDUser] = useState('');
   const [idKelas, setIDKelas] = useState('');
   const [kelasList, setKelasList] = useState([]);
@@ -10,93 +15,113 @@ export default function AddStudent() {
   const [alamat, setAlamat] = useState('');
   const [tanggalLahir, setTanggalLahir] = useState('');
   const [nisn, setNISN] = useState('');
+  const [noTelp, setNoTelp] = useState('');
   const [user, setUser] = useState([]);
+  const [photo, setPhoto] = useState(null);
+  const [photoPreview, setPhotoPreview] = useState(null);
 
   useEffect(() => {
-    const fetchKelas = async () => {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/kelas`);
-        const data = await response.json();
-        setKelasList(data);
-      } catch (error) {
-        console.error('Gagal memuat data kelas:', error);
-      }
-    };
-
-    fetchKelas();
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user`)
+      .then((r) => r.json())
+      .then(setUser)
+      .catch(() => console.error('Gagal load user'));
   }, []);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user`);
-        const data = await response.json();
-        setUser(data);
-      } catch (error) {
-        console.error('Gagal memuat data user:', error);
-      }
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/kelas`)
+      .then((r) => r.json())
+      .then(setKelasList)
+      .catch(() => console.error('Gagal load kelas'));
+  }, []);
+
+  const handlePhotoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPhoto(file);
+      setPhotoPreview(URL.createObjectURL(file)); // Display photo preview
     }
-
-    fetchUser();
-  }, []);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const newSiswa = {
-      id_user: parseInt(idUser),
-      id_kelas: parseInt(idKelas),
-      nama_siswa: namaSiswa,
-      alamat: alamat,
-      tanggal_lahir: tanggalLahir,
-      nisn: nisn
-    };
-
-    console.log("Data yang dikirim:", newSiswa);
+    const formData = new FormData();
+    if (photo) formData.append('photo', photo);
+    formData.append('id_user', idUser);
+    formData.append('id_kelas', idKelas);
+    formData.append('nama_siswa', namaSiswa);
+    formData.append('alamat', alamat);
+    formData.append('tanggal_lahir', tanggalLahir);
+    formData.append('nisn', nisn);
+    formData.append('no_telp', noTelp);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/siswa`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/siswa`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newSiswa),
+        body: formData,
       });
-
-      if (response.ok) {
-        alert('Siswa berhasil ditambahkan!');
-        setIDUser('');
-        setIDKelas('');
-        setNamaSiswa('');
-        setAlamat('');
-        setTanggalLahir('');
-        setNISN('');
-      } else {
-        const errorText = await response.text();
-        console.error("Response error:", errorText);
-        alert('Gagal menambahkan siswa. Lihat console.');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Terjadi kesalahan.');
+      if (!res.ok) throw new Error(await res.text());
+      alert('Siswa berhasil ditambahkan!');
+      handleReset();
+    } catch (err) {
+      console.error(err);
+      alert('Gagal menambahkan siswa.');
     }
+  };
+
+  const handleCancel = () => {
+    if (window.confirm('Are you sure you want to cancel? All changes will be lost.')) {
+      router.push('/dashboard/admin/users/student');
+    }
+  };
+
+  const handleReset = () => {
+    setIDUser('');
+    setIDKelas('');
+    setNamaSiswa('');
+    setAlamat('');
+    setTanggalLahir('');
+    setNISN('');
+    setNoTelp('');
+    setPhoto(null);
+    setPhotoPreview(null);
   };
 
   return (
     <div className="student-form-container">
-      <h2 className="form-title">Add New Student</h2>
+      <div className="form-header">
+        <h2>Tmabah Siswa</h2>
+      </div>
+
+      <div className="form-section-title">Detail Siswa</div>
 
       <form className="student-form" onSubmit={handleSubmit}>
-        <div className="section-header">
-          <h3>Student Details</h3>
-          <div className="form-buttons">
-            <button type="button" className="btn-cancel">cancel</button>
-            <button type="reset" className="btn-reset">reset</button>
-            <button type="submit" className="btn-save">save</button>
-          </div>
+        {/* Photo Upload */}
+        <div
+          className="photo-upload-container"
+          onClick={() => fileInputRef.current.click()}
+        >
+          <input
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            onChange={handlePhotoChange}
+            style={{ display: 'none' }}
+          />
+          {photoPreview
+            ? <img src={photoPreview} className="photo-preview" alt="preview" />
+            : (
+              <div className="photo-placeholder">
+                <Plus size={32} />
+                <span>Unggah Foto</span>
+              </div>
+            )
+          }
         </div>
 
-        <div className="form-grid">
+        {/* Form Fields */}
+        <div className="form-row">
           <div className="form-group">
-            <label>Name *</label>
+            <label>Nama *</label>
             <input
               type="text"
               placeholder="Enter name"
@@ -105,9 +130,11 @@ export default function AddStudent() {
               required
             />
           </div>
+        </div>
 
+        <div className="form-row">
           <div className="form-group">
-            <label>Username *</label>
+            <label>Username</label>
             <select value={idUser} onChange={(e) => setIDUser(e.target.value)} required>
               <option value="">Pilih Username</option>
               {user.map((user) => (
@@ -119,17 +146,21 @@ export default function AddStudent() {
           </div>
 
           <div className="form-group">
-            <label>Date of Birth *</label>
-            <input
-              type="date"
-              value={tanggalLahir}
-              onChange={(e) => setTanggalLahir(e.target.value)}
-              required
-            />
+            <label>Kelas *</label>
+            <select value={idKelas} onChange={(e) => setIDKelas(e.target.value)} required>
+              <option value="">Pilih Kelas</option>
+              {kelasList.map((kelas) => (
+                <option key={kelas.id_kelas} value={kelas.id_kelas}>
+                  {kelas.nama_kelas}
+                </option>
+              ))}
+            </select>
           </div>
+        </div>
 
+        <div className="form-row">
           <div className="form-group">
-            <label>Address *</label>
+            <label>Alamat</label>
             <input
               type="text"
               placeholder="Enter student address"
@@ -140,17 +171,17 @@ export default function AddStudent() {
           </div>
 
           <div className="form-group">
-            <label>Class *</label>
-            <select value={idKelas} onChange={(e) => setIDKelas(e.target.value)} required>
-              <option value="">Pilih Kelas</option>
-              {kelasList.map((kelas) => (
-                <option key={kelas.id_kelas} value={kelas.id_kelas}>
-                  {kelas.nama_kelas}
-                </option>
-              ))}
-            </select>
+             <label>Tanggal Lahir *</label>
+            <input
+              type="date"
+              value={tanggalLahir}
+              onChange={(e) => setTanggalLahir(e.target.value)}
+              required
+            />
           </div>
+        </div>
 
+        <div className="form-row">
           <div className="form-group">
             <label>NISN</label>
             <input
@@ -160,6 +191,30 @@ export default function AddStudent() {
               onChange={(e) => setNISN(e.target.value)}
             />
           </div>
+        </div>
+
+        {/* Footer Buttons */}
+        <div className="form-footer-buttons">
+          <button
+            type="button"
+            className="btn cancel"
+            onClick={handleCancel}
+          >
+            Batal
+          </button>
+          <button
+            type="button"
+            className="btn reset"
+            onClick={handleReset}
+          >
+            Reset
+          </button>
+          <button
+            type="submit"
+            className="btn save"
+          >
+            Simpan
+          </button>
         </div>
       </form>
     </div>

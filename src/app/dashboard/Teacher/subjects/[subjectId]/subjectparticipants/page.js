@@ -30,17 +30,17 @@ export default function SubjectParticipantsPage() {
 
   return (
     <div className="participants-page">
-      <h2>Subject Participants</h2>
+      <h2>Peserta Mata Pelajaran</h2>
 
       <div className="table-wrapper">
         <table className="students-table">
           <thead>
             <tr>
               <th>ID</th>
-              <th>Student Name</th>
+              <th>Nama Siswa</th>
               <th>NISN</th>
-              <th>Date of Birth</th>
-              <th>Address</th>
+              <th>Tanggal Lahir</th>
+              <th>Alamat</th>
             </tr>
           </thead>
 
@@ -64,12 +64,6 @@ export default function SubjectParticipantsPage() {
             ))}
           </tbody>
         </table>
-      </div>
-
-      <div className="pagination">
-        <button disabled>Prev</button>
-        <span>Page 1 / 1</span>
-        <button disabled>Next</button>
       </div>
     </div>
   );

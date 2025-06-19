@@ -13,27 +13,28 @@ export default function StudentDashboardPage() {
       <main className="dashboard-content">
         <section className="welcome-card">
           <div className="welcome-text">
-            <h2>Welcome, Student Higher Secondary School Team!</h2>
+            <h2>Selamat Datang, Siswa SMAS Lasharan Jaya Gowa!</h2>
             <p className="welcome-ipsum">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-              Aliquam sed nulla sit amet urna pellentesque...
+              Saya menyampaikan ucapan terima kasih kepada semua pihak yang telah membantu tersedianya website sekolah ini. Kritik dan saran yang konstruktif sangat kami harapkan demi perbaikan dan peningkatan kualitas serta kemanfaatan yang lebih luas.
             </p>
           </div>
-          <img src="/hero-illustration.png" alt="Hero" />
         </section>
 
         <section className="status-section">
           <div className="status-box subject-box">
             <div>
               <h3>{subjectCount}</h3>
-              <p>Subject</p>
+              <p>Mata Pelajaran</p>
             </div>
             <BookOpen size={48} />
           </div>
 
           <div className="status-box grade-box">
             <div>
-              <h3>Grades</h3>
+
+              <h3>{gradeCount}</h3>
+              <p>Nilai</p>
+
             </div>
             <Award size={48} />
           </div>

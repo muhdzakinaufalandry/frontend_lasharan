@@ -38,7 +38,7 @@ export default function SidebarStudent() {
     <div className="sidebar">
       <div className="sidebar-top-horizontal">
         <img src="/logo-smas.png" alt="Logo Sekolah" className="sidebar-logo" />
-        <p className="sidebar-admin">Hi, Student</p>
+        <p className="sidebar-admin">Hi, Siswa</p>
       </div>
 
       <nav className="sidebar-nav">
@@ -55,7 +55,7 @@ export default function SidebarStudent() {
           className={`sidebar-link ${activeMenu === 'subjects' ? 'active' : ''}`}
         >
           <BookOpen size={20} />
-          <span>Subjects</span>
+          <span>Mata Pelajaran</span>
         </Link>
 
         {/* <Link
@@ -70,7 +70,7 @@ export default function SidebarStudent() {
       <div className="sidebar-bottom">
         <button className="sidebar-link logout" onClick={handleLogout}>
           <LogOut size={20} />
-          <span>Logout</span>
+          <span>Keluar</span>
         </button>
       </div>
     </div>

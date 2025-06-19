@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import '@/styles/teacher.css';
 import Link from 'next/link';
 import { Search, Plus, Pencil, Trash2 } from 'lucide-react';
+import Image from 'next/image';
+import baseImage from '../../../../../../public/logo-smas.png'
 
 export default function TeacherPage() {
   const [gurus, setGurus] = useState([]);
@@ -82,12 +84,26 @@ export default function TeacherPage() {
     }
   };
 
+const handlePhotoChange = (e) => {
+  const file = e.target.files[0];  // Ambil file pertama yang dipilih
+  if (file) {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setEditGuru({
+        ...editGuru,
+        photo: reader.result, // Simpan gambar dalam bentuk base64 untuk preview
+      });
+    };
+    reader.readAsDataURL(file);  // Membaca file dan mengonversinya menjadi data URL
+  }
+};
+
   return (
     <div className="teacher-page">
       <div className="teacher-header">
         <div className="header-text">
-          <h1>Teachers</h1>
-          <p>All Teacher List</p>
+          <h1>Guru</h1>
+          <p>List Guru</p>
         </div>
 
         <div className="header-actions">
@@ -104,7 +120,7 @@ export default function TeacherPage() {
           </div>
 
           <Link href="/dashboard/admin/users/teacher/add" className="add-new-btn" style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-            <Plus size={16} /> Add New
+            <Plus size={16} /> Tambah
           </Link>
         </div>
       </div>
@@ -113,19 +129,23 @@ export default function TeacherPage() {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Teacher Name</th>
-            <th>Subject</th>
+            <th>foto</th>
+            <th>Nama Guru</th>
+            <th>Mata Pelajaran</th>
             <th>NIP</th>
-            <th>Address</th>
+            <th>Alamat</th>
             <th>Email</th>
-            <th>Phone</th>
-            <th>Action</th>
+            <th>No HP</th>
+            <th>Aksi</th>
           </tr>
         </thead>
         <tbody>
           {filteredGurus.map((teacher, index) => (
             <tr key={teacher.id_guru}>
               <td>{index + 1}</td>
+              <td>
+                <Image src={teacher.photo || baseImage} alt={teacher.nama_guru} className="teacher-photo" width={50} height={50} />
+              </td>
               <td>{teacher.nama_guru}</td>
               <td>{teacher.mata_pelajaran}</td>
               <td>{teacher.nip}</td>
@@ -154,9 +174,9 @@ export default function TeacherPage() {
       {editGuru && (
         <div className="edit-modal">
           <div className="modal-content">
-            <h3>Edit Teacher</h3>
+            <h3>Edit Guru</h3>
             <div className="form-group">
-              <label>Name</label>
+              <label>Nama</label>
               <input
                 type="text"
                 value={editGuru.nama_guru}
@@ -166,7 +186,7 @@ export default function TeacherPage() {
               />
             </div>
             <div className="form-group">
-              <label>Subject</label>
+              <label>Mata Pelajaran</label>
               <input
                 type="text"
                 value={editGuru.mata_pelajaran}
@@ -184,7 +204,7 @@ export default function TeacherPage() {
               />
             </div>
             <div className="form-group">
-              <label>Address</label>
+              <label>Alamat</label>
               <input
                 type="text"
                 value={editGuru.alamat}
@@ -200,19 +220,39 @@ export default function TeacherPage() {
               />
             </div>
             <div className="form-group">
-              <label>Phone</label>
+              <label>No HP</label>
               <input
                 type="text"
                 value={editGuru.no_telp}
                 onChange={(e) => setEditGuru({ ...editGuru, no_telp: e.target.value })}
               />
             </div>
+
+             {/* Photo Upload Section */}
+            <div className="form-group">
+              <label>Foto</label>
+              <div className="photo-upload-container" onClick={() => document.getElementById('file-upload').click()}>
+                {editGuru.photo ? (
+                  <img src={editGuru.photo} alt="Teacher" className="photo-preview" />
+                ) : (
+                  <div className="photo-placeholder">Unggah Foto</div>
+                )}
+                <input
+                  type="file"
+                  id="file-upload"
+                  onChange={handlePhotoChange}  // Handle the file change event
+                  style={{ display: 'none' }}   // Hide the actual input
+                  accept="image/*"             // Only accept images
+                />
+              </div>
+            </div>
+
             <div className="form-actions">
               <button className="btn-rounded save-btn" onClick={handleUpdateGuru}>
-                Save
+                Simpan
               </button>
               <button className="btn-rounded cancel-btn" onClick={() => setEditGuru(null)}>
-                Cancel
+                Batal
               </button>
             </div>
           </div>

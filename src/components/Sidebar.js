@@ -70,7 +70,7 @@ export default function Sidebar() {
           className={`sidebar-link ${activeMenu === 'datauser' ? 'active' : ''}`}
         >
           <Users size={18} />
-          <span>Data User</span>
+          <span>Data Pengguna</span>
         </Link>
 
         <div
@@ -103,7 +103,7 @@ export default function Sidebar() {
                 className={`dropdown-item ${activeRole === 'student' ? 'active-role-item' : ''}`}
                 onClick={() => setActiveRole('student')}
               >
-                Student
+                Siswa
               </Link>
             </div>
           )}
@@ -114,7 +114,7 @@ export default function Sidebar() {
           className={`sidebar-link ${activeMenu === 'class' ? 'active' : ''}`}
         >
           <Presentation size={18} />
-          <span>Class</span>
+          <span>Kelas</span>
         </Link>
 
         <Link
@@ -129,7 +129,7 @@ export default function Sidebar() {
       <div className="sidebar-bottom">
         <button onClick={handleLogout} className="sidebar-link logout">
           <LogOut size={18} />
-          <span>Logout</span>
+          <span>Keluar</span>
         </button>
       </div>
     </div>
