@@ -152,12 +152,6 @@
   overflow-x: auto;
 }
 
-.grade-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: 20px;
-}
-
 .grade-table th,
 .grade-table td {
   padding: 12px;
@@ -176,6 +170,8 @@
   border: none;
   font-size: 18px;
   cursor: pointer;
+  margin-right: 10px;
+  display: inline-block; 
 }
 
 .grade-table td button:hover {

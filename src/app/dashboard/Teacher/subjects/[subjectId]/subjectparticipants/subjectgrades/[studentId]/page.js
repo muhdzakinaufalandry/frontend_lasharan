@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import '@/styles/grades.css';
+import { Pencil, Trash } from 'lucide-react';
 
 export default function ParticipantsDetailsPage() {
   const { subjectId, studentId } = useParams();
@@ -157,7 +158,7 @@ export default function ParticipantsDetailsPage() {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
-   return (
+    return (
     <div className="grade-page">
       <main className="grade-main">
         <div className="header-section">
@@ -202,8 +203,20 @@ export default function ParticipantsDetailsPage() {
                       <td style={{ color: '#10B981' }}>{item.nilai}</td>
                       <td>0 - 100</td>
                       <td>
-                        <button title="Edit" onClick={() => openEditModal(item)}>✏️</button>
-                        <button title="Delete" onClick={() => handleDelete(item.id_penilaian)}>🗑️</button>
+                        <button 
+                          title="Edit" 
+                          onClick={() => openEditModal(item)} 
+                          style={{ cursor: 'pointer', marginRight: '10px' }}
+                        >
+                          <Pencil size={18} />
+                        </button>
+                        <button 
+                          title="Delete" 
+                          onClick={() => handleDelete(item.id_penilaian)} 
+                          style={{ cursor: 'pointer' }}
+                        >
+                          <Trash size={18} />
+                        </button>
                       </td>
                     </tr>
                 ))}
@@ -212,7 +225,7 @@ export default function ParticipantsDetailsPage() {
                   <td>-</td>
                   <td style={{ color: '#0ea5e9' }}><strong>{data.total}</strong></td>
                   <td>0 - 100</td>
-                  <td><button title="View">👁️</button></td>
+                  <td></td> {/* No button here for Total tasks */}
                 </tr>
               </tbody>
             </table>
