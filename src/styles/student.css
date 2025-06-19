@@ -3,6 +3,7 @@
   font-family: 'Poppins', sans-serif;
   background-color: #fff;
   border-radius: 25px;
+  overflow: auto;
 }
 
 .student-header {
@@ -79,7 +80,7 @@
   font-family: 'Poppins', sans-serif;
   background-color: #fff;
   border-radius: 25px;
-  
+   overflow-y: auto;
 }
 
 .photo-id-container {
@@ -92,7 +93,7 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  overflow: hidden;
+  overflow: auto;
   border: 1px solid #ccc;
 }
 
@@ -290,6 +291,27 @@ background-color: white;
   justify-content: center;
   align-items: center;
   z-index: 999;
+  overflow-y: auto;  
+}
+
+/* Make the modal content scrollable */
+.modal-content {
+  max-height: 80vh;  /* Max height for the modal */
+  overflow-y: auto;  /* Enable vertical scrolling */
+}
+
+/* Scrollbar styling (optional for better UX) */
+.student-page::-webkit-scrollbar, .teacher-page::-webkit-scrollbar {
+  width: 8px;
+}
+
+.student-page::-webkit-scrollbar-thumb, .teacher-page::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+.student-page::-webkit-scrollbar-track, .teacher-page::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
 }
 
 .edit-siswa-modal {
@@ -299,6 +321,7 @@ background-color: white;
   width: 400px;
   max-width: 90%;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  overflow-y: auto; 
 }
 
 .edit-siswa-modal input,
@@ -345,13 +368,13 @@ background-color: white;
 .student-id-container {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
   justify-content: flex-start; /* Foto di sebelah ID */
 }
 
 .photo-container {
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   overflow: hidden;
   border: 1px solid #ccc;
@@ -367,3 +390,4 @@ background-color: white;
   flex-grow: 1;
    padding-left: 10px;
 }
+

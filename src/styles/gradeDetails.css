@@ -38,7 +38,7 @@
   }
   
   .grade-table-container {
-    overflow-x: auto;
+    overflow: auto;
   }
   
   .grade-table {

@@ -65,7 +65,6 @@ export default function ParticipantsPage() {
               <tr key={stu.id_siswa}>
                 <td>{String(idx + 1).padStart(2, '0')}</td>
                 <td className="avatar-cell clickable-cell">
-                  <span className="avatar">👤</span>
                   {stu.nama_siswa || 'N/A'}
                 </td>
                 {/* NISN */}

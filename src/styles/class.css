@@ -36,10 +36,12 @@
 
 /* TABEL */
 .class-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 12px;
-  font-size: 14px;
+ width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
 .class-table thead tr {
@@ -60,8 +62,8 @@
   background-color: #fff;
   padding: 14px 16px;
   border: 1px solid #e5e7eb;
-  border-top: none;
-  border-bottom: none;
+   border-bottom: 1px solid #eaeaea;
+  text-align: left;
 }
 
 .class-table tbody tr {

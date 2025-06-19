@@ -144,8 +144,8 @@ export default function StudentPage() {
     <div className="student-page">
       <div className="student-header">
         <div className="header-text">
-          <h1>Student</h1>
-          <p>All Student List</p>
+          <h1>Siswa</h1>
+          <p>List Siswa</p>
         </div>
         <div className="header-actions">
           <div style={{ position: 'relative' }}>
@@ -179,6 +179,7 @@ export default function StudentPage() {
         <thead>
           <tr>
             <th>ID</th>
+            <th>Foto</th> {/* Fixed the closing tag here */}
             <th>Nama Siswa</th>
             <th>Kelas</th>
             <th>Alamat</th>
