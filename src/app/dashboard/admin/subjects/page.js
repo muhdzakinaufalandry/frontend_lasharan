@@ -94,6 +94,7 @@ export default function SubjectPage() {
       })
 
       if (response.ok) {
+        const updated = await response.json();
         setMataPelajarans(mataPelajarans.filter(s => s.id_mapel !== id))
         alert("Mata Pelajaran berhasil dihapus.")
       } else {
@@ -113,36 +114,40 @@ export default function SubjectPage() {
     setShowModal(true)
   }
 
-  const handleUpdateMataPelajaran = async () => {
-    const updatedData = {
-      id_kelas: parseInt(selectedKelas),
-      nama_mata_pelajaran: namaMataPelajaran,
-    }
-
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/matapelajaran/${IDMapel}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedData),
-      })
-
-      if (response.ok) {
-        const updated = await response.json()
-        setMataPelajarans(mataPelajarans.map(m =>
-          m.id_mapel === updated.id_mapel ? updated : m
-        ))
-        alert("Mata Pelajaran berhasil diperbarui.")
-        handleClose()
-      } else {
-        const errorText = await response.text()
-        console.error("Error updating mata pelajaran:", errorText)
-        alert("Gagal memperbarui mata pelajaran.")
-      }
-    } catch (error) {
-      console.error('Error:', error)
-      alert("Terjadi kesalahan saat memperbarui mata pelajaran.")
-    }
+const handleUpdateMataPelajaran = async (e) => {
+  e.preventDefault(); // ⛔ KAMU HARUS TAMBAHKAN INI JIKA PAKAI <form>
+  const updatedData = {
+    id_kelas: parseInt(selectedKelas),
+    nama_mata_pelajaran: namaMataPelajaran,
   }
+
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/matapelajaran/${IDMapel}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedData),
+    })
+
+    const raw = await response.text(); // 👈 ambil response sebagai teks mentah
+    console.log("Raw response:", raw);
+
+    if (response.ok) {
+      const updated = JSON.parse(raw); // parsing manual supaya bisa lihat error-nya kalau gagal
+      setMataPelajarans(mataPelajarans.map(m =>
+        m.id_mapel === updated.id_mapel ? updated : m
+      ));
+      alert("Mata Pelajaran berhasil diperbarui.");
+      handleClose();
+    } else {
+      console.error("Gagal response update:", raw);
+      alert("Gagal memperbarui mata pelajaran.");
+    }
+  } catch (error) {
+    console.error('Error catch:', error); // 💥 tampilkan error asli
+    alert("Terjadi kesalahan saat memperbarui mata pelajaran.");
+  }
+}
+
 
   const getKelasName = (id_kelas) => {
     const kelasData = kelas.find(k => k.id_kelas === id_kelas)

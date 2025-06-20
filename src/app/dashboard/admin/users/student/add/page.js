@@ -47,13 +47,17 @@ export default function AddStudent() {
 
     const dataSiswa = {
       id_user: parseInt(idUser),
-      id_kelas: parseInt(idKelas),
       nama_siswa: namaSiswa,
       alamat,
       tanggal_lahir: tanggalLahir,
       nisn,
       no_telp: noTelp
     };
+
+    if (idKelas) {
+      dataSiswa.id_kelas = parseInt(idKelas);
+    }
+
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/siswa`, {
@@ -167,7 +171,7 @@ export default function AddStudent() {
 
           <div className="form-group">
             <label>Kelas *</label>
-            <select value={idKelas} onChange={(e) => setIDKelas(e.target.value)} required>
+            <select value={idKelas} onChange={(e) => setIDKelas(e.target.value)}>
               <option value="">Pilih Kelas</option>
               {kelasList.map((kelas) => (
                 <option key={kelas.id_kelas} value={kelas.id_kelas}>
