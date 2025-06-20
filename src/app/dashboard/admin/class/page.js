@@ -13,6 +13,22 @@ export default function ClassPage() {
   const [namaKelas, setNamaKelas] = useState('');
   const [tahunAjaran, setTahunAjaran] = useState('');
 
+  const [showStudentModal, setShowStudentModal] = useState(false);
+  const [selectedKelas, setSelectedKelas] = useState(null);
+  const [allStudents, setAllStudents] = useState([]);
+  const [selectedStudentIds, setSelectedStudentIds] = useState([]);
+
+  const fetchSiswaTanpaKelas = async () => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/siswa`);
+      const data = await res.json();
+      setAllStudents(data.filter(s => s.id_kelas === null));
+    } catch (err) {
+      console.error("Gagal fetch siswa:", err);
+      setAllStudents([]);
+    }
+  };
+
   useEffect(() => {
     const fetchKelass = async () => {
       try {
@@ -149,6 +165,43 @@ export default function ClassPage() {
     }
   };
 
+  const handleOpenStudentModal = async (kelas) => {
+    setSelectedKelas(kelas);
+    setSelectedStudentIds([]);
+    setShowStudentModal(true);
+    await fetchSiswaTanpaKelas();
+  };
+
+  const handleAssignStudentToClass = async (e) => {
+    e.preventDefault();
+
+    try {
+      const requests = selectedStudentIds.map(id =>
+        fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/siswa/tambah/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id_kelas: selectedKelas.id_kelas })
+        })
+      );
+
+      const results = await Promise.all(requests);
+      const successCount = results.filter(res => res.ok).length;
+
+      if (successCount === selectedStudentIds.length) {
+        alert('Semua siswa berhasil dimasukkan ke kelas!');
+      } else {
+        alert(`Sebagian berhasil: ${successCount}/${selectedStudentIds.length}`);
+      }
+
+      setShowStudentModal(false);
+      setSelectedStudentIds([]);
+      await fetchSiswaTanpaKelas();
+    } catch (error) {
+      console.error(error);
+      alert('Terjadi kesalahan saat menambahkan siswa.');
+    }
+  };
+
   return (
     <div className="class-container">
       <div className="class-header">
@@ -176,24 +229,16 @@ export default function ClassPage() {
               <td>{getNamaGuruById(kelas.id_guru)}</td>
               <td>{kelas.tahun_ajaran}</td>
               <td className="action-icons">
-                <Pencil
-                  size={16}
-                  title="Edit"
-                  onClick={() => handleEdit(kelas)}
-                  style={{ cursor: 'pointer', marginRight: '10px' }}
-                />
-                <Trash2
-                  size={16}
-                  title="Delete"
-                  onClick={() => handleDelete(kelas.id_kelas)}
-                  style={{ cursor: 'pointer', color: '#c0392b' }}
-                />
+                <Pencil size={16} title="Edit" onClick={() => handleEdit(kelas)} style={{ cursor: 'pointer', marginRight: '10px' }} />
+                <UserPlus2 size={16} title="Tambah Siswa" onClick={() => handleOpenStudentModal(kelas)} style={{ cursor: 'pointer', marginRight: '10px' }} />
+                <Trash2 size={16} title="Delete" onClick={() => handleDelete(kelas.id_kelas)} style={{ cursor: 'pointer', color: '#c0392b' }} />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
 
+      {/* Modal Tambah/Edit Kelas */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -203,42 +248,24 @@ export default function ClassPage() {
               <div className="form-row">
                 <div className="form-group">
                   <label>Teacher</label>
-                  <select
-                    value={IDGuru}
-                    onChange={(e) => setIDGuru(e.target.value)}
-                    required
-                  >
+                  <select value={IDGuru} onChange={(e) => setIDGuru(e.target.value)} required>
                     <option value="">Pilih Guru</option>
                     {gurus.map((guru) => (
-                      <option key={guru.id_guru} value={guru.id_guru}>
-                        {guru.nama_guru}
-                      </option>
+                      <option key={guru.id_guru} value={guru.id_guru}>{guru.nama_guru}</option>
                     ))}
                   </select>
                 </div>
               </div>
-
               <div className="form-row">
                 <div className="form-group">
                   <label>Class</label>
-                  <input
-                    type="text"
-                    value={namaKelas}
-                    onChange={(e) => setNamaKelas(e.target.value)}
-                    required
-                  />
+                  <input type="text" value={namaKelas} onChange={(e) => setNamaKelas(e.target.value)} required />
                 </div>
                 <div className="form-group">
                   <label>School Year</label>
-                  <input
-                    type="text"
-                    value={tahunAjaran}
-                    onChange={(e) => setTahunAjaran(e.target.value)}
-                    required
-                  />
+                  <input type="text" value={tahunAjaran} onChange={(e) => setTahunAjaran(e.target.value)} required />
                 </div>
               </div>
-
               <div className="button-group">
                 <button type="button" onClick={handleClose} className="cancel-btn">Cancel</button>
                 <button type="submit" className="save-btn">{editKelas ? 'Update' : 'Save'}</button>
@@ -247,6 +274,53 @@ export default function ClassPage() {
           </div>
         </div>
       )}
+
+      {/* Modal Tambah Siswa ke Kelas */}
+{showStudentModal && (
+  <div className="modal-overlay">
+    <div className="modal-content modal-large"> {/* Tambahkan class modal-large */}
+      <h3>Masukkan Siswa ke Kelas {selectedKelas?.nama_kelas}</h3>
+      <hr />
+      <form onSubmit={handleAssignStudentToClass}>
+        <div className="form-group">
+          <label>Pilih Siswa</label>
+          <div className="checkbox-list">
+            {allStudents.length === 0 ? (
+              <p>Tidak ada siswa yang tersedia.</p>
+            ) : (
+              allStudents.map((siswa) => (
+                <div key={siswa.id_siswa} className="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id={`siswa-${siswa.id_siswa}`}
+                    value={siswa.id_siswa}
+                    checked={selectedStudentIds.includes(siswa.id_siswa.toString())}
+                    onChange={(e) => {
+                      const id = e.target.value;
+                      setSelectedStudentIds((prev) =>
+                        e.target.checked
+                          ? [...prev, id]
+                          : prev.filter((sid) => sid !== id)
+                      );
+                    }}
+                  />
+                  <label htmlFor={`siswa-${siswa.id_siswa}`}>
+                    {siswa.nama_siswa} ({siswa.nisn})
+                  </label>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+        <div className="button-group">
+          <button type="button" onClick={() => setShowStudentModal(false)} className="cancel-btn">Batal</button>
+          <button type="submit" className="save-btn">Tambahkan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
+
     </div>
   );
 }

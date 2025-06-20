@@ -8,7 +8,7 @@ import Image from 'next/image';
 export default function StudentPage() {
   const [siswas, setSiswas] = useState([]);
   const [filteredSiswas, setFilteredSiswas] = useState([]);
-  const [editSiswa, setEditSiswa] = useState(null);
+  const [editSiswa, setEditSiswa] = useState('');
   const [kelasList, setKelasList] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);

@@ -170,3 +170,30 @@ input[type="date"] {
 .save-btn:hover {
   background-color: #1565c0;
 }
+
+/* Modal lebih besar */
+.modal-large {
+  width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Checkbox daftar siswa */
+.checkbox-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 400px;
+  overflow-y: auto;
+  margin-top: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+
