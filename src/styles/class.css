@@ -175,7 +175,6 @@ input[type="date"] {
 .modal-large {
   width: 700px;
   max-height: 90vh;
-  overflow-y: auto;
 }
 
 /* Checkbox daftar siswa */

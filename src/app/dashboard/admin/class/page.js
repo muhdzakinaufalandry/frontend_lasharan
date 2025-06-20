@@ -4,9 +4,6 @@ import '@/styles/class.css';
 import '@/styles/dashboard.css';
 import { Pencil, Trash2, Plus, UserPlus2 } from 'lucide-react';
 
-import '@/styles/dashboard.css';
-import { Pencil, Trash2, Plus } from 'lucide-react';
-
 export default function ClassPage() {
   const [kelass, setKelass] = useState([]);
   const [gurus, setGurus] = useState([]);
@@ -208,7 +205,7 @@ export default function ClassPage() {
   return (
     <div className="class-container">
       <div className="class-header">
-        <h2>All Class List</h2>
+        <h2>List Kelas</h2>
         <button className="btn-add" onClick={handleOpen}>
           <Plus size={18} />
         </button>
@@ -218,10 +215,10 @@ export default function ClassPage() {
         <thead>
           <tr>
             <th>No</th>
-            <th>Class Name</th>
-            <th>Teacher</th>
-            <th>School Year</th>
-            <th>Action</th>
+            <th>Nama Kelas</th>
+            <th>Guru</th>
+            <th>Tahun Ajaran</th>
+            <th>Aksi</th>
           </tr>
         </thead>
         <tbody>
