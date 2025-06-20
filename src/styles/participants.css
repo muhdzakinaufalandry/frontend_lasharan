@@ -11,7 +11,7 @@
 }
 
 .table-wrapper {
-  overflow-x: auto;
+  overflow-y: auto;
   border-radius: 12px;
   box-shadow: 0 3px 12px rgba(0,0,0,0.06);
 }
@@ -22,7 +22,7 @@
 }
 
 .students-table thead {
-  background: #f4f7fc;
+  background: #e9f6fd;
 }
 
 .students-table th,
@@ -41,7 +41,6 @@
 }
 
 .name-link:hover {
-  text-decoration: underline;
   color: #0070f3;
 }
 

@@ -2,14 +2,12 @@
     margin: 0;
     padding: 0;
     height: 100vh;
-    overflow: hidden; /* Menghindari scroll */
   }
 
   .dashboard-container {
     display: flex;
     min-height: 100vh;
     margin-bottom: 0.1rem;
-    overflow: hidden;
   }
   
   .dashboard-header h1 {

@@ -157,7 +157,7 @@ const handleUpdateMataPelajaran = async (e) => {
   return (
     <div className="subject-container">
       <div className="subject-header">
-        <h2>All Subject List</h2>
+        <h2>List Mata Pelajaran</h2>
         <button className="btn-add" onClick={handleOpen}>
           <Plus size={20} />
         </button>
@@ -182,7 +182,6 @@ const handleUpdateMataPelajaran = async (e) => {
                 <td>{getKelasName(subj.id_kelas)}</td>
                 <td>{subj.nama_mata_pelajaran}</td>
                 <td className="action-icons">
-
                 <button onClick={() => handleEditMataPelajaran(subj)} className="icon-button">
                   <Pencil size={18} />
                 </button>
@@ -190,7 +189,6 @@ const handleUpdateMataPelajaran = async (e) => {
                   <Trash2 size={18} />
                 </button>
               </td>
-
               </tr>
             ))}
           </tbody>

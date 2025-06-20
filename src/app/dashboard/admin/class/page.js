@@ -1,7 +1,11 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import '@/styles/class.css';
+import '@/styles/dashboard.css';
 import { Pencil, Trash2, Plus, UserPlus2 } from 'lucide-react';
+
+import '@/styles/dashboard.css';
+import { Pencil, Trash2, Plus } from 'lucide-react';
 
 export default function ClassPage() {
   const [kelass, setKelass] = useState([]);
